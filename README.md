@@ -1,5 +1,7 @@
 # 荒野日记:孤岛 — 逆向工程 / 邮件定制工具 / 内置 MOD 菜单
 
+**仓库地址: https://github.com/qpalzm2332933171-droid/hyqs-island-mod**
+
 针对手机游戏《荒野日记:孤岛》(版本 **1.9.0.0 / 1.9.0.070502**, OPPO 渠道服) 的完整逆向工程整理,
 包含 **游戏源码分析、邮件系统破解、Reqable 改包教程、解封教程、直装 MOD 菜单(APK)、渠道服移植教程**。
 
@@ -51,7 +53,7 @@
 | [`docs/`](docs/) | 邮件系统、反外挂/解封、MOD 源码分析、渠道服移植、构建指南、物品 ID 表 |
 | [`extras/`](extras/) | 早期用 GG 修改器做的 Lua 脚本(与本项目关系不大, 留作参考) |
 
-**成品 APK**(在 [Releases](../../releases) 里下载):
+**成品 APK**(在 [Releases](https://github.com/qpalzm2332933171-droid/hyqs-island-mod/releases/latest) 里下载):
 
 | 文件 | 适用 |
 |---|---|
