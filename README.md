@@ -55,12 +55,13 @@
 
 | 文件 | 适用 |
 |---|---|
-| `荒野日记孤岛_MOD_arm64-v8a.apk` | 真机(几乎所有安卓手机)、arm64 模拟器 |
-| `荒野日记孤岛_MOD_x86.apk` | x86/x86_64 模拟器(雷电、MUMU、BlueStacks 等) |
+| `hyqs_island_MOD_arm64-v8a.apk` | 真机(几乎所有安卓手机)、arm64 模拟器 |
+| `hyqs_island_MOD_x86.apk` | x86/x86_64 模拟器(雷电、MUMU、BlueStacks 等) |
+| `hyqs_island_MOD_universal.apk` | 不确定就用这个(含全部 ABI, 89 MB) |
 
 > 说明: 游戏本体只提供了 `arm64-v8a / armeabi-v7a / armeabi / x86` 四个 so, **官方没有 x86_64 版**。
 > x86_64 的模拟器(MUMU 等)依靠模拟器的 32 位兼容层运行 `x86` 版, 实测正常。
-> 如果你想要"全能包", 直接装未拆分的那份即可(Release 里也保留了 universal 版)。
+> 不确定就装 universal 版(含全部 ABI)。
 
 ---
 
