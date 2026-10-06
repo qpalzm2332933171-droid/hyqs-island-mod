@@ -1,0 +1,3644 @@
+{
+    "3000": {
+        "PRODUCT": {
+            "1": {
+                "ID": 1036, 
+                "P_COST": {
+                    "4000": 1, 
+                    "4004": 1
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4100": 1
+                }, 
+                "LEVEL": 1, 
+                "AUDIO": "build_iron", 
+                "DESC": {
+                    "cn": "制作石斧", 
+                    "en": "Craft Stone Axe", 
+                    "tw": "製作石斧"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }
+            }, 
+            "2": {
+                "ID": 1038, 
+                "P_COST": {
+                    "4003": 4, 
+                    "4036": 2
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4120": 1
+                }, 
+                "LEVEL": 1, 
+                "AUDIO": "build_iron", 
+                "DESC": {
+                    "cn": "制作朱莉的长弓", 
+                    "en": "Craft Julie's Longbow", 
+                    "tw": "製作朱莉的長弓"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }, 
+                "COND": {
+                    "1001": [
+                        {
+                            "Jh": 1, 
+                            "b8": 1
+                        }
+                    ]
+                }
+            }, 
+            "3": {
+                "ID": 1037, 
+                "P_COST": {
+                    "4001": 4, 
+                    "4003": 4
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4119": 1
+                }, 
+                "LEVEL": 1, 
+                "AUDIO": "loading", 
+                "DESC": {
+                    "cn": "制作老贝的草裙", 
+                    "en": "Craft Bain's Kilt", 
+                    "tw": "製作老貝的草裙"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }, 
+                "COND": {
+                    "1001": [
+                        {
+                            "Bg": 1, 
+                            "e8": 1
+                        }
+                    ]
+                }
+            }, 
+            "4": {
+                "ID": 1040, 
+                "P_COST": {
+                    "4003": 1, 
+                    "4004": 1, 
+                    "4028": 1
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4114": 1
+                }, 
+                "LEVEL": 1, 
+                "AUDIO": "loading", 
+                "DESC": {
+                    "cn": "制作火把", 
+                    "en": "Craft Torch", 
+                    "tw": "製作火把"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }
+            }, 
+            "5": {
+                "ID": 1039, 
+                "P_COST": {
+                    "4074": 1, 
+                    "4003": 1, 
+                    "4004": 1
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4114": 1
+                }, 
+                "LEVEL": 1, 
+                "AUDIO": "loading", 
+                "DESC": {
+                    "cn": "制作火把", 
+                    "en": "Craft Torch", 
+                    "tw": "製作火把"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }
+            }, 
+            "6": {
+                "ID": 1041, 
+                "P_COST": {
+                    "4000": 1, 
+                    "4005": 1
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4101": 1
+                }, 
+                "LEVEL": 1, 
+                "AUDIO": "build_iron", 
+                "DESC": {
+                    "cn": "制作匕首", 
+                    "en": "Craft Dagger", 
+                    "tw": "製作匕首"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }
+            }, 
+            "8": {
+                "ID": 1043, 
+                "P_COST": {
+                    "4012": 1, 
+                    "4003": 1, 
+                    "4036": 2
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4105": 1
+                }, 
+                "LEVEL": 2, 
+                "AUDIO": "build_iron", 
+                "DESC": {
+                    "cn": "制作短弓", 
+                    "en": "Craft Shortbow", 
+                    "tw": "製作短弓"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }
+            }, 
+            "9": {
+                "ID": 1042, 
+                "P_COST": {
+                    "4005": 10, 
+                    "4036": 5
+                }, 
+                "P_TIME": 600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4107": 20
+                }, 
+                "LEVEL": 2, 
+                "AUDIO": "loading", 
+                "DESC": {
+                    "cn": "制作20支箭矢", 
+                    "en": "Craft 20 arrows", 
+                    "tw": "製作20支箭矢"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }
+            }, 
+            "10": {
+                "ID": 1045, 
+                "P_COST": {
+                    "4036": 5, 
+                    "4071": 10, 
+                    "4005": 10, 
+                    "4072": 3
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4123": 20
+                }, 
+                "LEVEL": 2, 
+                "AUDIO": "loading", 
+                "DESC": {
+                    "cn": "制作20支毒羽箭", 
+                    "en": "Craft 20 poison arrows", 
+                    "tw": "製作20支毒羽箭"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }, 
+                "COND": {
+                    "1003": [
+                        {
+                            "2003": {
+                                "UNLOCK": true, 
+                                "COMPLETE": false
+                            }
+                        }
+                    ]
+                }
+            }, 
+            "11": {
+                "ID": 1044, 
+                "P_COST": {
+                    "4005": 1, 
+                    "4036": 2
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4113": 1
+                }, 
+                "LEVEL": 2, 
+                "AUDIO": "build_iron", 
+                "DESC": {
+                    "cn": "制作竹枪", 
+                    "en": "Craft Bamboo Spear", 
+                    "tw": "製作竹槍"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }
+            }, 
+            "12": {
+                "ID": 1047, 
+                "P_COST": {
+                    "4003": 3, 
+                    "4004": 1, 
+                    "4007": 1
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4133": 1
+                }, 
+                "LEVEL": 2, 
+                "AUDIO": "build_iron", 
+                "DESC": {
+                    "cn": "制作改良的平底锅", 
+                    "en": "Craft Improved pan", 
+                    "tw": "製作改良的平底鍋"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }, 
+                "COND": {
+                    "1031": {
+                        "34": 1, 
+                        "307": 1
+                    }
+                }
+            }, 
+            "13": {
+                "ID": 1046, 
+                "P_COST": {
+                    "4000": 1, 
+                    "4003": 5, 
+                    "4004": 3
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4139": 1
+                }, 
+                "LEVEL": 2, 
+                "AUDIO": "build_iron", 
+                "DESC": {
+                    "cn": "制作石锤", 
+                    "en": "Craft Stone Hammer", 
+                    "tw": "製作石錘"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }, 
+                "COND": {
+                    "1031": {
+                        "320": 1, 
+                        "41": 1
+                    }
+                }
+            }, 
+            "14": {
+                "ID": 1049, 
+                "P_COST": {
+                    "4001": 6, 
+                    "4003": 6
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4134": 1
+                }, 
+                "LEVEL": 2, 
+                "AUDIO": "loading", 
+                "DESC": {
+                    "cn": "制作某人的新衣", 
+                    "en": "Craft Sb.'s New Clothes", 
+                    "tw": "製作某人的新衣"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }, 
+                "COND": {
+                    "1023": {
+                        "35": 1
+                    }
+                }
+            }, 
+            "15": {
+                "ID": 1048, 
+                "P_COST": {
+                    "4011": 1, 
+                    "4003": 2
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4109": 1
+                }, 
+                "LEVEL": 2, 
+                "AUDIO": "loading", 
+                "DESC": {
+                    "cn": "制作皮甲", 
+                    "en": "Craft Leather Armor", 
+                    "tw": "製作皮甲"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }
+            }, 
+            "18": {
+                "ID": 1051, 
+                "P_COST": {
+                    "4000": 1, 
+                    "4004": 2, 
+                    "4005": 2
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4112": 1
+                }, 
+                "LEVEL": 2, 
+                "AUDIO": "build_iron", 
+                "DESC": {
+                    "cn": "制作双刃斧", 
+                    "en": "Craft Raider Axe", 
+                    "tw": "製作雙刃斧"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }
+            }, 
+            "25": {
+                "ID": 1050, 
+                "P_COST": {
+                    "4000": 20
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4005": 10
+                }, 
+                "BUFF": 6017, 
+                "LEVEL": 3, 
+                "AUDIO": "build_rub", 
+                "DESC": {
+                    "cn": "研磨10片石片", 
+                    "en": "Grind 10 stone slab", 
+                    "tw": "研磨10片石片"
+                }, 
+                "TITLE": {
+                    "cn": "研磨", 
+                    "en": "Grind", 
+                    "tw": "研磨"
+                }, 
+                "GETTEXT": {
+                    "cn": "即将收获:石片*10", 
+                    "en": "Get stone slab*10", 
+                    "tw": "即將收獲:石片*10"
+                }, 
+                "COND": {
+                    "1023": {
+                        "37": 1
+                    }, 
+                    "1000": 1002
+                }
+            }, 
+            "26": {
+                "ID": 1053, 
+                "P_COST": {
+                    "4012": 2, 
+                    "4003": 4, 
+                    "4036": 8
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4106": 1
+                }, 
+                "LEVEL": 3, 
+                "AUDIO": "build_iron", 
+                "DESC": {
+                    "cn": "制作硬竹弓", 
+                    "en": "Craft Bamboo Bow", 
+                    "tw": "製作硬竹弓"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }
+            }, 
+            "27": {
+                "ID": 1052, 
+                "P_COST": {
+                    "4012": 2, 
+                    "4003": 2, 
+                    "4004": 2, 
+                    "4036": 4
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4104": 1
+                }, 
+                "LEVEL": 3, 
+                "AUDIO": "build_iron", 
+                "DESC": {
+                    "cn": "制作硬竹弩", 
+                    "en": "Craft Bamboo Crossbow", 
+                    "tw": "製作硬竹弩"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }
+            }, 
+            "28": {
+                "ID": 1031, 
+                "P_COST": {
+                    "4011": 1, 
+                    "4003": 2, 
+                    "4033": 8, 
+                    "4032": 2, 
+                    "4036": 6
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4116": 1
+                }, 
+                "LEVEL": 3, 
+                "AUDIO": "loading", 
+                "DESC": {
+                    "cn": "制作藤甲", 
+                    "en": "Craft Vine Armor", 
+                    "tw": "製作藤甲"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }
+            }, 
+            "29": {
+                "ID": 1032, 
+                "P_COST": {
+                    "4035": 1, 
+                    "4005": 2, 
+                    "4034": 2, 
+                    "4036": 1
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4117": 1
+                }, 
+                "LEVEL": 3, 
+                "AUDIO": "loading", 
+                "DESC": {
+                    "cn": "制作竹筒炸药", 
+                    "en": "Craft Bamboo Explosive", 
+                    "tw": "製作竹筒炸藥"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }
+            }, 
+            "30": {
+                "ID": 1033, 
+                "P_COST": {
+                    "4011": 8, 
+                    "4003": 8
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4111": 1
+                }, 
+                "LEVEL": 3, 
+                "AUDIO": "loading", 
+                "ISBAG": 1, 
+                "DESC": {
+                    "cn": "制作包", 
+                    "en": "Craft Bag", 
+                    "tw": "製作包"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }
+            }, 
+            "31": {
+                "ID": 1034, 
+                "P_COST": {
+                    "4000": 1, 
+                    "4032": 1, 
+                    "4004": 2, 
+                    "4005": 2, 
+                    "4007": 1
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4129": 1
+                }, 
+                "LEVEL": 3, 
+                "BRANCH": [
+                    "3"
+                ], 
+                "AUDIO": "build_iron", 
+                "DESC": {
+                    "cn": "制作锋利的双刃斧", 
+                    "en": "Craft Sharp Raider Axe", 
+                    "tw": "製作鋒利的雙刃斧"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }
+            }, 
+            "32": {
+                "ID": 1027, 
+                "P_COST": {
+                    "4000": 1, 
+                    "4032": 1, 
+                    "4004": 2, 
+                    "4005": 2, 
+                    "4007": 1
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4130": 1
+                }, 
+                "LEVEL": 3, 
+                "BRANCH": [
+                    "3"
+                ], 
+                "AUDIO": "build_iron", 
+                "DESC": {
+                    "cn": "制作锋利的竹枪", 
+                    "en": "Craft Sharp Bamboo Spear", 
+                    "tw": "製作鋒利的竹槍"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }
+            }, 
+            "33": {
+                "ID": 1028, 
+                "P_COST": {
+                    "4007": 1, 
+                    "4032": 1, 
+                    "4003": 1, 
+                    "4005": 1
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4131": 2
+                }, 
+                "LEVEL": 3, 
+                "BRANCH": [
+                    "3"
+                ], 
+                "AUDIO": "build_iron", 
+                "DESC": {
+                    "cn": "制作投掷飞刀", 
+                    "en": "Craft Throwing Dart", 
+                    "tw": "製作投擲飛刀"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }
+            }, 
+            "34": {
+                "ID": 1029, 
+                "P_COST": {
+                    "4000": 1, 
+                    "4004": 2, 
+                    "4035": 2, 
+                    "4005": 2, 
+                    "4072": 3
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4127": 1
+                }, 
+                "LEVEL": 3, 
+                "BRANCH": [
+                    "3_1"
+                ], 
+                "AUDIO": "build_iron", 
+                "DESC": {
+                    "cn": "制作毒刃斧", 
+                    "en": "Craft Poison Axe", 
+                    "tw": "製作毒刃斧"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }
+            }, 
+            "35": {
+                "ID": 1030, 
+                "P_COST": {
+                    "4000": 1, 
+                    "4004": 2, 
+                    "4035": 2, 
+                    "4005": 2, 
+                    "4072": 3
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4128": 1
+                }, 
+                "LEVEL": 3, 
+                "BRANCH": [
+                    "3_1"
+                ], 
+                "AUDIO": "build_iron", 
+                "DESC": {
+                    "cn": "制作毒竹枪", 
+                    "en": "Craft Poison Spear", 
+                    "tw": "製作毒竹槍"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }
+            }, 
+            "36": {
+                "ID": 1035, 
+                "P_COST": {
+                    "4030": 2, 
+                    "4035": 1, 
+                    "4034": 2, 
+                    "4072": 1
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4132": 1
+                }, 
+                "LEVEL": 3, 
+                "BRANCH": [
+                    "3_1"
+                ], 
+                "AUDIO": "loading", 
+                "DESC": {
+                    "cn": "制作毒液炸药", 
+                    "en": "Craft Poison Explosive", 
+                    "tw": "製作毒液炸藥"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }
+            }, 
+            "37": {
+                "ID": 1080, 
+                "P_COST": {
+                    "4406": 3
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4138": 1
+                }, 
+                "LEVEL": 1, 
+                "AUDIO": "loading", 
+                "DESC": {
+                    "cn": "制作小鞭炮", 
+                    "en": "Craft Firecracker", 
+                    "tw": "製作小鞭炮"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }, 
+                "COND": {
+                    "1036": [
+                        1612828800, 
+                        1613692800
+                    ]
+                }
+            }, 
+            "19": {
+                "ID": 1083, 
+                "P_COST": {
+                    "4012": 1, 
+                    "4003": 2, 
+                    "4036": 3
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4142": 1
+                }, 
+                "LEVEL": 2, 
+                "AUDIO": "loading", 
+                "DESC": {
+                    "cn": "制作驯兽鞭", 
+                    "en": "Craft Domesticating Whip", 
+                    "tw": "製作馴獸鞭"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }, 
+                "COND": {
+                    "1023": {
+                        "45": 1
+                    }
+                }
+            }, 
+            "20": {
+                "ID": 1084, 
+                "P_COST": {
+                    "4072": 1, 
+                    "4036": 2
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4143": 1
+                }, 
+                "LEVEL": 2, 
+                "AUDIO": "loading", 
+                "DESC": {
+                    "cn": "制作吹箭", 
+                    "en": "Craft blowpipe Dart", 
+                    "tw": "製作吹箭"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }, 
+                "COND": {
+                    "1023": {
+                        "46": 1
+                    }
+                }
+            }, 
+            "21": {
+                "ID": 1091, 
+                "P_COST": {
+                    "4000": 1, 
+                    "4012": 1, 
+                    "4004": 2, 
+                    "4005": 1
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4145": 1
+                }, 
+                "LEVEL": 2, 
+                "AUDIO": "build_iron", 
+                "DESC": {
+                    "cn": "制作机关剑", 
+                    "en": "Craft mechanical sword", 
+                    "tw": "製作機關劍"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }, 
+                "COND": {
+                    "1023": {
+                        "47": 1
+                    }
+                }
+            }, 
+            "22": {
+                "ID": 1092, 
+                "P_COST": {
+                    "4000": 1, 
+                    "4012": 2, 
+                    "4004": 2, 
+                    "4005": 1
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4146": 1
+                }, 
+                "LEVEL": 2, 
+                "AUDIO": "build_iron", 
+                "DESC": {
+                    "cn": "制作机关连弩", 
+                    "en": "Craft mechanical crossbow", 
+                    "tw": "製作機關連弩"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }, 
+                "COND": {
+                    "1023": {
+                        "48": 1
+                    }
+                }
+            }, 
+            "23": {
+                "ID": 1093, 
+                "P_COST": {
+                    "4440": 1, 
+                    "4007": 1
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4147": 3
+                }, 
+                "LEVEL": 2, 
+                "AUDIO": "loading", 
+                "DESC": {
+                    "cn": "制作3个麻痹针", 
+                    "en": "Craft 3 paralysis needle", 
+                    "tw": "製作3個麻痺針"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }, 
+                "COND": {
+                    "1023": {
+                        "49": 1
+                    }
+                }
+            }, 
+            "24": {
+                "ID": 1095, 
+                "P_COST": {
+                    "4001": 1, 
+                    "4003": 4, 
+                    "4004": 1
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4148": 1
+                }, 
+                "LEVEL": 2, 
+                "AUDIO": "loading", 
+                "DESC": {
+                    "cn": "制作女巫扫帚", 
+                    "en": "Craft Witch broom", 
+                    "tw": "製作女巫掃帚"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }, 
+                "COND": {
+                    "1023": {
+                        "50": 1
+                    }
+                }
+            }, 
+            "17": {
+                "ID": 1096, 
+                "P_COST": {
+                    "4003": 2, 
+                    "4071": 4
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4149": 1
+                }, 
+                "LEVEL": 2, 
+                "AUDIO": "loading", 
+                "DESC": {
+                    "cn": "制作羽毛裙", 
+                    "en": "Craft Feather kilt", 
+                    "tw": "製作羽毛裙"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }, 
+                "COND": {
+                    "1023": {
+                        "53": 1
+                    }
+                }
+            }, 
+            "38": {
+                "ID": 1100, 
+                "P_COST": {
+                    "4144": 1, 
+                    "4011": 1
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4150": 1
+                }, 
+                "LEVEL": 2, 
+                "AUDIO": "loading", 
+                "DESC": {
+                    "cn": "制作防护服", 
+                    "en": "Craft Protective clothing", 
+                    "tw": "製作防護服"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }, 
+                "COND": {
+                    "1023": {
+                        "57": 1
+                    }
+                }
+            }, 
+            "16": {
+                "ID": 1102, 
+                "P_COST": {
+                    "4002": 4, 
+                    "4036": 2
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4151": 1
+                }, 
+                "LEVEL": 2, 
+                "AUDIO": "loading", 
+                "DESC": {
+                    "cn": "制作冰雪卷轴", 
+                    "en": "Craft Snow scroll", 
+                    "tw": "製作冰雪卷軸"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }, 
+                "COND": {
+                    "1045": "100104", 
+                    "1023": {
+                        "58": 1
+                    }
+                }
+            }, 
+            "7": {
+                "ID": 1090, 
+                "P_COST": {
+                    "4420": 3
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4421": 1
+                }, 
+                "LEVEL": 1, 
+                "AUDIO": "loading", 
+                "DESC": {
+                    "cn": "制作毛线盒", 
+                    "en": "Craft Dagger", 
+                    "tw": "制作毛線盒"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }, 
+                "COND": {
+                    "1036": [
+                        1598227200, 
+                        1598832000
+                    ]
+                }
+            }
+        }
+    }, 
+    "3001": {
+        "PRODUCT": {
+            "1": {
+                "ID": 1024, 
+                "P_COST": {
+                    "4044": 2, 
+                    "4002": 3
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4044": 10
+                }, 
+                "BUFF": 6001, 
+                "LEVEL": 1, 
+                "AUDIO": "build_plant", 
+                "DESC": {
+                    "cn": "种植土豆", 
+                    "en": "Plant Potato", 
+                    "tw": "種植土豆"
+                }, 
+                "TITLE": {
+                    "cn": "种植", 
+                    "en": "Plant", 
+                    "tw": "種植"
+                }, 
+                "GETTEXT": {
+                    "cn": "即将收获:土豆*10", 
+                    "en": "Get Potato*10", 
+                    "tw": "即將收獲:土豆*10"
+                }
+            }, 
+            "2": {
+                "ID": 1026, 
+                "P_COST": {
+                    "4002": 2, 
+                    "4400": 1
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4400": 5
+                }, 
+                "BUFF": 6020, 
+                "LEVEL": 1, 
+                "AUDIO": "build_plant", 
+                "DESC": {
+                    "cn": "种植粗粮", 
+                    "en": "Plant Crops", 
+                    "tw": "種植粗糧"
+                }, 
+                "TITLE": {
+                    "cn": "种植", 
+                    "en": "Plant", 
+                    "tw": "種植"
+                }, 
+                "GETTEXT": {
+                    "cn": "即将收获:小袋粗粮*5", 
+                    "en": "Get Crops*5", 
+                    "tw": "即將收獲:小袋粗糧*5"
+                }
+            }, 
+            "3": {
+                "ID": 1078, 
+                "P_COST": {
+                    "4092": 1, 
+                    "4002": 1
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4092": 2
+                }, 
+                "BUFF": 6021, 
+                "LEVEL": 1, 
+                "AUDIO": "build_plant", 
+                "DESC": {
+                    "cn": "种植南瓜", 
+                    "en": "Plant pumpkin", 
+                    "tw": "種植南瓜"
+                }, 
+                "TITLE": {
+                    "cn": "种植", 
+                    "en": "Plant", 
+                    "tw": "種植"
+                }, 
+                "GETTEXT": {
+                    "cn": "即将收获:南瓜*2", 
+                    "en": "Get pumpkin*2", 
+                    "tw": "即將收獲:南瓜*2"
+                }, 
+                "COND": {
+                    "1036": [
+                        1540483200, 
+                        1541376000
+                    ]
+                }
+            }, 
+            "5": {
+                "ID": 1025, 
+                "P_COST": {
+                    "4002": 3, 
+                    "4022": 3
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4022": 10
+                }, 
+                "BUFF": 6002, 
+                "LEVEL": 2, 
+                "AUDIO": "build_plant", 
+                "DESC": {
+                    "cn": "种植薄荷", 
+                    "en": "Plant Mint", 
+                    "tw": "種植薄荷"
+                }, 
+                "TITLE": {
+                    "cn": "种植", 
+                    "en": "Plant", 
+                    "tw": "種植"
+                }, 
+                "GETTEXT": {
+                    "cn": "即将收获:薄荷*10", 
+                    "en": "Get Mint*10", 
+                    "tw": "即將收獲:薄荷*10"
+                }
+            }, 
+            "8": {
+                "ID": 1098, 
+                "P_COST": {
+                    "4002": 2, 
+                    "4451": 1
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4451": 5
+                }, 
+                "BUFF": 6023, 
+                "LEVEL": 1, 
+                "AUDIO": "build_plant", 
+                "DESC": {
+                    "cn": "种植可可豆", 
+                    "en": "Plant Cocoa bean", 
+                    "tw": "種植可可豆"
+                }, 
+                "TITLE": {
+                    "cn": "种植", 
+                    "en": "Plant", 
+                    "tw": "種植"
+                }, 
+                "GETTEXT": {
+                    "cn": "即将收获:可可豆*5", 
+                    "en": "Get Cocoa bean*5", 
+                    "tw": "即將收獲:可可豆*5"
+                }, 
+                "COND": {
+                    "1023": {
+                        "55": 1
+                    }
+                }
+            }, 
+            "4": {
+                "ID": 1082, 
+                "P_COST": {
+                    "4004": 2
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4038": 5
+                }, 
+                "BUFF": 6022, 
+                "LEVEL": 1, 
+                "AUDIO": "build_plant", 
+                "DESC": {
+                    "cn": "养殖蜜蜂", 
+                    "en": "Feed bee", 
+                    "tw": "養殖蜜蜂"
+                }, 
+                "TITLE": {
+                    "cn": "养殖", 
+                    "en": "Feed", 
+                    "tw": "養殖"
+                }, 
+                "GETTEXT": {
+                    "cn": "即将收获:蜂蜜*5", 
+                    "en": "Get Honey*5", 
+                    "tw": "即將收獲:蜂蜜*5"
+                }
+            }
+        }
+    }, 
+    "3002": {
+        "PRODUCT": {
+            "1": {
+                "ID": 1065, 
+                "P_COST": {
+                    "4004": 1, 
+                    "4020": 1
+                }, 
+                "P_TIME": 1800, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4025": 1
+                }, 
+                "LEVEL": 1, 
+                "AUDIO": "build_fire", 
+                "DESC": {
+                    "cn": "烹饪烤肉", 
+                    "en": "Cook Roast Meat", 
+                    "tw": "烹飪烤肉"
+                }, 
+                "TITLE": {
+                    "cn": "烹饪", 
+                    "en": "Cook", 
+                    "tw": "烹飪"
+                }
+            }, 
+            "2": {
+                "ID": 1067, 
+                "P_COST": {
+                    "4004": 1, 
+                    "4020": 1, 
+                    "4036": 1
+                }, 
+                "P_TIME": 1800, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4070": 1
+                }, 
+                "LEVEL": 1, 
+                "AUDIO": "build_fire", 
+                "DESC": {
+                    "cn": "烹饪荒野烤肉", 
+                    "en": "Cook Wild Roast Meat", 
+                    "tw": "烹飪荒野烤肉"
+                }, 
+                "TITLE": {
+                    "cn": "烹饪", 
+                    "en": "Cook", 
+                    "tw": "烹飪"
+                }, 
+                "COND": {
+                    "1001": [
+                        {
+                            "Lg": 1, 
+                            "c9": 1
+                        }
+                    ]
+                }
+            }, 
+            "3": {
+                "ID": 1066, 
+                "P_COST": {
+                    "4044": 2, 
+                    "4004": 1
+                }, 
+                "P_TIME": 1800, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4040": 1
+                }, 
+                "LEVEL": 1, 
+                "AUDIO": "build_fire", 
+                "DESC": {
+                    "cn": "烹饪烤土豆", 
+                    "en": "Cook Baked Potato", 
+                    "tw": "烹飪烤土豆"
+                }, 
+                "TITLE": {
+                    "cn": "烹饪", 
+                    "en": "Cook", 
+                    "tw": "烹飪"
+                }
+            }, 
+            "4": {
+                "ID": 1069, 
+                "P_COST": {
+                    "4004": 1, 
+                    "4002": 1, 
+                    "4400": 2
+                }, 
+                "P_TIME": 1800, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4402": 1
+                }, 
+                "LEVEL": 1, 
+                "AUDIO": "build_boil", 
+                "DESC": {
+                    "cn": "烹饪粗粮粥", 
+                    "en": "Cook porridge", 
+                    "tw": "烹飪粗糧粥"
+                }, 
+                "TITLE": {
+                    "cn": "烹饪", 
+                    "en": "Cook", 
+                    "tw": "烹飪"
+                }
+            }, 
+            "5": {
+                "ID": 1068, 
+                "P_COST": {
+                    "4400": 2, 
+                    "4004": 1, 
+                    "4411": 1
+                }, 
+                "P_TIME": 1800, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4412": 1
+                }, 
+                "LEVEL": 1, 
+                "AUDIO": "build_boil", 
+                "DESC": {
+                    "cn": "烹饪粽子", 
+                    "en": "Cook Zongzi", 
+                    "tw": "烹飪粽子"
+                }, 
+                "TITLE": {
+                    "cn": "烹饪", 
+                    "en": "Cook", 
+                    "tw": "烹飪"
+                }, 
+                "COND": {
+                    "1036": [
+                        1623369600, 
+                        1623974400
+                    ]
+                }
+            }, 
+            "7": {
+                "ID": 1071, 
+                "P_COST": {
+                    "4002": 1, 
+                    "4004": 1, 
+                    "4020": 2
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4026": 1
+                }, 
+                "LEVEL": 2, 
+                "AUDIO": "build_boil", 
+                "DESC": {
+                    "cn": "烹饪肉汤", 
+                    "en": "Cook Meat Soup", 
+                    "tw": "烹飪肉湯"
+                }, 
+                "TITLE": {
+                    "cn": "烹饪", 
+                    "en": "Cook", 
+                    "tw": "烹飪"
+                }
+            }, 
+            "9": {
+                "ID": 1070, 
+                "P_COST": {
+                    "4044": 2, 
+                    "4002": 1, 
+                    "4004": 1
+                }, 
+                "P_TIME": 1800, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4041": 1
+                }, 
+                "LEVEL": 2, 
+                "AUDIO": "build_boil", 
+                "DESC": {
+                    "cn": "烹饪土豆泥", 
+                    "en": "Cook Mashed Potato", 
+                    "tw": "烹飪土豆泥"
+                }, 
+                "TITLE": {
+                    "cn": "烹饪", 
+                    "en": "Cook", 
+                    "tw": "烹飪"
+                }
+            }, 
+            "10": {
+                "ID": 1073, 
+                "P_COST": {
+                    "4044": 2, 
+                    "4002": 2, 
+                    "4004": 2, 
+                    "4022": 1, 
+                    "4020": 1, 
+                    "4038": 2
+                }, 
+                "P_TIME": 1800, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4043": 1
+                }, 
+                "LEVEL": 2, 
+                "AUDIO": "build_boil", 
+                "DESC": {
+                    "cn": "烹饪秘制炖肉", 
+                    "en": "Cook Secret Stew", 
+                    "tw": "烹飪秘制燉肉"
+                }, 
+                "TITLE": {
+                    "cn": "烹饪", 
+                    "en": "Cook", 
+                    "tw": "烹飪"
+                }, 
+                "COND": {
+                    "1000": 1000
+                }
+            }, 
+            "13": {
+                "ID": 1072, 
+                "P_COST": {
+                    "4044": 1, 
+                    "4089": 1, 
+                    "4022": 1, 
+                    "4020": 2, 
+                    "4021": 2
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4099": 5
+                }, 
+                "BUFF": 6018, 
+                "LEVEL": 3, 
+                "AUDIO": "build_rub", 
+                "DESC": {
+                    "cn": "酿制5个奇特香料", 
+                    "en": "brewage 5 Peculiar Spice", 
+                    "tw": "釀制5個奇特香料"
+                }, 
+                "TITLE": {
+                    "cn": "酿制", 
+                    "en": "Brewage", 
+                    "tw": "釀制"
+                }, 
+                "GETTEXT": {
+                    "cn": "即将收获:香料*5", 
+                    "en": "Get Peculiar Spice*5", 
+                    "tw": "即將收獲:香料*5"
+                }, 
+                "COND": {
+                    "1023": {
+                        "36": 1
+                    }, 
+                    "1000": 1000
+                }
+            }, 
+            "14": {
+                "ID": 1059, 
+                "P_COST": {
+                    "4022": 1, 
+                    "4002": 1, 
+                    "4004": 2, 
+                    "4020": 2
+                }, 
+                "P_TIME": 1800, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4098": 1
+                }, 
+                "LEVEL": 2, 
+                "AUDIO": "build_boil", 
+                "DESC": {
+                    "cn": "烹饪小哥肉酱", 
+                    "en": "Cook Beef paste", 
+                    "tw": "烹飪小哥肉酱"
+                }, 
+                "TITLE": {
+                    "cn": "烹饪", 
+                    "en": "Cook", 
+                    "tw": "烹飪"
+                }, 
+                "COND": {
+                    "1023": {
+                        "39": 1
+                    }, 
+                    "1000": 1003
+                }
+            }, 
+            "15": {
+                "ID": 1058, 
+                "P_COST": {
+                    "4004": 10
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4030": 5
+                }, 
+                "BUFF": 6013, 
+                "LEVEL": 2, 
+                "AUDIO": "build_fire", 
+                "DESC": {
+                    "cn": "烧制木炭", 
+                    "en": "Fire Charcoal", 
+                    "tw": "燒制木炭"
+                }, 
+                "TITLE": {
+                    "cn": "烧制", 
+                    "en": "Fire", 
+                    "tw": "燒制"
+                }, 
+                "GETTEXT": {
+                    "cn": "即将收获:木炭*5", 
+                    "en": "Get Charcoal*5", 
+                    "tw": "即將收獲:木炭*5"
+                }
+            }, 
+            "17": {
+                "ID": 1061, 
+                "P_COST": {
+                    "4004": 6
+                }, 
+                "P_TIME": 1800, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "7010": 15
+                }, 
+                "BUFF": 6000, 
+                "PETATTRS": {
+                    "7010": 15
+                }, 
+                "LEVEL": 3, 
+                "AUDIO": "build_fire", 
+                "DESC": {
+                    "cn": "木材生火", 
+                    "en": "Firing with Timber", 
+                    "tw": "木材生火"
+                }, 
+                "TITLE": {
+                    "cn": "生火", 
+                    "en": "Starting Fire", 
+                    "tw": "生火"
+                }
+            }, 
+            "19": {
+                "ID": 1060, 
+                "P_COST": {
+                    "4089": 2, 
+                    "5011": 4
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4081": 4
+                }, 
+                "BUFF": 6015, 
+                "LEVEL": 3, 
+                "BRANCH": [
+                    "3_1"
+                ], 
+                "AUDIO": "build_fire", 
+                "DESC": {
+                    "cn": "烘烤咸鱼干", 
+                    "en": "Roast Salted Fish", 
+                    "tw": "烘烤鹹魚幹"
+                }, 
+                "TITLE": {
+                    "cn": "烘烤", 
+                    "en": "Roast", 
+                    "tw": "烘烤"
+                }, 
+                "GETTEXT": {
+                    "cn": "即将收获:咸鱼干*4", 
+                    "en": "Get Salted Fish*4", 
+                    "tw": "即將收獲:鹹魚幹*4"
+                }
+            }, 
+            "20": {
+                "ID": 1063, 
+                "P_COST": {
+                    "4089": 4, 
+                    "4020": 6
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4082": 6
+                }, 
+                "BUFF": 6016, 
+                "LEVEL": 3, 
+                "BRANCH": [
+                    "3_1"
+                ], 
+                "AUDIO": "build_fire", 
+                "DESC": {
+                    "cn": "烘烤烟熏肉", 
+                    "en": "Roast Smoked Meat", 
+                    "tw": "烘烤煙熏肉"
+                }, 
+                "TITLE": {
+                    "cn": "烘烤", 
+                    "en": "Roast", 
+                    "tw": "烘烤"
+                }, 
+                "GETTEXT": {
+                    "cn": "即将收获:烟熏肉*6", 
+                    "en": "Get Smoked Meat*6", 
+                    "tw": "即將收獲:煙熏肉*6"
+                }
+            }, 
+            "21": {
+                "ID": 1062, 
+                "P_COST": {
+                    "4044": 2, 
+                    "4002": 1, 
+                    "4015": 1, 
+                    "4020": 2
+                }, 
+                "P_TIME": 1800, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4083": 1
+                }, 
+                "LEVEL": 3, 
+                "BRANCH": [
+                    "3"
+                ], 
+                "AUDIO": "build_boil", 
+                "DESC": {
+                    "cn": "烹饪兽血乱炖", 
+                    "en": "Cook Assorted Animal Stew", 
+                    "tw": "烹飪獸血亂燉"
+                }, 
+                "TITLE": {
+                    "cn": "烹饪", 
+                    "en": "Cook", 
+                    "tw": "烹飪"
+                }
+            }, 
+            "22": {
+                "ID": 1064, 
+                "P_COST": {
+                    "4030": 3
+                }, 
+                "P_TIME": 1800, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "7011": 15
+                }, 
+                "BUFF": 6014, 
+                "PETATTRS": {
+                    "7011": 15
+                }, 
+                "LEVEL": 3, 
+                "BRANCH": [
+                    "3"
+                ], 
+                "AUDIO": "build_fire", 
+                "DESC": {
+                    "cn": "木炭生火", 
+                    "en": "Firing with Charcoal", 
+                    "tw": "木炭生火"
+                }, 
+                "TITLE": {
+                    "cn": "生火", 
+                    "en": "Firing", 
+                    "tw": "生火"
+                }
+            }, 
+            "23": {
+                "ID": 1081, 
+                "P_COST": {
+                    "4408": 1, 
+                    "4400": 2
+                }, 
+                "P_TIME": 1800, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4409": 1
+                }, 
+                "LEVEL": 1, 
+                "AUDIO": "build_fire", 
+                "DESC": {
+                    "cn": "烹饪青团", 
+                    "en": "Cook Green dumpling", 
+                    "tw": "烹飪青團"
+                }, 
+                "TITLE": {
+                    "cn": "烹饪", 
+                    "en": "Cook", 
+                    "tw": "烹飪"
+                }, 
+                "COND": {
+                    "1036": [
+                        1617408000, 
+                        1618012800
+                    ]
+                }
+            }, 
+            "11": {
+                "ID": 1085, 
+                "P_COST": {
+                    "4044": 1, 
+                    "4038": 1, 
+                    "4427": 1, 
+                    "4020": 1, 
+                    "4021": 1
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4437": 1
+                }, 
+                "LEVEL": 2, 
+                "AUDIO": "build_fire", 
+                "DESC": {
+                    "cn": "制作军粮丸", 
+                    "en": "Cook Military Grain Pill", 
+                    "tw": "製作軍糧丸"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }, 
+                "COND": {
+                    "1023": {
+                        "44": 1
+                    }
+                }
+            }, 
+            "12": {
+                "ID": 1086, 
+                "P_COST": {
+                    "4002": 1, 
+                    "4004": 1, 
+                    "4427": 1
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4438": 1
+                }, 
+                "LEVEL": 2, 
+                "AUDIO": "build_fire", 
+                "DESC": {
+                    "cn": "制作木耳汤", 
+                    "en": "Cook Fungus Soup", 
+                    "tw": "製作木耳湯"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }, 
+                "COND": {
+                    "1003": [
+                        {
+                            "6001": {
+                                "UNLOCK": true, 
+                                "COMPLETE": false
+                            }
+                        }
+                    ]
+                }
+            }, 
+            "16": {
+                "ID": 1097, 
+                "P_COST": {
+                    "4038": 1, 
+                    "4004": 1, 
+                    "4400": 1
+                }, 
+                "P_TIME": 1800, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4443": 2
+                }, 
+                "LEVEL": 2, 
+                "AUDIO": "build_fire", 
+                "DESC": {
+                    "cn": "制作姜饼人", 
+                    "en": "Cook Gingerbread man", 
+                    "tw": "製作薑餅人"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }, 
+                "COND": {
+                    "1023": {
+                        "54": 1
+                    }
+                }
+            }, 
+            "18": {
+                "ID": 1099, 
+                "P_COST": {
+                    "4038": 1, 
+                    "4451": 1, 
+                    "4004": 1
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4410": 2
+                }, 
+                "LEVEL": 2, 
+                "AUDIO": "build_fire", 
+                "DESC": {
+                    "cn": "制作巧克力", 
+                    "en": "Cook chocolate", 
+                    "tw": "製作巧克力"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }, 
+                "COND": {
+                    "1023": {
+                        "56": 1
+                    }
+                }
+            }, 
+            "6": {
+                "ID": 1094, 
+                "P_COST": {
+                    "4093": 1, 
+                    "4400": 1, 
+                    "4004": 1
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4094": 1
+                }, 
+                "LEVEL": 1, 
+                "AUDIO": "build_fire", 
+                "DESC": {
+                    "cn": "制作火鸡大餐", 
+                    "en": "Cook Turkey Dinner", 
+                    "tw": "製作火鸡大餐"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }, 
+                "COND": {
+                    "1036": [
+                        1606262400, 
+                        1606953600
+                    ]
+                }
+            }, 
+            "8": {
+                "ID": 1101, 
+                "P_COST": {
+                    "4092": 3, 
+                    "4004": 1
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4441": 2
+                }, 
+                "LEVEL": 1, 
+                "AUDIO": "build_fire", 
+                "DESC": {
+                    "cn": "制作南瓜糖", 
+                    "en": "Cook pumpkin candy", 
+                    "tw": "製作南瓜糖"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }, 
+                "COND": {
+                    "1036": [
+                        1604102400, 
+                        1604707200
+                    ]
+                }
+            }
+        }
+    }, 
+    "3002_1": {
+        "PRODUCT": {
+            "1": {
+                "ID": 1002, 
+                "P_COST": {
+                    "4004": 1, 
+                    "4020": 1
+                }, 
+                "P_TIME": 1800, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4025": 1
+                }, 
+                "LEVEL": 1, 
+                "AUDIO": "build_fire", 
+                "DESC": {
+                    "cn": "制作烤肉", 
+                    "en": "Cook Roast Meat", 
+                    "tw": "製作烤肉"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }
+            }, 
+            "2": {
+                "ID": 1004, 
+                "P_COST": {
+                    "4004": 1, 
+                    "4020": 1, 
+                    "4036": 1
+                }, 
+                "P_TIME": 1800, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4070": 1
+                }, 
+                "LEVEL": 1, 
+                "AUDIO": "build_fire", 
+                "DESC": {
+                    "cn": "制作荒野烤肉", 
+                    "en": "Cook Wild Roast Meat", 
+                    "tw": "製作荒野烤肉"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }, 
+                "COND": {
+                    "1001": [
+                        {
+                            "c9": 1
+                        }
+                    ]
+                }
+            }, 
+            "3": {
+                "ID": 1003, 
+                "P_COST": {
+                    "4044": 2, 
+                    "4004": 1
+                }, 
+                "P_TIME": 1800, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4040": 1
+                }, 
+                "LEVEL": 1, 
+                "AUDIO": "build_fire", 
+                "DESC": {
+                    "cn": "制作烤土豆", 
+                    "en": "Cook Baked Potato", 
+                    "tw": "製作烤土豆"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }
+            }
+        }
+    }, 
+    "3003": {
+        "PRODUCT": {
+            "1": {
+                "ID": 1054, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ATTRS": {
+                    "7000": 10, 
+                    "7003": 10
+                }, 
+                "BUFF": 6005, 
+                "LEVEL": 1, 
+                "AUDIO": "sleep", 
+                "DESC": {
+                    "cn": "小憩", 
+                    "en": "Power Nap", 
+                    "tw": "小憩"
+                }, 
+                "TITLE": {
+                    "cn": "睡觉", 
+                    "en": "Sleep", 
+                    "tw": "睡覺"
+                }, 
+                "SPEDESC": {
+                    "cn": "小憩一下，眯一会。", 
+                    "en": "Take a power nap.", 
+                    "tw": "小憩一下，瞇一會。"
+                }
+            }, 
+            "2": {
+                "ID": 1056, 
+                "P_TIME": 14400, 
+                "C_TIME": 0, 
+                "ATTRS": {
+                    "7000": 40, 
+                    "7003": 40
+                }, 
+                "BUFF": 6006, 
+                "LEVEL": 1, 
+                "AUDIO": "sleep", 
+                "DESC": {
+                    "cn": "短睡", 
+                    "en": "Short Rest", 
+                    "tw": "短睡"
+                }, 
+                "TITLE": {
+                    "cn": "睡觉", 
+                    "en": "Sleep", 
+                    "tw": "睡覺"
+                }, 
+                "SPEDESC": {
+                    "cn": "短暂进入深度睡眠。", 
+                    "en": "Take a short rest.", 
+                    "tw": "短暫進入深度睡眠。"
+                }
+            }, 
+            "3": {
+                "ID": 1055, 
+                "P_TIME": 28800, 
+                "C_TIME": 0, 
+                "ATTRS": {
+                    "7000": 80, 
+                    "7003": 80
+                }, 
+                "BUFF": 6007, 
+                "LEVEL": 1, 
+                "AUDIO": "sleep", 
+                "DESC": {
+                    "cn": "睡觉", 
+                    "en": "Sleep", 
+                    "tw": "睡覺"
+                }, 
+                "TITLE": {
+                    "cn": "睡觉", 
+                    "en": "Sleep", 
+                    "tw": "睡覺"
+                }, 
+                "SPEDESC": {
+                    "cn": "常规睡眠，让身体得到更好的休息。", 
+                    "en": "Usual sleep cycle that allows body to recover better.", 
+                    "tw": "常規睡眠，讓身體得到更好的休息。"
+                }
+            }, 
+            "4": {
+                "ID": 1057, 
+                "P_TIME": 0, 
+                "C_TIME": 0, 
+                "ATTRS": {
+                    "7000": 80, 
+                    "7003": 80
+                }, 
+                "BUFF": 6008, 
+                "LEVEL": 1, 
+                "AUDIO": "sleep", 
+                "DESC": {
+                    "cn": "睡觉", 
+                    "en": "Sleep", 
+                    "tw": "睡覺"
+                }, 
+                "TITLE": {
+                    "cn": "睡觉", 
+                    "en": "Sleep", 
+                    "tw": "睡覺"
+                }, 
+                "SPEDESC": {
+                    "cn": "睡至清晨6点，请注意状态，防止在睡眠中死去。", 
+                    "en": "Sleep till 6am. Pay attention to your statuses, or you may die in your sleep.", 
+                    "tw": "睡至清晨6點，請註意狀態，防止在睡眠中死去。"
+                }
+            }
+        }
+    }, 
+    "3004": {
+        "PRODUCT": {
+            "1": {
+                "ID": 1012, 
+                "P_COST": {
+                    "4013": 1, 
+                    "4003": 1
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4016": 1
+                }, 
+                "LEVEL": 1, 
+                "AUDIO": "loading", 
+                "DESC": {
+                    "cn": "制作绷带", 
+                    "en": "Craft Bandage", 
+                    "tw": "製作繃帶"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }
+            }, 
+            "2": {
+                "ID": 1014, 
+                "P_COST": {
+                    "4013": 1, 
+                    "4002": 1
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4017": 1
+                }, 
+                "LEVEL": 1, 
+                "AUDIO": "build_boil", 
+                "DESC": {
+                    "cn": "制作汤药", 
+                    "en": "Craft Medicinal Brew", 
+                    "tw": "製作湯藥"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }
+            }, 
+            "3": {
+                "ID": 1013, 
+                "P_COST": {
+                    "4002": 1, 
+                    "4022": 2
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4024": 1
+                }, 
+                "LEVEL": 1, 
+                "AUDIO": "build_tea", 
+                "DESC": {
+                    "cn": "制作薄荷茶", 
+                    "en": "Craft Mint Tea", 
+                    "tw": "製作薄荷茶"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }
+            }, 
+            "4": {
+                "ID": 1016, 
+                "P_COST": {
+                    "4013": 2, 
+                    "4037": 1
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4019": 1
+                }, 
+                "LEVEL": 2, 
+                "AUDIO": "build_pill", 
+                "DESC": {
+                    "cn": "制作药酒", 
+                    "en": "Craft Ointment", 
+                    "tw": "製作藥酒"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }
+            }, 
+            "5": {
+                "ID": 1015, 
+                "P_COST": {
+                    "4013": 2, 
+                    "4039": 1, 
+                    "4022": 1, 
+                    "4037": 1
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4018": 1
+                }, 
+                "LEVEL": 2, 
+                "AUDIO": "build_pill", 
+                "DESC": {
+                    "cn": "制作急救丸", 
+                    "en": "Craft Emergency Pill", 
+                    "tw": "製作急救丸"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }
+            }, 
+            "6": {
+                "ID": 1018, 
+                "P_COST": {
+                    "4074": 1, 
+                    "4002": 1, 
+                    "4022": 3
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4084": 1
+                }, 
+                "LEVEL": 2, 
+                "BRANCH": [
+                    "2"
+                ], 
+                "AUDIO": "build_pill", 
+                "DESC": {
+                    "cn": "制作青草膏", 
+                    "en": "Craft Grass Cream", 
+                    "tw": "製作青草膏"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }
+            }, 
+            "7": {
+                "ID": 1017, 
+                "P_COST": {
+                    "4013": 1, 
+                    "4001": 1, 
+                    "4003": 2, 
+                    "4028": 1
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4085": 1
+                }, 
+                "LEVEL": 2, 
+                "BRANCH": [
+                    "2"
+                ], 
+                "AUDIO": "build_pill", 
+                "DESC": {
+                    "cn": "制作膏药", 
+                    "en": "Craft Medical Cream", 
+                    "tw": "製作膏藥"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }
+            }, 
+            "8": {
+                "ID": 1020, 
+                "P_COST": {
+                    "4013": 2, 
+                    "4038": 1, 
+                    "4002": 1, 
+                    "4074": 1
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4086": 1
+                }, 
+                "LEVEL": 2, 
+                "BRANCH": [
+                    "2"
+                ], 
+                "AUDIO": "build_pill", 
+                "DESC": {
+                    "cn": "制作大补丸", 
+                    "en": "Craft Tonic Pill", 
+                    "tw": "製作大補丸"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }
+            }, 
+            "9": {
+                "ID": 1019, 
+                "P_COST": {
+                    "4074": 1, 
+                    "4071": 1, 
+                    "4015": 1, 
+                    "4020": 1, 
+                    "4072": 1
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4087": 1
+                }, 
+                "LEVEL": 2, 
+                "BRANCH": [
+                    "2_1"
+                ], 
+                "AUDIO": "build_pill", 
+                "DESC": {
+                    "cn": "制作女巫的药丸", 
+                    "en": "Craft Witch's Pill", 
+                    "tw": "製作女巫的藥丸"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }
+            }, 
+            "10": {
+                "ID": 1087, 
+                "P_COST": {
+                    "4428": 1, 
+                    "4426": 2
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4434": 1
+                }, 
+                "LEVEL": 2, 
+                "AUDIO": "build_pill", 
+                "DESC": {
+                    "cn": "制作避毒丸", 
+                    "en": "Craft Avoiding Toxin Pill", 
+                    "tw": "製作避毒丸"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }, 
+                "COND": {
+                    "1001": [
+                        {
+                            "Au": 1
+                        }
+                    ]
+                }
+            }, 
+            "11": {
+                "ID": 1088, 
+                "P_COST": {
+                    "4429": 1, 
+                    "4426": 2
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4435": 1
+                }, 
+                "LEVEL": 2, 
+                "AUDIO": "build_pill", 
+                "DESC": {
+                    "cn": "制作暖身丸", 
+                    "en": "Craft Warm-up Pill", 
+                    "tw": "製作暖身丸"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }, 
+                "COND": {
+                    "1023": {
+                        "42": 1
+                    }
+                }
+            }, 
+            "12": {
+                "ID": 1089, 
+                "P_COST": {
+                    "4426": 2, 
+                    "4430": 1
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 1, 
+                "ITEMS": {
+                    "4436": 1
+                }, 
+                "LEVEL": 2, 
+                "AUDIO": "build_pill", 
+                "DESC": {
+                    "cn": "制作强身丸", 
+                    "en": "Craft Body-sturdy Pill", 
+                    "tw": "製作強身丸"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }, 
+                "COND": {
+                    "1023": {
+                        "43": 1
+                    }
+                }
+            }
+        }
+    }, 
+    "3005": {}, 
+    "3006": {
+        "PRODUCT": {
+            "1": {
+                "ID": 1021, 
+                "P_COST": {
+                    "4020": 2
+                }, 
+                "P_TIME": 600, 
+                "C_TIME": 0, 
+                "PETATTRS": {
+                    "7006": 80
+                }, 
+                "LEVEL": 1, 
+                "AUDIO": "build_wolfeat", 
+                "DESC": {
+                    "cn": "喂食", 
+                    "en": "Feed", 
+                    "tw": "餵食"
+                }, 
+                "TITLE": {
+                    "cn": "喂食", 
+                    "en": "Feed", 
+                    "tw": "餵食"
+                }
+            }, 
+            "2": {
+                "ID": 1023, 
+                "P_COST": {
+                    "4027": 1
+                }, 
+                "P_TIME": 600, 
+                "C_TIME": 0, 
+                "PETATTRS": {
+                    "7028": 80
+                }, 
+                "LEVEL": 1, 
+                "AUDIO": "wolf_wow", 
+                "DESC": {
+                    "cn": "驯养", 
+                    "en": "Tame", 
+                    "tw": "馴養"
+                }, 
+                "TITLE": {
+                    "cn": "驯养", 
+                    "en": "Tame", 
+                    "tw": "馴養"
+                }
+            }, 
+            "3": {
+                "ID": 1022, 
+                "P_COST": {
+                    "4013": 1
+                }, 
+                "P_TIME": 600, 
+                "C_TIME": 0, 
+                "PETATTRS": {
+                    "7003": 80
+                }, 
+                "LEVEL": 1, 
+                "AUDIO": "wolf_wow", 
+                "DESC": {
+                    "cn": "治疗", 
+                    "en": "Heal", 
+                    "tw": "治療"
+                }, 
+                "TITLE": {
+                    "cn": "治疗", 
+                    "en": "Heal", 
+                    "tw": "治療"
+                }
+            }
+        }
+    }, 
+    "3008": {
+        "PRODUCT": {
+            "1": {
+                "ID": 1077, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4020": 5
+                }, 
+                "LEVEL": 1, 
+                "AUDIO": "build_fish", 
+                "DESC": {
+                    "cn": "钓鱼", 
+                    "en": "Fish", 
+                    "tw": "釣魚"
+                }, 
+                "TITLE": {
+                    "cn": "钓鱼", 
+                    "en": "Fish", 
+                    "tw": "釣魚"
+                }, 
+                "GETTEXT": {
+                    "cn": "即将收获:生肉*5", 
+                    "en": "Get Raw Meat*5", 
+                    "tw": "即將收獲:生肉*5"
+                }, 
+                "SPEDESC": {
+                    "cn": "钓鱼时每次甩竿等待消耗30分钟，请尽量不要使用空饵钓鱼，不同的鱼类出现的条件和喜好的饵也略有差别。", 
+                    "en": "When fishing, you spend 30 min each time you toss your line. Refrain from using empty bait to fish. Different fishes will appear depending on their preferred types of bait.", 
+                    "tw": "釣魚時每次甩竿等待消耗30分鐘，請盡量不要使用空餌釣魚，不同的魚類出現的條件和喜好的餌也略有差別。"
+                }
+            }
+        }
+    }, 
+    "3009": {
+        "PRODUCT": {
+            "1": {
+                "ID": 1074, 
+                "P_COST": {
+                    "4004": 6
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4002": 12
+                }, 
+                "BUFF": 6009, 
+                "LEVEL": 1, 
+                "AUDIO": "build_water", 
+                "DESC": {
+                    "cn": "净水", 
+                    "en": "Purify", 
+                    "tw": "凈水"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }, 
+                "GETTEXT": {
+                    "cn": "即将收获:淡水*12", 
+                    "en": "Get Fresh Water*12", 
+                    "tw": "即將收獲:淡水*12"
+                }
+            }, 
+            "3": {
+                "ID": 1075, 
+                "P_COST": {
+                    "4004": 6, 
+                    "4042": 5
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4037": 1
+                }, 
+                "BUFF": 6010, 
+                "LEVEL": 1, 
+                "AUDIO": "build_water", 
+                "DESC": {
+                    "cn": "制作酒精", 
+                    "en": "brew Alcohol", 
+                    "tw": "製作酒精"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }, 
+                "GETTEXT": {
+                    "cn": "即将收获:酒精*1", 
+                    "en": "Get Alcohol*1", 
+                    "tw": "即將收獲:酒精*1"
+                }
+            }, 
+            "4": {
+                "ID": 1079, 
+                "P_COST": {
+                    "4002": 3
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4136": 5
+                }, 
+                "BUFF": 6019, 
+                "LEVEL": 1, 
+                "AUDIO": "build_water", 
+                "DESC": {
+                    "cn": "制作雪球", 
+                    "en": "Make snow ball", 
+                    "tw": "製作雪球"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }, 
+                "GETTEXT": {
+                    "cn": "即将收获:雪球*5", 
+                    "en": "Get snow ball*5", 
+                    "tw": "即將收獲:雪球*5"
+                }, 
+                "COND": {
+                    "1036": [
+                        1608768000, 
+                        1609718400
+                    ]
+                }
+            }
+        }
+    }, 
+    "3010": {
+        "PRODUCT": {
+            "1": {
+                "ID": 1005, 
+                "P_COST": {
+                    "4030": 3, 
+                    "4032": 1, 
+                    "4007": 2, 
+                    "4036": 1
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4103": 1
+                }, 
+                "LEVEL": 1, 
+                "AUDIO": "build_iron", 
+                "DESC": {
+                    "cn": "制作武士刀", 
+                    "en": "Craft Samurai Sword", 
+                    "tw": "製作武士刀"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }
+            }, 
+            "2": {
+                "ID": 1007, 
+                "P_COST": {
+                    "4012": 2, 
+                    "4032": 4, 
+                    "4004": 2, 
+                    "4007": 2, 
+                    "4030": 4
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4115": 1
+                }, 
+                "LEVEL": 1, 
+                "AUDIO": "build_iron", 
+                "DESC": {
+                    "cn": "制作重连弩", 
+                    "en": "Craft Repeating Crossbow", 
+                    "tw": "製作重連弩"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }
+            }, 
+            "3": {
+                "ID": 1006, 
+                "P_COST": {
+                    "4030": 2, 
+                    "4035": 1, 
+                    "4034": 2, 
+                    "4007": 1
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4118": 1
+                }, 
+                "LEVEL": 1, 
+                "AUDIO": "loading", 
+                "DESC": {
+                    "cn": "制作榴弹", 
+                    "en": "Craft Grenade", 
+                    "tw": "製作榴彈"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }
+            }, 
+            "4": {
+                "ID": 1009, 
+                "P_COST": {
+                    "4030": 2, 
+                    "4035": 1, 
+                    "4034": 2
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4126": 10
+                }, 
+                "LEVEL": 1, 
+                "AUDIO": "loading", 
+                "DESC": {
+                    "cn": "制作弹药", 
+                    "en": "Craft Ammo", 
+                    "tw": "製作彈藥"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }, 
+                "COND": {
+                    "1004": {
+                        "4080": 1
+                    }
+                }
+            }, 
+            "5": {
+                "ID": 1008, 
+                "P_COST": {
+                    "4012": 1, 
+                    "4032": 3, 
+                    "4004": 2, 
+                    "4007": 1, 
+                    "4030": 3
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4135": 1
+                }, 
+                "LEVEL": 1, 
+                "AUDIO": "build_iron", 
+                "DESC": {
+                    "cn": "制作伪袖珍手枪", 
+                    "en": "Craft Fake Pocket Pistol", 
+                    "tw": "製作偽袖珍手槍"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }, 
+                "COND": {
+                    "1023": {
+                        "38": 1
+                    }, 
+                    "1000": 1001
+                }
+            }, 
+            "6": {
+                "ID": 1010, 
+                "P_COST": {
+                    "4007": 1
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4049": 1
+                }, 
+                "LEVEL": 1, 
+                "AUDIO": "build_iron", 
+                "DESC": {
+                    "cn": "制作铁锭", 
+                    "en": "Craft Iron Ingot", 
+                    "tw": "製作鐵錠"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }, 
+                "COND": {
+                    "1003": [
+                        {
+                            "22": {
+                                "UNLOCK": true, 
+                                "COMPLETE": false
+                            }
+                        }
+                    ]
+                }
+            }, 
+            "7": {
+                "ID": 1076, 
+                "P_COST": {
+                    "4030": 6, 
+                    "4032": 2, 
+                    "4007": 2, 
+                    "4036": 2
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4137": 1
+                }, 
+                "LEVEL": 1, 
+                "AUDIO": "build_iron", 
+                "DESC": {
+                    "cn": "制作杰克之刃", 
+                    "en": "Craft Jack's Sword", 
+                    "tw": "製作傑克之刃"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }, 
+                "COND": {
+                    "1004": {
+                        "4137": 99
+                    }
+                }
+            }
+        }
+    }, 
+    "3011": {
+        "PRODUCT": {
+            "1": {
+                "ID": 1011, 
+                "P_COST": {
+                    "4044": 12, 
+                    "4002": 5
+                }, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4042": 5
+                }, 
+                "BUFF": 6012, 
+                "LEVEL": 1, 
+                "AUDIO": "build_water", 
+                "DESC": {
+                    "cn": "酿酒", 
+                    "en": "Brew", 
+                    "tw": "釀酒"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }, 
+                "GETTEXT": {
+                    "cn": "即将收获:土豆酒*5", 
+                    "en": "Get Potato Wine*5", 
+                    "tw": "即將收獲:土豆酒*5"
+                }
+            }
+        }
+    }, 
+    "3012": {
+        "PRODUCT": {}
+    }, 
+    "3018": {
+        "PRODUCT": {
+            "1": {
+                "ID": 1000, 
+                "P_COST": {
+                    "4403": 1
+                }, 
+                "P_TIME": 1800, 
+                "C_TIME": 0, 
+                "BUFF": 8021, 
+                "BUFFLIST": [
+                    {
+                        "FATE": {
+                            "tw": "你感覺紙牌點燃的樣子十分厲害，但是似乎並沒有什麽卵用", 
+                            "en": "You feel the fire of cards looks so cool, but it doesn't seem to have any effect.", 
+                            "cn": "你感觉纸牌点燃的样子十分厉害，但是似乎并没有什么卵用"
+                        }, 
+                        "WEIGHT": 30, 
+                        "BUFF": 0
+                    }, 
+                    {
+                        "FATE": {
+                            "tw": "你感覺受到了神秘的祝福，更能擊中對方的要害", 
+                            "en": "You felt blessing of mysterious power. Now you can hit vital point of enemy easier.", 
+                            "cn": "你感觉受到了神秘的祝福，更能击中对方的要害"
+                        }, 
+                        "WEIGHT": 10, 
+                        "BUFF": 8016
+                    }, 
+                    {
+                        "FATE": {
+                            "tw": "你感覺受到了神秘的祝福，恐嚇概率提升", 
+                            "en": "You felt blessing of mysterious power. Your probability of scaring enemy increased.", 
+                            "cn": "你感觉受到了神秘的祝福，恐吓概率提升"
+                        }, 
+                        "WEIGHT": 10, 
+                        "BUFF": 8017
+                    }, 
+                    {
+                        "FATE": {
+                            "tw": "你感覺受到了神秘的祝福，似乎變得更靈巧了", 
+                            "en": "You felt blessing of mysterious power. You seem to be defter.", 
+                            "cn": "你感觉受到了神秘的祝福，似乎变得更灵巧了"
+                        }, 
+                        "WEIGHT": 10, 
+                        "BUFF": 8018
+                    }, 
+                    {
+                        "FATE": {
+                            "tw": "你感覺受到了神秘的祝福，近戰攻擊更加精準了", 
+                            "en": "You felt blessing of mysterious power. Your melee attack becomes more accurate.", 
+                            "cn": "你感觉受到了神秘的祝福，近战攻击更加精准了"
+                        }, 
+                        "WEIGHT": 10, 
+                        "BUFF": 8019
+                    }, 
+                    {
+                        "FATE": {
+                            "tw": "你感覺受到了神秘的祝福，遠程攻擊更加精準了", 
+                            "en": "You felt blessing of mysterious power. Your ranged attack becomes more accurate.", 
+                            "cn": "你感觉受到了神秘的祝福，远程攻击更加精准了"
+                        }, 
+                        "WEIGHT": 10, 
+                        "BUFF": 8020
+                    }
+                ], 
+                "LEVEL": 1, 
+                "AUDIO": "build_fire", 
+                "DESC": {
+                    "cn": "点燃", 
+                    "en": "Kindle", 
+                    "tw": "點燃"
+                }, 
+                "TITLE": {
+                    "cn": "点燃", 
+                    "en": "Kindle", 
+                    "tw": "點燃"
+                }, 
+                "SPEDESC": {
+                    "cn": "通过点燃纸牌窥探命运，获取神秘力量加持。", 
+                    "en": "Kindle the cards to spy on the fate,you will gain the mysterious power.", 
+                    "tw": "通過點燃紙牌窺探命運，獲取神秘力量加持。"
+                }, 
+                "SPEICON": "Texture/Item/4403", 
+                "SPETITLE": {
+                    "cn": "点燃纸牌", 
+                    "en": "Kindle cards", 
+                    "tw": "點燃紙牌"
+                }
+            }, 
+            "2": {
+                "ID": 1001, 
+                "P_COST": {
+                    "4002": 5, 
+                    "4004": 8, 
+                    "4036": 10
+                }, 
+                "P_TIME": 1800, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4403": 10
+                }, 
+                "LEVEL": 1, 
+                "AUDIO": "loading", 
+                "DESC": {
+                    "cn": "制作纸牌*10", 
+                    "en": "Make Cards*10", 
+                    "tw": "製作紙牌*10"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }, 
+                "COND": {
+                    "1023": {
+                        "40": 1
+                    }, 
+                    "1000": 1004
+                }
+            }, 
+            "3": {
+                "ID": 1103, 
+                "P_COST": {
+                    "4020": 5
+                }, 
+                "P_TIME": 300, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4456": 5
+                }, 
+                "LEVEL": 1, 
+                "AUDIO": "loading", 
+                "DESC": {
+                    "cn": "制作赤色染料*5", 
+                    "en": "Make Red dye*5", 
+                    "tw": "製作赤色染料*5"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }, 
+                "COND": {
+                    "1045": "100404"
+                }
+            }, 
+            "4": {
+                "ID": 1104, 
+                "P_COST": {
+                    "4038": 3
+                }, 
+                "P_TIME": 300, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4457": 5
+                }, 
+                "LEVEL": 1, 
+                "AUDIO": "loading", 
+                "DESC": {
+                    "cn": "制作橙色染料*5", 
+                    "en": "Make Orange dye*5", 
+                    "tw": "製作橙色染料*5"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }, 
+                "COND": {
+                    "1045": "100404"
+                }
+            }, 
+            "5": {
+                "ID": 1105, 
+                "P_COST": {
+                    "4025": 3
+                }, 
+                "P_TIME": 300, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4458": 5
+                }, 
+                "LEVEL": 1, 
+                "AUDIO": "loading", 
+                "DESC": {
+                    "cn": "制作黄色染料*5", 
+                    "en": "Make Yellow dye*5", 
+                    "tw": "製作黃色染料*5"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }, 
+                "COND": {
+                    "1045": "100404"
+                }
+            }, 
+            "6": {
+                "ID": 1106, 
+                "P_COST": {
+                    "4022": 3
+                }, 
+                "P_TIME": 300, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4459": 5
+                }, 
+                "LEVEL": 1, 
+                "AUDIO": "loading", 
+                "DESC": {
+                    "cn": "制作绿色染料*5", 
+                    "en": "Make Green dye*5", 
+                    "tw": "製作綠色染料*5"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }, 
+                "COND": {
+                    "1045": "100404"
+                }
+            }, 
+            "7": {
+                "ID": 1107, 
+                "P_COST": {
+                    "4021": 3, 
+                    "4036": 3
+                }, 
+                "P_TIME": 300, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4460": 5
+                }, 
+                "LEVEL": 1, 
+                "AUDIO": "loading", 
+                "DESC": {
+                    "cn": "制作青色染料*5", 
+                    "en": "Make Cyan dye*5", 
+                    "tw": "製作青色染料*5"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }, 
+                "COND": {
+                    "1045": "100404"
+                }
+            }, 
+            "8": {
+                "ID": 1108, 
+                "P_COST": {
+                    "4013": 5, 
+                    "4029": 1
+                }, 
+                "P_TIME": 300, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4461": 5
+                }, 
+                "LEVEL": 1, 
+                "AUDIO": "loading", 
+                "DESC": {
+                    "cn": "制作蓝色染料*5", 
+                    "en": "Make Blue dye*5", 
+                    "tw": "製作藍色染料*5"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }, 
+                "COND": {
+                    "1045": "100404"
+                }
+            }, 
+            "9": {
+                "ID": 1109, 
+                "P_COST": {
+                    "4035": 2, 
+                    "4015": 2
+                }, 
+                "P_TIME": 300, 
+                "C_TIME": 0, 
+                "ITEMS": {
+                    "4462": 5
+                }, 
+                "LEVEL": 1, 
+                "AUDIO": "loading", 
+                "DESC": {
+                    "cn": "制作紫色染料*5", 
+                    "en": "Make Violet dye*5", 
+                    "tw": "製作紫色染料*5"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }, 
+                "COND": {
+                    "1045": "100404"
+                }
+            }
+        }
+    }, 
+    "3200": {
+        "PRODUCT": {
+            "1": {
+                "ID": 1200, 
+                "P_COST": {
+                    "4004": 1
+                }, 
+                "ROBOT": 1, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "LEVEL": 1, 
+                "AUDIO": "build_iron", 
+                "DESC": {
+                    "cn": "制作采集核心", 
+                    "en": "Make collection core", 
+                    "tw": "製作採集核心"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }
+            }, 
+            "101": {
+                "ID": 1201, 
+                "P_COST": {
+                    "4004": 1
+                }, 
+                "ROBOT": 101, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "LEVEL": 1, 
+                "AUDIO": "build_iron", 
+                "DESC": {
+                    "cn": "制作斧头手臂", 
+                    "en": "Make  axe arm", 
+                    "tw": "製作斧頭手臂"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Make", 
+                    "tw": "製作"
+                }
+            }, 
+            "102": {
+                "ID": 1202, 
+                "P_COST": {
+                    "4012": 1, 
+                    "4003": 4, 
+                    "4036": 4
+                }, 
+                "ROBOT": 102, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "LEVEL": 1, 
+                "AUDIO": "build_iron", 
+                "DESC": {
+                    "cn": "制作弓箭手臂", 
+                    "en": "Make bow arm", 
+                    "tw": "製作弓箭手臂"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }
+            }, 
+            "103": {
+                "ID": 1203, 
+                "P_COST": {
+                    "4000": 4, 
+                    "4004": 4, 
+                    "4005": 2
+                }, 
+                "ROBOT": 103, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "LEVEL": 1, 
+                "AUDIO": "build_iron", 
+                "DESC": {
+                    "cn": "制作镰刀手臂", 
+                    "en": "Make sickle arm", 
+                    "tw": "製作鐮刀手臂"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Make", 
+                    "tw": "製作"
+                }
+            }, 
+            "104": {
+                "ID": 1204, 
+                "P_COST": {
+                    "4003": 4, 
+                    "4004": 4, 
+                    "4036": 4
+                }, 
+                "ROBOT": 104, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "LEVEL": 1, 
+                "AUDIO": "build_iron", 
+                "DESC": {
+                    "cn": "制作渔网手臂", 
+                    "en": "Make fishnet arm", 
+                    "tw": "製作漁網手臂"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }
+            }, 
+            "105": {
+                "ID": 1205, 
+                "P_COST": {
+                    "4000": 8, 
+                    "4004": 4
+                }, 
+                "ROBOT": 105, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "LEVEL": 1, 
+                "AUDIO": "build_iron", 
+                "DESC": {
+                    "cn": "制作镐子手臂", 
+                    "en": "Make pickaxe arm", 
+                    "tw": "製作鎬子手臂"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Make", 
+                    "tw": "製作"
+                }
+            }, 
+            "106": {
+                "ID": 1206, 
+                "P_COST": {
+                    "4030": 2, 
+                    "4036": 6, 
+                    "4007": 4
+                }, 
+                "ROBOT": 106, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "LEVEL": 1, 
+                "AUDIO": "build_iron", 
+                "DESC": {
+                    "cn": "制作烹饪手臂", 
+                    "en": "Make cooking arm", 
+                    "tw": "製作烹飪手臂"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }
+            }, 
+            "107": {
+                "ID": 1207, 
+                "P_COST": {
+                    "4030": 2, 
+                    "4036": 6, 
+                    "4007": 4
+                }, 
+                "ROBOT": 107, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "LEVEL": 1, 
+                "AUDIO": "build_iron", 
+                "DESC": {
+                    "cn": "制作制药手臂", 
+                    "en": "Make medical arm", 
+                    "tw": "製作制藥手臂"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Make", 
+                    "tw": "製作"
+                }
+            }, 
+            "201": {
+                "ID": 1208, 
+                "P_COST": {
+                    "4004": 1
+                }, 
+                "ROBOT": 201, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "LEVEL": 1, 
+                "AUDIO": "build_iron", 
+                "DESC": {
+                    "cn": "制作木质躯干", 
+                    "en": "Make wooden body", 
+                    "tw": "製作木質軀幹"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }
+            }, 
+            "202": {
+                "ID": 1209, 
+                "P_COST": {
+                    "4003": 4, 
+                    "4036": 8
+                }, 
+                "ROBOT": 202, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "LEVEL": 1, 
+                "AUDIO": "build_iron", 
+                "DESC": {
+                    "cn": "制作竹质躯干", 
+                    "en": "Make bamboo body", 
+                    "tw": "製作竹質軀幹"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Make", 
+                    "tw": "製作"
+                }
+            }, 
+            "203": {
+                "ID": 1210, 
+                "P_COST": {
+                    "4000": 4, 
+                    "4003": 4, 
+                    "4005": 4
+                }, 
+                "ROBOT": 203, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "LEVEL": 1, 
+                "AUDIO": "build_iron", 
+                "DESC": {
+                    "cn": "制作石质躯干", 
+                    "en": "Make stone body", 
+                    "tw": "製作石質軀幹"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }
+            }, 
+            "204": {
+                "ID": 1211, 
+                "P_COST": {
+                    "4031": 2, 
+                    "4032": 4, 
+                    "4007": 4
+                }, 
+                "ROBOT": 204, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "LEVEL": 1, 
+                "AUDIO": "build_iron", 
+                "DESC": {
+                    "cn": "制作金属躯干", 
+                    "en": "Make metal body", 
+                    "tw": "製作金屬軀幹"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Make", 
+                    "tw": "製作"
+                }
+            }, 
+            "301": {
+                "ID": 1212, 
+                "P_COST": {
+                    "4004": 1
+                }, 
+                "ROBOT": 301, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "LEVEL": 1, 
+                "AUDIO": "build_iron", 
+                "DESC": {
+                    "cn": "制作时光之足", 
+                    "en": "Make time foot", 
+                    "tw": "製作時光之足"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }
+            }, 
+            "302": {
+                "ID": 1213, 
+                "P_COST": {
+                    "4001": 4, 
+                    "4011": 2, 
+                    "4005": 2
+                }, 
+                "ROBOT": 302, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "LEVEL": 1, 
+                "AUDIO": "build_iron", 
+                "DESC": {
+                    "cn": "制作生存之足", 
+                    "en": "Make survival foot", 
+                    "tw": "製作生存之足"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Make", 
+                    "tw": "製作"
+                }
+            }, 
+            "303": {
+                "ID": 1214, 
+                "P_COST": {
+                    "4001": 4, 
+                    "4011": 2, 
+                    "4005": 2
+                }, 
+                "ROBOT": 303, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "LEVEL": 1, 
+                "AUDIO": "build_iron", 
+                "DESC": {
+                    "cn": "制作渔夫之足", 
+                    "en": "Make fisherman's foot", 
+                    "tw": "製作漁夫之足"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }
+            }, 
+            "304": {
+                "ID": 1215, 
+                "P_COST": {
+                    "4001": 4, 
+                    "4011": 2, 
+                    "4005": 2
+                }, 
+                "ROBOT": 304, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "LEVEL": 1, 
+                "AUDIO": "build_iron", 
+                "DESC": {
+                    "cn": "制作斗者之足", 
+                    "en": "Make fighter's foot", 
+                    "tw": "製作鬥者之足"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Make", 
+                    "tw": "製作"
+                }
+            }, 
+            "305": {
+                "ID": 1216, 
+                "P_COST": {
+                    "4001": 4, 
+                    "4011": 2, 
+                    "4005": 2
+                }, 
+                "ROBOT": 305, 
+                "P_TIME": 3600, 
+                "C_TIME": 0, 
+                "LEVEL": 1, 
+                "AUDIO": "build_iron", 
+                "DESC": {
+                    "cn": "制作巧匠之足", 
+                    "en": "Make craft's foot", 
+                    "tw": "製作巧匠之足"
+                }, 
+                "TITLE": {
+                    "cn": "制作", 
+                    "en": "Craft", 
+                    "tw": "製作"
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,553 @@
+{
+    "1000" : {
+        "100001": {
+            "ID": "100001", 
+            "ICON": "Texture/CreateRole/img_role_100001",
+            "SCRIPT" : "rr",
+            "NAME": {
+                "cn": "战地厨师",
+                "en": "Battle Chef",
+                "tw": "戰地廚師"
+            },
+            "DESC1": {
+                "cn": "一次偶然的机会，罗兰接触到了《战就战》这款游戏，在这款公平竞技的游戏中，罗兰领悟了“冲”和“屯”的战斗技巧。",
+                "en": "Once by chance Roland met the game “Battle Brawlers”. In that fair competition game Roland comprehended fighting finesse “Charge” and “Hold”.",
+                "tw": "一次偶然的機會，羅蘭接觸到了《戰就戰》這款遊戲，在這款公平競技的遊戲中，羅蘭領悟了“沖”和“屯”的戰鬥技巧。"
+            },
+            "DESC2": {
+                "cn": "\n在原本的烹饪基础上，领悟了“冲”和“屯”的战斗技巧。",
+                "en": "\nBeyond original cooking skills, comprehend “Charge” and “Hold”.",
+                "tw": "\n在原本的烹飪基礎上，領悟了“沖”和“屯”的戰鬥技巧。"
+            },
+            "DEFAULTBUFF" : "5001"
+        },
+        "100002": {
+            "ID": "100002", 
+            "ICON": "Texture/CreateRole/img_role_100002",
+            "SCRIPT" : "rr",
+            "NAME": {
+                "cn": "御蜂厨医",
+                "en": "Healthy Bee Chef",
+                "tw": "禦蜂廚醫"
+            },
+            "DESC1": {
+                "cn": "我们能否通过食物来改善人们的心情、治疗身心上的疾病？甚至……\n罗兰开始进行更多食物研究，进食时可以恢复一定内外伤。\n罗兰的故事也将在《荒野日记》中延续。",
+                "en": "Can we use food to change our mood? cure our disease? or even……\nRoland starts to research deeply in food. Taking food can recover certain amount of infection and trauma parameter.",
+                "tw": "我們能否通過食物來改善人們的心情、治療身心上的疾病？甚至……\n羅蘭開始進行更多食物研究，進食時可以恢復一定內外傷。\n罗兰的故事也将在《荒野日记》中延续。"
+            },
+            "DESC2": {
+                "cn": "\n进食时可恢复内外伤，可以养殖蜜蜂",
+                "en": "\nTaking food can recover certain amount of infection and trauma parameter. could also keep bees.",
+                "tw": "\n進食時可恢復內外傷，可以養殖蜜蜂"
+            }
+        },
+        "100003": {
+            "ID": "100003", 
+            "ICON": "Texture/CreateRole/img_role_100003",
+            "SCRIPT" : "rr",
+            "NAME": {
+                "cn": "新春厨神",
+                "en": "New Year's Cook",
+                "tw": "新春厨神"
+            },
+            "GET_DESC":{
+                "cn": "通过活动获得",
+                "en": "Unlock by activity",
+                "tw": "通過活動獲得"
+            },
+            "DESC1": {
+                "cn": "春节如期而至，罗兰为伙伴们准备了丰盛的新春佳肴，伙伴们也将为罗兰先上祝福。\n每个角色奇遇都将为罗兰提供强力状态。",
+                "en": "Spring Festival as scheduled, Roland for the partners prepared a rich New Year's meal, partners will also be for Roland first blessing. \nEach character adventure will provide Roland with a powerful buff",
+                "tw": "春節如期而至，羅蘭為夥伴們準備了豐盛的新春佳肴，夥伴們也將為羅蘭先上祝福。\n每個角色奇遇都將為羅蘭提供強力狀態。"
+            },
+            "DESC2": {
+                "cn": "\n每个奇遇角色都将为罗兰提供超强状态",
+                "en": "\nEach adventure character will provide Roland with a super buff.",
+                "tw": "\n每個奇遇角色都將為羅蘭提供超強狀態"
+            }
+        },
+        "100004": {
+            "ID": "100004", 
+            "ICON": "Texture/CreateRole/img_role_100004",
+            "SCRIPT" : "rr",
+            "NAME": {
+                "cn": "春语妙厨",
+                "en": "Spring Cook",
+                "tw": "春語妙廚"
+            },
+            "GET_DESC":{
+                "cn": "通过活动获得",
+                "en": "Unlock by activity",
+                "tw": "通過活動獲得"
+            },
+            "DESC1": {
+                "cn": "又一年春节到来，罗兰烹饪时偶发灵感，提笔创作起了传统春联。\n通过创作春联获取不同类型的力量，每日首次烹饪时创作灵感显著提升。",
+                "en": "Another year the Spring Festival came, Roland cooking occasionally inspired, pen to create a traditional Spring Festival.\nGet permanent promotion by write Spring Festival couplets",
+                "tw": "又一年春節到來，羅蘭烹飪時偶發靈感，提筆創作起了傳統春聯。\n通過創作春聯獲取不同類型的力量，每日首次烹飪時創作靈感顯著提升。"
+            },
+            "DESC2": {
+                "cn": "\n通过春联获取单局永久提升的增益状态或恢复效果",
+                "en": "\nGet permanent promotion by write Spring Festival couplets",
+                "tw": "\n通過春聯獲取單局永久提升的增益狀態或恢復效果"
+            }
+        }
+    },
+    "1001" : {
+        "100101": {
+            "ID": "100101", 
+            "ICON": "Texture/CreateRole/img_role_100101",
+            "SCRIPT" : "sai",
+            "NAME": {
+                "cn": "双旦女爵",
+                "en": "Christmas beauty",
+                "tw": "雙旦女爵"
+            },
+            "DESC1": {
+                "cn": "节日的喜悦和狂欢让昼夜的交替变得更加玄妙，身为女爵的朱莉变得更能适应白昼黑夜的变化。\n白天不瞌睡，晚上睡得香。",
+                "en": "The joy of the festival made the turn of day and night even more mysterious,Julie as a viscount became more attuned to the changes of day and night.",
+                "tw": "節日的喜悅和狂歡讓晝夜的交替變得更加玄妙，身爲女爵的朱莉變得更能適應白晝黑夜的變化。\n白天不瞌睡，晚上睡得香。"
+            },
+            "DESC2": {
+                "cn": "\n节日使得朱莉能够更适应白昼黑夜的变化",
+                "en": "\nThe festival made Julie more adaptable to the changes of day and night",
+                "tw": "\n節日使得朱莉能夠更適應白晝黑夜的變化"
+            }
+        },
+        "100102": {
+            "ID": "100102", 
+            "ICON": "Texture/CreateRole/img_role_100102",
+            "SCRIPT" : "sai",
+            "NAME": {
+                "cn": "幽灵公主",
+                "en": "Princess Mononoke",
+                "tw": "幽靈公主"
+            },
+            "GET_DESC":{
+                "cn": "通过活动获得",
+                "en": "Unlock by activity",
+                "tw": "通過活動獲得"
+            },
+            "DESC1": {
+                "cn": "人与自然间无法化解的矛盾让朱莉感受到了新月的力量。\n开局解锁白狼并附带2个宠物口粮，大幅提升白狼能力。",
+                "en": "The irresolvable contradiction between man and nature made Julie feel the power of the crescent.\n Unlock the white wolf at the beginning with two pet rations, and can greatly improve the ability of the white wolf.",
+                "tw": "人與自然間無法化解的矛盾讓朱莉感受到了新月的力量。\n開局解鎖白狼並附帶2個寵物口糧，大幅提升白狼能力。"
+            },
+            "DESC2": {
+                "cn": "\n人与自然间的矛盾让朱莉感受到了新月的力量。",
+                "en": "\nThe irresolvable contradiction between man and nature made Julie feel the power of the crescent.",
+                "tw": "\n人與自然間的矛盾讓朱莉感受到了新月的力量。"
+            }
+        },
+        "100103": {
+            "ID": "100103", 
+            "ICON": "Texture/CreateRole/img_role_100103",
+            "SCRIPT" : "sai",
+            "NAME": {
+                "cn": "塔罗女巫",
+                "en": "Tarot Witch",
+                "tw": "塔羅女巫"
+            },
+            "GET_DESC":{
+                "cn": "通过活动获得",
+                "en": "Unlock by activity",
+                "tw": "通過活動獲得"
+            },
+            "DESC1": {
+                "cn": "朱莉从老师处获得了一副塔罗牌，并从塔罗中感受到了神秘的力量。\n通过解读塔罗牌获取不同类型的力量",
+                "en": "Julie got a Tarot from her teacher and felt the power of mystery from Tarot.\n Get different types of power by interpreting Tarot.",
+                "tw": "朱莉從老師處獲得了壹副塔羅牌，並從塔羅中感受到了神秘的力量。\n通過解讀塔羅牌獲取不同類型的力量"
+            },
+            "DESC2": {
+                "cn": "\n通过解读塔罗牌并从中获取自己想要的力量。",
+                "en": "\nGet the strength you want by interpreting the Tarot",
+                "tw": "\n通過解讀塔羅牌並從中獲取自己想要的力量。"
+            }
+        },
+        "100104": {
+            "ID": "100104", 
+            "ICON": "Texture/CreateRole/img_role_100104",
+            "SCRIPT" : "sai",
+            "NAME": {
+                "cn": "冰雪女王",
+                "en": "Frozen Queen",
+                "tw": "冰雪女王"
+            },
+            "GET_DESC":{
+                "cn": "通过活动获得",
+                "en": "Unlock by activity",
+                "tw": "通過活動獲得"
+            },
+            "DESC1": {
+                "cn": "冰雪奇缘让朱莉学会了掌控冰雪的力量。\n在水分充足的区域制造冰墙来抵挡伤害，冰墙碎裂时造成范围伤害。",
+                "en": "The Frozen let Julie learn the power to control the ice and snow. \nCreate an ice wall in an area with water to withstand damage, causing range damage when the ice wall breaks.",
+                "tw": "冰雪奇緣讓朱莉學會了掌控冰雪的力量。\n在水分充足的區域制造冰墻來抵擋傷害，冰墻碎裂時造成範圍傷害。"
+            },
+            "DESC2": {
+                "cn": "\n冰雪奇缘让朱莉学会了掌控冰雪的力量。",
+                "en": "\nhe Frozen let Julie learn the power to control the ice and snow.",
+                "tw": "\n冰雪奇緣讓朱莉學會了掌控冰雪的力量。"
+            }
+        },
+        "100105": {
+            "ID": "100105", 
+            "ICON": "Texture/CreateRole/img_role_100105",
+            "SCRIPT" : "sai",
+            "NAME": {
+                "cn": "吸血女爵",
+                "en": "Vampire beauty",
+                "tw": "吸血女爵"
+            },
+            "GET_DESC":{
+                "cn": "通过活动获得",
+                "en": "Unlock by activity",
+                "tw": "通過活動獲得"
+            },
+            "DESC1": {
+                "cn": "朱莉激活了隐藏在血脉中的吸血鬼血统。\n击败敌人获得血液，为自己带来强大的力量。",
+                "en": "Julie activated vampire blood. \nDefeat enemy to gain blood and bring powerful power to yourself.",
+                "tw": "朱莉激活了隱藏在血脈中的吸血鬼血統。\n擊敗敵人獲得血液，為自己帶來強大的力量。"
+            },
+            "DESC2": {
+                "cn": "\n朱莉激活了隐藏在血脉中的吸血鬼血统",
+                "en": "\nJulie activated vampire blood",
+                "tw": "\n朱莉激活了隱藏在血脈中的吸血鬼血統。"
+            }
+        }
+    },
+    "1002" : {
+        "100201": {
+            "ID": "100201", 
+            "ICON": "Texture/CreateRole/img_role_100201",
+            "SCRIPT" : "sai",
+            "NAME": {
+                "cn": "不屈军魂",
+                "en": "Unyielding soldier",
+                "tw": "不屈軍魂"
+            },
+            "DESC1": {
+                "cn": "常年的军旅生活让老贝经历了无数次死亡，在这种情况下，老贝逐渐掌握了从死神手中逃脱的窍门。\n战斗死亡时将脱离并恢复一定状态，这个技能每隔一定时间可生效一次",
+                "en": "After years of military life and countless deaths, Bain gradually grasped the trick of escaping from death.",
+                "tw": "常年的軍旅生活讓老貝經歷了無數次死亡，在這種情況下，老貝逐漸掌握了從死神手中逃脫的竅門。\n戰鬥死亡時將脫離並恢復一定狀態，這個技能每隔一定時間可生效一次"
+            },
+            "DESC2": {
+                "cn": "\n军旅生涯使得老贝掌握了从死神手中逃脱的窍门",
+                "en": "\nMilitary career gave Bain the knack of escaping from death",
+                "tw": "\n軍旅生涯使得老貝掌握了從死神手中逃脫的竅門"
+            }
+        },
+        "100202": {
+            "ID": "100202", 
+            "ICON": "Texture/CreateRole/img_role_100202",
+            "SCRIPT" : "sai",
+            "NAME": {
+                "cn": "狂化战士",
+                "en": "Wild Soldier",
+                "tw": "狂化戰士"
+            },
+            "GET_DESC":{
+                "cn": "通过活动获得",
+                "en": "Unlock by activity",
+                "tw": "通過活動獲得"
+            },
+            "DESC1": {
+                "cn": "老贝接受了军队的提升，之后每当他战斗情绪激动、心跳加速的时候，就可以大幅度提升自己的能力，但是这股愤怒并不容易控制。",
+                "en": "Bain accepted the promotion of the army, and then when he was excited about the battle and his heart was racing, he could greatly improve his ability, but this anger was not easy to control.",
+                "tw": "老貝接受了軍隊的提升，之後每當他戰鬥情緒激動、心跳加速的時候，就可以大幅度提升自己的能力，但是這股憤怒並不容易控制。"
+            },
+            "DESC2": {
+                "cn": "\n老贝会在战斗时变得情绪激动，大幅度提升自己的能力。",
+                "en": "\nBain will become emotional when fighting and greatly improve his ability.",
+                "tw": "\n老貝會在戰鬥時變得情緒激動，大幅度提升自己的能力。"
+            }
+        },
+        "100203": {
+            "ID": "100203", 
+            "ICON": "Texture/CreateRole/img_role_100203",
+            "SCRIPT" : "sai",
+            "NAME": {
+                "cn": "赏金猎人",
+                "en": "Bounty Hunter",
+                "tw": "賞金獵人"
+            },
+            "GET_DESC":{
+                "cn": "通过活动获得",
+                "en": "Unlock by activity",
+                "tw": "通過活動獲得"
+            },
+            "DESC1": {
+                "cn": "经历了财阀背叛的老贝意识到了金钱的重要性，开始了赏金猎人的生涯。\n老贝每天会有赏金的名单，对名单敌人有额外伤害，完成任务后还有额外奖励",
+                "en": "Bain experienced the betrayal of the chaebol realized the importance of money and began a career as a bounty hunter.",
+                "tw": "經歷了財閥背叛的老貝意識到了金錢的重要性，開始了賞金獵人的生涯。\n老貝每天會有賞金的名單，對名單敵人有額外傷害，完成任務後還有额外獎勵"
+            },
+            "DESC2": {
+                "cn": "\n老贝意识到金钱的重要性开始了赏金猎人的生涯",
+                "en": "\nBain realized the importance of money and began the career of a bounty hunter.",
+                "tw": "\n老貝意識到金錢的重要性開始了賞金獵人的生涯"
+            }
+        },
+        "100204": {
+            "ID": "100204", 
+            "ICON": "Texture/CreateRole/img_role_100204",
+            "SCRIPT" : "sai",
+            "NAME": {
+                "cn": "荒岛学者",
+                "en": "Island scholar",
+                "tw": "荒島學者"
+            },
+            "GET_DESC":{
+                "cn": "通过活动获得",
+                "en": "Unlock by activity",
+                "tw": "通過活動獲得"
+            },
+            "DESC1": {
+                "cn": "老贝随身携带了一个太阳能阅读器，充好电后能阅读书籍并从书籍中获得力量",
+                "en": "Bain has a solar reader with him, which can read books and gain power from them.",
+                "tw": "老貝隨身攜帶了一個太陽能閱讀器，充好電後能閱讀書籍並從書籍中獲得力量"
+            },
+            "DESC2": {
+                "cn": "\n老贝能阅读书籍并从书籍中获得力量",
+                "en": "\nBain can read books and gain power from them.",
+                "tw": "\n老貝能閱讀書籍並從書籍中獲得力量"
+            }
+        }
+    },
+    "1003" : {
+        "100301": {
+            "ID": "100301",
+            "ICON": "Texture/CreateRole/img_role_100301",
+            "SCRIPT": "sai",
+            "NAME": {
+                "cn": "元日食神",
+                "en": "Spring Cookery",
+                "tw": "元日食神"
+            },
+            "DESC1": {
+                "cn": "野食小哥：有些猪，注定要留在回忆里。\n体重与饥饿值变化会带来不同额外属性。",
+                "en": "Yesman：Some pigs, destined to stay in memory. \nChanges in body weight and hunger value can bring different additional attributes.",
+                "tw": "野食小哥：有些豬，註定要留在回憶裏。\n體重與饑餓值變化會帶來不同額外屬性。"
+            },
+            "DESC2": {
+                "cn": "\n小哥通过控制体重和饥饿值来适应不同的生存环境",
+                "en": "\nYesman adapts to different living conditions by controlling his weight and hunger.",
+                "tw": "\n小哥通過控制體重和饑餓值來適應不同的生存環境"
+            }
+        },
+        "100302": {
+            "ID": "100302",
+            "ICON": "Texture/CreateRole/img_role_100302",
+            "SCRIPT": "sai",
+            "NAME": {
+                "cn": "圣诞老哥",
+                "en": "Christmas Brother",
+                "tw": "聖誕老哥"
+            },
+            "GET_DESC":{
+                "cn": "通过活动获得",
+                "en": "Unlock by activity",
+                "tw": "通過活動獲得"
+            },
+            "DESC1": {
+                "cn": "节日到来，小哥化身圣诞老哥借助塞壬的力量给荒野上的他人送去一份礼物！\n角色与奇遇共同解锁后，其他角色在游戏中可获圣诞老哥送的礼物",
+                "en": "Christmas is coming！Yesman with the power of the plug, will send presents to others on the wilderness！\nThe other characters could get gifts from the Christmas Brother.",
+                "tw": "節日到來，小哥化身聖誕老哥借助塞壬的力量給荒野上的他人送去壹份禮物！\n角色與奇遇共同解鎖後，其他角色在遊戲中可獲聖誕老哥送的禮物"
+            },
+            "DESC2": {
+                "cn": "\n使用其他角色在游戏中可获圣诞老哥送的礼物",
+                "en": "\nThe other characters could get gifts from the Christmas Brother.",
+                "tw": "\n使用其他角色在遊戲中可獲聖誕老哥送的禮物"
+            }
+        },
+        "100303": {
+            "ID": "100303",
+            "ICON": "Texture/CreateRole/img_role_100303",
+            "SCRIPT": "sai",
+            "NAME": {
+                "cn": "绝味小哥",
+                "en": "Relish Yesman",
+                "tw": "絕味小哥"
+            },
+            "GET_DESC":{
+                "cn": "通过活动获得",
+                "en": "Unlock by activity",
+                "tw": "通過活動獲得"
+            },
+            "DESC1": {
+                "cn": "小哥一直在追寻绝无仅有的味道，那种拥有奇迹般味道的食物可以治愈人的身心！\n小哥每天会有喜好的食物，食用对应食物可以持续恢复生命",
+                "en": "Yesman has been looking for the unique taste, the kind of miracle taste of food can cure people's body and mind!\nYesman will have a favorite food every day, eating the corresponding food can continue to restore life",
+                "tw": "小哥一直在追尋絕無僅有的味道，那種擁有奇跡般味道的食物可以治愈人的身心！\n小哥每天會有喜好的食物，食用對應食物可以持續恢復生命"
+            },
+            "DESC2": {
+                "cn": "\n每日食用对应食物可以持续恢复生命",
+                "en": "\nDaily consumption of corresponding foods can continue to restore life.",
+                "tw": "\n每日食用對應食物可以持續恢復生命"
+            }
+        },
+        "100304": {
+            "ID": "100304",
+            "ICON": "Texture/CreateRole/img_role_100304",
+            "SCRIPT": "sai",
+            "NAME": {
+                "cn": "苍龙祭司",
+                "en": "Black dragon priest",
+                "tw": "蒼龍祭司"
+            },
+            "GET_DESC":{
+                "cn": "通过活动获得",
+                "en": "Unlock by activity",
+                "tw": "通過活動獲得"
+            },
+            "DESC1": {
+                "cn": "小哥在一次端午祭祀中无意中感应到苍龙星宿 \n获得了在战斗中尝试与苍龙星宿沟通的能力",
+                "en": "In a Dragon Boat Festival, Yesman  accidentally sensed the black dragon stars. \n Now he can try to communicate with the black dragon",
+                "tw": "小哥在一次端午祭祀中無意中感應到蒼龍星宿 \n獲得了在戰鬥中嘗試與蒼龍星宿溝通"
+            },
+            "DESC2": {
+                "cn": "\n可以引起天火焚烧敌人也可能引火上身",
+                "en": "\nHe will burn his enemy or himself",
+                "tw": "\n可以引起天火焚燒敵人也可能引火上身"
+            }
+        },
+        "100305": {
+            "ID": "100305",
+            "ICON": "Texture/CreateRole/img_role_100305",
+            "SCRIPT": "sai",
+            "NAME": {
+                "cn": "驯鹿之魂",
+                "en": "Reindeer spirit",
+                "tw": "馴鹿之魂"
+            },
+            "GET_DESC":{
+                "cn": "通过活动获得",
+                "en": "Unlock by activity",
+                "tw": "通過活動獲得"
+            },
+            "DESC1": {
+                "cn": "小哥误食了一个奇怪的蘑菇 \n长出了一对鹿角并且获得了能够强化身体部位的能力",
+                "en": "Yesman ate a strange mushroom by mistake. \n Now he has two antlers and has the ability to strengthen body parts ",
+                "tw": "小哥誤食了一個奇怪的蘑菇 \n長出了一對鹿角並且獲得了能夠強化身體部位的能力"
+            },
+            "DESC2": {
+                "cn": "小哥误食了一个奇怪的蘑菇 \n长出了一对鹿角并且获得了能够强化身体部位的能力",
+                "en": "Yesman ate a strange mushroom by mistake. \n Now he has two antlers and has the ability to strengthen body parts ",
+                "tw": "小哥誤食了一個奇怪的蘑菇 \n長出了一對鹿角並且獲得了能夠強化身體部位的能力"
+            }
+        }
+    },
+    "1004" : {
+        "100401": {
+            "ID": "100401", 
+            "ICON": "Texture/CreateRole/img_role_100401",
+            "SCRIPT" : "sai",
+            "NAME": {
+                "cn": "夺宝怪盗",
+                "en": "Treasure snatch",
+                "tw": "奪寶怪盜"
+            },
+            "DESC1": {
+                "cn": "偶然的机会让基德在燃烧纸牌时发现了新的命运指向，那么这次命运的指针又将指引基德前往哪里呢？\n燃烧纸牌时可能发现藏宝的地点，在藏宝点可以发现大量物资",
+                "en": "By chance, Kidd found a new destiny in the burning of cards, where does this time the pointer of fate will guide Kidd to?",
+                "tw": "偶然的機會讓基德在燃燒紙牌時發現了新的命運指向，那麽這次命運的指針又將指引基德前往哪裏呢？\n燃燒紙牌時可能發現藏寶的地點，在藏寶點可以發現大量物資"
+            },
+            "DESC2": {
+                "cn": "\n基德有概率通过命运纸牌获晓藏宝地的信息",
+                "en": "\nKidd has a chance to get information about the place of Destiny through cards of fate.",
+                "tw": "\n基德有概率通過命運紙牌獲曉藏寶地的信息"
+            }
+        },
+        "100402": {
+            "ID": "100402",
+            "ICON": "Texture/CreateRole/img_role_100402",
+            "SCRIPT": "sai",
+            "NAME": {
+                "cn": "异变死神",
+                "en": "Mutated Death",
+                "tw": "異變死神"
+            },
+            "DESC1": {
+                "cn": "经历了一系列的事情后，基德发现自己变得更加狂暴、嗜血，基德沉浸在这种力量之中，却不知死神已经悄悄盯上了他。\n随时间进度大幅提升攻击力，但一定期限后角色会死亡",
+                "en": "After a series of things happened, Kidd found he became more fierce and bloodthirsty. Kidd was addicted to this power. He didn't know Death was staring him. \n Kidd's combat power gets stronger and stronger along with time passes. But he will die after a certain period.",
+                "tw": "經歷了一系列的事情後，基德發現自己變得更加狂暴、嗜血，基德沈浸在這種力量之中，卻不知死神已經悄悄盯上了他。\n隨時間進度大幅提升攻擊力，但一定期限後角色會死亡"
+            },
+            "DESC2": {
+                "cn": "\n基德随时间进度大幅提升攻击力，但一定期限后角色会死亡",
+                "en": "\nKidd's combat power gets stronger and stronger along with time passes. But he will die after a certain period.",
+                "tw": "\n基德隨時間進度大幅提升攻擊力，但一定期限後角色會死亡"
+            }
+        },
+        "100403": {
+            "ID": "100403",
+            "ICON": "Texture/CreateRole/img_role_100403",
+            "SCRIPT": "sai",
+            "NAME": {
+                "cn": "新月狼人",
+                "en": "New Moon Werewolf",
+                "tw": "新月狼人"
+            },
+            "GET_DESC":{
+                "cn": "通过活动获得",
+                "en": "Unlock by activity",
+                "tw": "通過活動獲得"
+            },
+            "DESC1": {
+                "cn": "沐浴新月的光辉，基德从中感受到了原始的野性，那种徒手撕裂和近距离拼杀的快感让他无法自拔，基德是否能掌握这神秘的力量？\n大幅提高近距离作战能力并提高银刚狼效果",
+                "en": "Bathed in the glow of the new moon, Kidd felt the raw wildness, the pleasure of tearing with his hands and fighting close to him, and could Kidd master the mysterious power?",
+                "tw": "沐浴新月的光輝，基德從中感受到了原始的野性，那種徒手撕裂和近距離拼殺的快感讓他無法自拔，基德是否能掌握這神秘的力量？\n大幅提高近距離作戰能力並提高銀刚狼效果"
+            },
+            "DESC2": {
+                "cn": "\n基德掌握狼人之力大幅提高近距离作战能力并提高银刚狼效果",
+                "en": "\nKidd's ability to master werewolves greatly improves close combat capability and improves the effect of silver steel wolves.",
+                "tw": "\n基德掌握狼人之力大幅提高近距離作戰能力並提高銀刚狼效果"
+            }
+        },
+        "100404": {
+            "ID": "100404",
+            "ICON": "Texture/CreateRole/img_role_100404",
+            "SCRIPT": "sai",
+            "NAME": {
+                "cn": "彩蛋兔爷",
+                "en": "Master Egg Rabbit",
+                "tw": "彩蛋兔爺"
+            },
+            "GET_DESC":{
+                "cn": "通过活动获得",
+                "en": "Unlock by activity",
+                "tw": "通過活動獲得"
+            },
+            "DESC1": {
+                "cn": "复活节来临，基德也想在这个节日里展现一下自己的艺术细胞。\n基德通过绘制彩蛋来提升自己的力量。",
+                "en": "As Easter approaches, Kidd wants to show off his art cells this holiday season. Kidd boosts his strength by drawing eggs.",
+                "tw": "復活節來臨，基德也想在這個節日裏展現一下自己的藝術細胞。\n基德通過繪制彩蛋來提升自己的力量。"
+            },
+            "DESC2": {
+                "cn": "\n基德通过绘制彩蛋获取力量。",
+                "en": "\nKidd boosts his strength by drawing eggs.",
+                "tw": "\n基德通過繪制彩蛋獲取力量。"
+            }
+        },
+        "100405": {
+            "ID": "100405",
+            "ICON": "Texture/CreateRole/img_role_100405",
+            "SCRIPT": "sai",
+            "NAME": {
+                "cn": "丛林战士",
+                "en": "Jungle warrior",
+                "tw": "叢林戰士"
+            },
+            "GET_DESC":{
+                "cn": "通过活动获得",
+                "en": "Unlock by activity",
+                "tw": "通過活動獲得"
+            },
+            "DESC1": {
+                "cn": "人们可以从野兽身上学习到很多知识\n基德能通过与野兽战斗学会它们的战斗技巧。",
+                "en": "People can learn a lot from beasts. Kidd can learn their fighting skills by fighting wild animals",
+                "tw": "人們可以從野獸身上學習到很多知識\n基德能通過與野獸戰鬥學會它們的戰鬥技巧。"
+            },
+            "DESC2": {
+                "cn": "\n基德通过与野兽战斗学会它们的战斗技巧。",
+                "en": "\nKidd can learn their fighting skills by fighting wild animals.",
+                "tw": "\n基德通過與野獸戰鬥學會它們的戰鬥技巧。"
+            }
+        }
+    }
+}

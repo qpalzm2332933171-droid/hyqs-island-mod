@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>荒野日记:孤岛 — 邮件定制工具</title>
+<style>
+:root{
+  --bg:#101418; --panel:#181e24; --panel2:#1e262e; --line:#2a343e;
+  --txt:#e8eef5; --dim:#93a3b3; --acc:#4ea1ff; --acc2:#2f6fb5;
+  --ok:#3ddc84; --warn:#ffb454; --sel:#123a2a; --selborder:#3ddc84;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);font:14px/1.5 "Microsoft YaHei",system-ui,sans-serif}
+header{position:sticky;top:0;z-index:20;background:linear-gradient(180deg,#161c22,#141a20);border-bottom:1px solid var(--line);padding:10px 16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+header h1{font-size:17px;margin:0;white-space:nowrap}
+header .sub{color:var(--dim);font-size:12px}
+.wrap{display:flex;gap:14px;padding:14px;align-items:flex-start}
+.main{flex:1;min-width:0}
+.side{width:390px;flex-shrink:0;position:sticky;top:64px;max-height:calc(100vh - 78px);overflow:auto}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:12px}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
+input[type=text],input[type=number],input[type=datetime-local],textarea{background:#0d1216;border:1px solid var(--line);color:var(--txt);border-radius:8px;padding:7px 10px;font:inherit;outline:none}
+input:focus,textarea:focus{border-color:var(--acc)}
+#search{flex:1;min-width:220px}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{padding:6px 12px;border-radius:16px;border:1px solid var(--line);background:var(--panel2);cursor:pointer;user-select:none;font-size:13px}
+.chip:hover{border-color:var(--acc)}
+.chip.on{background:var(--acc2);border-color:var(--acc);color:#fff}
+button{background:var(--panel2);border:1px solid var(--line);color:var(--txt);border-radius:8px;padding:7px 12px;cursor:pointer;font:inherit}
+button:hover{border-color:var(--acc)}
+button.primary{background:var(--acc2);border-color:var(--acc);color:#fff}
+button.primary:hover{background:#3b82d6}
+button.warn{color:var(--warn)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.item{position:relative;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:8px;cursor:pointer;display:flex;gap:8px;align-items:center;transition:border-color .1s, background .1s}
+.item:hover{border-color:var(--acc)}
+.item.sel{background:var(--sel);border-color:var(--selborder)}
+.item .ic{width:48px;height:48px;flex-shrink:0;background:#0b0f12;border-radius:8px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.item .ic img{max-width:46px;max-height:46px;image-rendering:auto}
+.item .ic .ph{color:#455;font-size:18px;font-weight:700}
+.item .meta{min-width:0;flex:1}
+.item .nm{display:block;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.item .id{display:block;font-size:11px;color:var(--dim)}
+.item .note{display:block;font-size:10px;color:var(--warn);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.item .cnt{position:absolute;right:6px;top:6px;width:52px;background:#0d1216;border:1px solid var(--selborder);border-radius:6px;padding:2px 4px;font-size:12px;display:none}
+.item.sel .cnt{display:block}
+.item .cnt input{width:100%;background:transparent;border:0;color:var(--ok);font:inherit;padding:0;text-align:center}
+.item .cnt input:focus{outline:none}
+.item.sel .chk{position:absolute;left:4px;top:4px;color:var(--ok);font-weight:700;display:block}
+.item .chk{display:none}
+.stats{color:var(--dim);font-size:12px}
+.stats b{color:var(--ok)}
+.side h3{margin:0 0 8px;font-size:14px;color:var(--acc)}
+.frow{display:flex;gap:8px;align-items:center;margin-bottom:8px;flex-wrap:wrap}
+.frow label{color:var(--dim);font-size:12px;min-width:64px}
+.frow input[type=text],.frow input[type=number]{flex:1;min-width:0}
+.frow textarea{width:100%;min-height:56px;resize:vertical}
+#jsonOut{width:100%;min-height:180px;font:12px/1.5 Consolas,monospace;word-break:break-all}
+details summary{cursor:pointer;color:var(--dim);font-size:12px}
+.tip{color:var(--dim);font-size:11px;margin-top:4px}
+.badge{display:inline-block;background:#0d1216;border:1px solid var(--line);border-radius:6px;padding:1px 6px;font-size:11px;color:var(--dim);margin-right:4px}
+.ok{color:var(--ok)} .warnc{color:var(--warn)}
+.toast{position:fixed;left:50%;bottom:30px;transform:translateX(-50%);background:#1d2c22;border:1px solid var(--ok);color:var(--ok);padding:8px 18px;border-radius:8px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:99}
+.toast.show{opacity:1}
+@media (max-width:1100px){.wrap{flex-direction:column}.side{width:100%;position:static;max-height:none}}
+</style>
+</head>
+<body>
+<header>
+  <h1>🎒 荒野日记:孤岛 — 邮件定制工具</h1>
+  <span class="sub">勾选物品 → 自动计算 token → 复制 JSON 到 Reqable 响应体重写</span>
+</header>
+<div class="wrap">
+  <div class="main">
+    <div class="card">
+      <div class="toolbar">
+        <input type="text" id="search" placeholder="搜索物品名(支持中文/繁体)或 ID, 如: 木耳汤 / 4438">
+        <button id="btnSelectAll">全选当前筛选</button>
+        <button id="btnClear" class="warn">清空选择</button>
+        <span class="stats" id="stats"></span>
+      </div>
+      <div class="chips" id="chips"></div>
+      <div class="toolbar" style="margin-top:10px">
+        <label style="color:var(--dim);font-size:12px">新选中物品默认数量</label>
+        <input type="number" id="defCount" value="99" min="1" max="99999" style="width:90px">
+        <button id="btnApplyCount">批量设置已选数量</button>
+        <span class="tip">点击卡片勾选/取消; 卡片右上角可单独改数量</span>
+      </div>
+    </div>
+    <div class="grid" id="grid"></div>
+    <div class="tip" style="margin:10px 0 30px">图标缺失的 13 个物品(油料/火山爆发/各类蛋/索利达尔等)以占位符显示, 不影响发放。</div>
+  </div>
+
+  <div class="side">
+    <div class="card">
+      <h3>📧 邮件设置</h3>
+      <div class="frow"><label>标题</label><input type="text" id="mtitle" value="空释的超级礼包"></div>
+      <div class="frow" style="align-items:flex-start"><label>正文</label><textarea id="mmessage">全物品礼包，一键领取！</textarea></div>
+      <div class="frow"><label>贝壳</label><input type="number" id="mcoin" value="9999" min="0" max="99999999"></div>
+      <div class="frow"><label>邮件ID</label><input type="text" id="mid" value="1112672461636"></div>
+      <div class="tip">邮件ID 必须用服务器认识的 id(当前为你抓到的真实邮件 1112672461636), 否则「领取」可能失败。</div>
+      <div class="frow"><label>到期时间</label><input type="datetime-local" id="mdeadline"></div>
+      <div class="frow">
+        <button data-days="7">+7天</button><button data-days="30">+30天</button>
+        <button data-days="180">+180天</button><button data-days="3650">+10年</button>
+      </div>
+      <details>
+        <summary>高级设置 (收件人/发件人/昵称等)</summary>
+        <div class="frow"><label>收件人uid</label><input type="text" id="mto" value="1000000000000"></div>
+        <div class="frow"><label>发件人</label><input type="text" id="mfrom" value="dalao"></div>
+        <div class="frow"><label>昵称</label><input type="text" id="mnick" value="%E7%A9%BA%E9%87%8A"></div>
+        <div class="tip">昵称需 URL 编码(空释 = %E7%A9%BA%E9%87%8A)</div>
+      </details>
+    </div>
+
+    <div class="card">
+      <h3>🧾 已选清单</h3>
+      <div class="frow"><button id="btnSelAllItems">勾选全部320件</button><button id="btnReset" class="warn">重置</button></div>
+      <div id="selSummary" class="stats" style="margin-bottom:8px">未选择物品</div>
+      <div id="selIcons" style="display:flex;flex-wrap:wrap;gap:2px;max-height:110px;overflow:auto"></div>
+    </div>
+
+    <div class="card">
+      <h3>⚙️ 生成</h3>
+      <div class="frow"><button class="primary" id="btnGen">生成 JSON</button><button id="btnCopy">复制 JSON</button></div>
+      <div id="genInfo" class="stats"></div>
+      <textarea id="jsonOut" readonly placeholder="点击「生成 JSON」…"></textarea>
+      <div class="tip">粘贴方法: Reqable → 重写 → 荒野日记_孤岛_贝壳邮件 → 响应体「替换为」→ 粘贴整行 → 保存。</div>
+    </div>
+
+    <div class="card">
+      <h3>📖 使用步骤</h3>
+      <ol style="margin:0;padding-left:18px;color:var(--dim);font-size:12px">
+        <li>勾选想要的物品并设置数量/贝壳/到期时间</li>
+        <li>点「生成 JSON」，再点「复制 JSON」</li>
+        <li>Reqable 中粘贴到响应体重写里，保存</li>
+        <li>重启游戏(邮件有10分钟缓存) → 打开邮件 → 领取</li>
+      </ol>
+      <div class="tip" style="margin-top:8px">小技巧: 网址末尾加 <code>#sel=4438:5,4500:10</code> 可自动预选并设置数量。</div>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script src="md5.js"></script>
+<script src="gen.js"></script>
+<script src="items.js"></script>
+<script>
+(function(){
+  'use strict';
+  var items = window.ITEM_DATA || [];
+  var CATS = [
+    {k:'all',    n:'全部(' + items.length + ')'},
+    {k:'tool',   n:'工具'},
+    {k:'food',   n:'食物'},
+    {k:'prop',   n:'材料'},
+    {k:'drug',   n:'药品'},
+    {k:'other',  n:'其他/剧情'},
+    {k:'currency',n:'货币'}
+  ];
+  var state = { cat:'all', q:'', sel:{} };   // sel: id -> count
+  var $ = function(id){ return document.getElementById(id); };
+
+  function save(){
+    try{
+      localStorage.setItem('hyrj_mail_tool', JSON.stringify({
+        sel: state.sel, cat: state.cat,
+        s:{t:$('mtitle').value,m:$('mmessage').value,c:$('mcoin').value,id:$('mid').value,
+           d:$('mdeadline').value,to:$('mto').value,f:$('mfrom').value,n:$('mnick').value}
+      }));
+    }catch(e){}
+  }
+  function load(){
+    try{
+      var raw = localStorage.getItem('hyrj_mail_tool');
+      if(!raw) return;
+      var d = JSON.parse(raw);
+      if(d.sel) state.sel = d.sel;
+      if(d.cat) state.cat = d.cat;
+      var s = d.s || {};
+      if(s.t!==undefined)$('mtitle').value=s.t; if(s.m!==undefined)$('mmessage').value=s.m;
+      if(s.c!==undefined)$('mcoin').value=s.c; if(s.id!==undefined)$('mid').value=s.id;
+      if(s.d!==undefined)$('mdeadline').value=s.d; if(s.to!==undefined)$('mto').value=s.to;
+      if(s.f!==undefined)$('mfrom').value=s.f; if(s.n!==undefined)$('mnick').value=s.n;
+    }catch(e){}
+  }
+
+  function toLocalInput(d){
+    var p=function(n){return(n<10?'0':'')+n;};
+    return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+'T'+p(d.getHours())+':'+p(d.getMinutes());
+  }
+  function setDeadlineDays(days){
+    var d = new Date(Date.now() + days*86400000);
+    $('mdeadline').value = toLocalInput(d);
+    save();
+  }
+
+  function passFilter(it){
+    if(state.cat!=='all' && it.cat!==state.cat) return false;
+    if(!state.q) return true;
+    var q = state.q.toLowerCase();
+    return (it.name && it.name.toLowerCase().indexOf(q)>=0) ||
+           (it.tw && it.tw.toLowerCase().indexOf(q)>=0) ||
+           (it.id && it.id.indexOf(q)>=0) ||
+           (it.note && it.note.toLowerCase().indexOf(q)>=0);
+  }
+
+  function renderChips(){
+    var h = '';
+    for(var i=0;i<CATS.length;i++){
+      var c = CATS[i];
+      h += '<span class="chip'+(state.cat===c.k?' on':'')+'" data-cat="'+c.k+'">'+c.n+'</span>';
+    }
+    $('chips').innerHTML = h;
+    var cs = $('chips').getElementsByClassName('chip');
+    for(var j=0;j<cs.length;j++){
+      cs[j].onclick = function(){ state.cat=this.getAttribute('data-cat'); renderChips(); renderGrid(); save(); };
+    }
+  }
+
+  function iconTag(it, size){
+    if(it.icon) return '<img loading="lazy" src="icons/'+it.id+'.png" alt="">';
+    return '<span class="ph">'+ (it.name||'?').slice(0,1) +'</span>';
+  }
+
+  function renderGrid(){
+    var h = '', shown = 0;
+    for(var i=0;i<items.length;i++){
+      var it = items[i];
+      if(!passFilter(it)) continue;
+      shown++;
+      var sel = state.sel[it.id] !== undefined;
+      h += '<div class="item'+(sel?' sel':'')+'" data-id="'+it.id+'">'+
+             '<span class="chk">✓</span>'+
+             '<span class="cnt"><input type="number" min="1" max="99999" value="'+(sel?state.sel[it.id]:99)+'" data-cid="'+it.id+'"></span>'+
+             '<span class="ic">'+iconTag(it)+'</span>'+
+             '<span class="meta"><span class="nm" title="'+(it.name||'')+'">'+(it.name||'?')+'</span>'+
+             '<span class="id">ID '+it.id+(it.w?' · 重'+it.w:'')+'</span>'+
+             (it.note?'<span class="note">'+it.note+'</span>':'')+
+             (String(it.id)==='100005'?'<span class="note" style="color:#ff9b9b">附邮件上限9</span>':'')+
+             '</span></div>';
+    }
+    $('grid').innerHTML = h || '<div class="tip">没有匹配的物品</div>';
+    var cards = $('grid').getElementsByClassName('item');
+    for(var k=0;k<cards.length;k++){
+      cards[k].onclick = function(ev){
+        if(ev.target.tagName==='INPUT') return;
+        var id = this.getAttribute('data-id');
+        if(state.sel[id]!==undefined){ delete state.sel[id]; this.classList.remove('sel'); }
+        else { state.sel[id] = Math.max(1, parseInt($('defCount').value)||99); this.classList.add('sel'); }
+        var inp = this.querySelector('input'); if(inp) inp.value = state.sel[id]||99;
+        updateStats(); renderSelPanel(); save();
+      };
+    }
+    var inputs = $('grid').getElementsByTagName('input');
+    for(var m=0;m<inputs.length;m++){
+      inputs[m].onclick = function(ev){ ev.stopPropagation(); };
+      inputs[m].onchange = function(){
+        var id = this.getAttribute('data-cid');
+        var v = Math.max(1, Math.min(99999, parseInt(this.value)||1));
+        this.value = v;
+        if(state.sel[id]!==undefined){ state.sel[id]=v; updateStats(); renderSelPanel(); save(); }
+      };
+      inputs[m].onkeydown = function(ev){ ev.stopPropagation(); };
+    }
+    updateStats();
+  }
+
+  function selList(){
+    var arr = [];
+    for(var id in state.sel){ if(state.sel.hasOwnProperty(id)) arr.push({id:id, count:state.sel[id]}); }
+    arr.sort(function(a,b){
+      var pa = a.id.split('_'), pb = b.id.split('_');
+      var na = parseInt(pa[0]), nb = parseInt(pb[0]);
+      if(na!==nb) return na-nb;
+      return (parseInt(pa[1]||0))-(parseInt(pb[1]||0));
+    });
+    return arr;
+  }
+
+  function updateStats(){
+    var arr = selList(), total = 0;
+    for(var i=0;i<arr.length;i++) total += arr[i].count;
+    $('stats').innerHTML = '已选 <b>'+arr.length+'</b> 种 / 共 <b>'+total+'</b> 个';
+  }
+
+  function renderSelPanel(){
+    var arr = selList();
+    if(!arr.length){ $('selSummary').textContent='未选择物品'; $('selIcons').innerHTML=''; return; }
+    var total=0, map={};
+    for(var i=0;i<items.length;i++) map[items[i].id]=items[i];
+    for(var j=0;j<arr.length;j++) total+=arr[j].count;
+    $('selSummary').innerHTML = '已选 <b>'+arr.length+'</b> 种 / 共 <b>'+total+'</b> 个 · 贝壳 <b>'+$('mcoin').value+'</b>';
+    var h='';
+    for(var k=0;k<arr.length;k++){
+      var it = map[arr[k].id];
+      h += '<span style="position:relative" title="'+(it?it.name:'')+' x'+arr[k].count+'">'+iconTag(it||{})+'</span>';
+    }
+    $('selIcons').innerHTML = h;
+  }
+
+  function gen(){
+    var arr = selList();
+    if(!arr.length){ toast('请先勾选物品'); return; }
+    var clampNote = '';
+    for(var ci=0; ci<arr.length; ci++){
+      if(String(arr[ci].id)==='100005' && arr[ci].count>9){
+        arr[ci].count = 9; state.sel[arr[ci].id] = 9;
+        clampNote = ' · <span style="color:#ff9b9b">100005(广告币)已强制降为9（邮件上限9，超过会触发封号标记）</span>';
+      }
+    }
+    if(clampNote){ renderGrid(); updateStats(); renderSelPanel(); }
+    var dl = $('mdeadline').value;
+    var deadline = dl ? new Date(dl).getTime() : (Date.now()+30*86400000);
+    if(!(deadline>0)){ toast('到期时间无效'); return; }
+    var now = Date.now();
+    var mail = MailGen.buildMail({
+      mailId: $('mid').value.trim(), title: $('mtitle').value, message: $('mmessage').value,
+      coin: $('mcoin').value, toUser: $('mto').value.trim(), fromUser: $('mfrom').value,
+      nick: $('mnick').value, channel:'_', type:'item',
+      createTime: now, deadline: deadline, selected: arr
+    });
+    var resp = MailGen.buildResponse(mail, now);
+    var txt = JSON.stringify(resp);
+    $('jsonOut').value = txt;
+    $('genInfo').innerHTML = '类型 '+arr.length+' 种 · goods '+mail.goods.split(';').length+' 项 · token <b>'+mail.token+'</b> · 长度 '+txt.length+' 字符'+clampNote;
+
+    var cl = [];
+    for(var cj=0; cj<arr.length; cj++) if(String(arr[cj].id)==='100005') cl.push(arr[cj].count);
+    if(cl.length) toast('已生成；100005 数量=' + cl[0] + ' (≤9 安全)');
+    save();
+  }
+
+  function toast(msg){
+    var t=$('toast'); t.textContent=msg; t.classList.add('show');
+    setTimeout(function(){ t.classList.remove('show'); }, 1600);
+  }
+
+  function copyJSON(){
+    var ta=$('jsonOut');
+    if(!ta.value){ gen(); if(!ta.value) return; }
+    function fallback(){
+      ta.removeAttribute('readonly'); ta.select(); ta.setSelectionRange(0, ta.value.length);
+      try{ document.execCommand('copy'); toast('已复制到剪贴板'); }catch(e){ toast('复制失败, 请手动Ctrl+C'); }
+      ta.setAttribute('readonly','readonly');
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(ta.value).then(function(){ toast('已复制到剪贴板'); }, fallback);
+    } else fallback();
+  }
+
+  // ---- 事件 ----
+  $('search').oninput = function(){ state.q=this.value.trim(); renderGrid(); };
+  $('btnSelectAll').onclick = function(){
+    var def = Math.max(1, parseInt($('defCount').value)||99);
+    for(var i=0;i<items.length;i++){ if(passFilter(items[i])) state.sel[items[i].id]=def; }
+    renderGrid(); renderSelPanel(); save();
+  };
+  $('btnClear').onclick = function(){ state.sel={}; renderGrid(); renderSelPanel(); save(); };
+  $('btnApplyCount').onclick = function(){
+    var v = Math.max(1, Math.min(99999, parseInt($('defCount').value)||1));
+    var n = 0;
+    for(var id in state.sel){ if(state.sel.hasOwnProperty(id)){ state.sel[id]=v; n++; } }
+    if(!n){ toast('请先勾选物品'); return; }
+    renderGrid(); renderSelPanel(); save();
+    toast('已将 ' + n + ' 种物品的数量设为 ' + v);
+  };
+  $('btnSelAllItems').onclick = function(){
+    var def = Math.max(1, parseInt($('defCount').value)||99);
+    for(var i=0;i<items.length;i++) state.sel[items[i].id]=def;
+    renderGrid(); renderSelPanel(); save();
+  };
+  $('btnReset').onclick = function(){
+    state.sel={}; $('mtitle').value='空释的超级礼包'; $('mmessage').value='全物品礼包，一键领取！';
+    $('mcoin').value=9999; $('mid').value='1112672461636';
+    $('mto').value='1000000000000'; $('mfrom').value='dalao'; $('mnick').value='%E7%A9%BA%E9%87%8A';
+    setDeadlineDays(30); renderGrid(); renderSelPanel(); save(); toast('已重置');
+  };
+  var ds = document.querySelectorAll('[data-days]');
+  for(var i=0;i<ds.length;i++){ ds[i].onclick=function(){ setDeadlineDays(parseInt(this.getAttribute('data-days'))); }; }
+  $('btnGen').onclick = gen;
+  $('btnCopy').onclick = copyJSON;
+  ['mtitle','mmessage','mcoin','mid','mdeadline','mto','mfrom','mnick'].forEach(function(id){
+    $(id).addEventListener('input', function(){ save(); renderSelPanel(); });
+  });
+
+  // ---- 初始化 ----
+  load();
+  try{
+    var hm = /#sel=([^&]+)/.exec(location.hash);
+    if(hm){
+      hm[1].split(',').forEach(function(part){
+        var kv = part.split(':'); if(kv.length===2){ state.sel[kv[0]] = Math.max(1, parseInt(kv[1])||1); }
+      });
+    }
+  }catch(e){}
+  if(!$('mdeadline').value) setDeadlineDays(30);
+  renderChips(); renderGrid(); renderSelPanel(); updateStats();
+})();
+</script>
+</body>
+</html>

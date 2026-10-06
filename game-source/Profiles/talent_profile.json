@@ -1,0 +1,899 @@
+{
+    "2000": {
+        "TYPE": 0,
+        "NAME": {
+            "cn": "无",
+            "en": "None",
+            "tw": "無"
+        },
+        "DESC": {
+            "cn": "能够活下来已经是很幸运了",
+            "en": "We're lucky to still be alive",
+            "tw": "能夠活下來已經是很幸運了"
+        },
+        "BASE": {},
+        "ATTR": {}, 
+        "EFFECT": []
+    },
+    "2001": {
+        "TYPE": 1,
+        "NAME": {
+            "cn": "神射手",
+            "en": "Elven",
+            "tw": "神射手"
+        },
+        "DESC": {
+            "cn": "你对弓有着异样的天赋\n提高25%远程命中率",
+            "en": "You exhibit unnatural talent with a bow\n+25% ranged hit rate",
+            "tw": "你對弓有著異樣的天賦\n提高25%遠程命中率"
+        },
+        "BASE": {
+            "7017": 25
+        },
+        "ATTR": {},
+        "BASE_EFFECT": [
+            {
+                "7017": 25,
+                "7016": 0
+            },
+            {
+                "7017": 30,
+                "7016": 5
+            },
+            {
+                "7017": 35,
+                "7016": 10
+            },
+            {
+                "7017": 40,
+                "7016": 15
+            }
+        ],
+        "paper": [
+            [20,0],
+            [40,5],
+            [100,20]
+        ]
+    },
+    "2002": {
+        "TYPE": 2,
+        "NAME": {
+            "cn": "大家伙",
+            "en": "Big Guy",
+            "tw": "大家夥"
+        },
+        "DESC": {
+            "cn": "块头的优势在这里体现了出来\n提高100生命值上限",
+            "en": "A meathead's advantage is reflected here\n+100 max HP",
+            "tw": "塊頭的優勢在這裏體現了出來\n提高100生命值上限"
+        },
+        "BASE": {
+            "7002": 100,
+            "7003": 100
+        },
+        "ATTR": {},
+        "BASE_EFFECT": [
+            {
+                "7002": 100,
+                "7003": 100
+            },
+            {
+                "7002": 150,
+                "7003": 150
+            },
+            {
+                "7002": 200,
+                "7003": 200
+            },
+            {
+                "7002": 250,
+                "7003": 250
+            }
+        ],
+        "paper": [
+            [20,0],
+            [40,5],
+            [100,20]
+        ]
+    },
+    "2003": {
+        "TYPE": 3,
+        "NAME": {
+            "cn": "清扫者",
+            "en": "Cleaner",
+            "tw": "清掃者"
+        },
+        "DESC": {
+            "cn": "清扫会有意外收获\n有概率获取双倍副本资源",
+            "en": "You may be in for an unexpected bounty when cleaning up\nChance to get 2x instance resources",
+            "tw": "清掃會有意外收獲\n有概率獲取雙倍副本資源"
+        },
+        "BASE": {},
+        "ATTR": 8,
+        "EFFECT": [
+            [
+                8
+            ],
+            [
+                10
+            ],
+            [
+                12
+            ],
+            [
+                14
+            ]
+        ],
+        "paper": [
+            [20,0],
+            [40,5],
+            [100,20]
+        ]
+    },
+    "2004": {
+        "TYPE": 3,
+        "NAME": {
+            "cn": "万人迷",
+            "en": "Idol",
+            "tw": "萬人迷"
+        },
+        "DESC": {
+            "cn": "这是个看脸的荒野\n拒绝请求不降低友好度，且有概率额外获得物品",
+            "en": "It's a face-judging wasteland \nRejected requests don't reduce affection, and increase chance to get bonus items",
+            "tw": "這是個看臉的荒野\n拒絕請求不降低友好度，且有概率額外獲得物品"
+        },
+        "BASE": {},
+        "ATTR": 30,
+        "EFFECT": [
+            [
+                30,
+                0
+            ],
+            [
+                30,
+                2
+            ],
+            [
+                30,
+                3
+            ],
+            [
+                30,
+                4
+            ]
+        ],
+        "paper": [
+            [20,0],
+            [40,5],
+            [100,20]
+        ]
+    },
+    "2005": {
+        "TYPE": 2,
+        "NAME": {
+            "cn": "占星师",
+            "en": "Astrologer",
+            "tw": "占星師"
+        },
+        "DESC": {
+            "cn": "星辰会指引你前进的方向\n降低迷失方向几率",
+            "en": "The stars will guide you on the right path\nReduce rate of getting lost",
+            "tw": "星辰會指引你前進的方向\n降低迷失方向幾率"
+        },
+        "BASE": {},
+        "ATTR": -55,
+        "EFFECT": [
+            [
+                -55,
+                0
+            ],
+            [
+                -55,
+                3
+            ],
+            [
+                -55,
+                6
+            ],
+            [
+                -55,
+                10
+            ]
+        ],
+        "paper": [
+            [20,0],
+            [40,5],
+            [100,20]
+        ]
+    },
+    "2006": {
+        "TYPE": 2,
+        "NAME": {
+            "cn": "陷猎者",
+            "en": "Trapper",
+            "tw": "陷獵者"
+        },
+        "DESC": {
+            "cn": "好的猎人只需要守株待兔\n提高陷阱捕获猎物几率",
+            "en": "Good hunters stay by the rabbit hole\nIncrease trap capture rate",
+            "tw": "好的獵人只需要守株待兔\n提高陷阱捕獲獵物幾率"
+        },
+        "BASE": {},
+        "ATTR": 60,
+        "EFFECT": [
+            [
+                60,
+                0
+            ],
+            [
+                60,
+                20
+            ],
+            [
+                60,
+                30
+            ],
+            [
+                60,
+                40
+            ]
+        ],
+        "paper": [
+            [20,0],
+            [40,5],
+            [100,20]
+        ]
+    },
+    "2007": {
+        "TYPE": 1,
+        "NAME": {
+            "cn": "长臂猿",
+            "en": "Gibbon",
+            "tw": "長臂猿"
+        },
+        "DESC": {
+            "cn": "似乎你的手臂比一般人要长一些\n提高1基础攻击距离，但闪避几率降低",
+            "en": "Your arms are longer than usual person\n+1 Basic ATK range, but Dodge rate is reduced",
+            "tw": "似乎你的手臂比一般人要長一些\n提高1基礎攻擊距離，但閃避幾率降低"
+        },
+        "BASE": {
+            "7018": -20
+        },
+        "ATTR": 1,
+        "EFFECT": [
+            [
+                1
+            ],
+            [
+                1
+            ],
+            [
+                1
+            ],
+            [
+                1
+            ]
+        ],
+        "BASE_EFFECT": [
+            {
+                "7018": -20
+            },
+            {
+                "7018": -15
+            },
+            {
+                "7018": -10
+            },
+            {
+                "7018": 0
+            }
+        ],
+        "paper": [
+            [20,0],
+            [40,5],
+            [100,20]
+        ]
+    },
+    "2008": {
+        "TYPE": 1,
+        "NAME": {
+            "cn": "空手道",
+            "en": "Karate",
+            "tw": "空手道"
+        },
+        "DESC": {
+            "cn": "武器有时是一种累赘\n不装备任何武器时提高攻击和闪避",
+            "en": "Weapons are sometimes cumbersome\nNot equipping any weapons increase ATK and Dodge",
+            "tw": "武器有時是一種累贅\n不裝備任何武器時提高攻擊和閃避"
+        },
+        "BASE": {},
+        "ATTR": {
+            "ATTACK": 15,
+            "MISS": 20
+        },
+        "EFFECT": [
+            [
+                15,
+                20
+            ],
+            [
+                20,
+                25
+            ],
+            [
+                30,
+                30
+            ],
+            [
+                40,
+                35
+            ]
+        ],
+        "paper": [
+            [20,0],
+            [40,5],
+            [100,20]
+        ]
+    },
+    "2009": {
+        "TYPE": 1,
+        "NAME": {
+            "cn": "逆境者",
+            "en": "Adversity",
+            "tw": "逆境者"
+        },
+        "DESC": {
+            "cn": "越是危险的情况力量越大\n血量过低时提高攻击力",
+            "en": "The more dangerous the situation, the stronger you become\nIncrease ATK when HP is low",
+            "tw": "越是危險的情況力量越大\n血量過低時提高攻擊力"
+        },
+        "BASE": {},
+        "ATTR": 1.8,
+        "EFFECT": [
+            [
+                1.8,
+                0.2
+            ],
+            [
+                2,
+                0.25
+            ],
+            [
+                2.3,
+                0.3
+            ],
+            [
+                2.5,
+                0.35
+            ]
+        ],
+        "paper": [
+            [20,0],
+            [40,5],
+            [100,20]
+        ]
+    },
+    "2010": {
+        "TYPE": 1,
+        "NAME": {
+            "cn": "养护者",
+            "en": "Smith",
+            "tw": "養護者"
+        },
+        "DESC": {
+            "cn": "对待武器也要像爱人一样\n降低武器耐久度消耗",
+            "en": "Treat your weapon like your lover\nWeapon durability reduces more slowly",
+            "tw": "對待武器也要像愛人一樣\n降低武器耐久度消耗"
+        },
+        "BASE": {},
+        "ATTR": 30,
+        "EFFECT": [
+            [
+                30
+            ],
+            [
+                40
+            ],
+            [
+                50
+            ],
+            [
+                60
+            ]
+        ],
+        "paper": [
+            [20,0],
+            [40,5],
+            [100,20]
+        ]
+    },
+    "2011": {
+        "TYPE": 1,
+        "NAME": {
+            "cn": "银刚狼",
+            "en": "Wolverine",
+            "tw": "銀剛狼"
+        },
+        "DESC": {
+            "cn": "远比不上金刚狼\n每次战斗后回复部分自身损失的生命值",
+            "en": "Heal much faster than the average human\nRestore some HP lost after each battle",
+            "tw": "遠比不上金剛狼\n每次戰鬥後回復部分自身損失的生命值"
+        },
+        "BASE": {},
+        "ATTR": {
+            "MIN": 25,
+            "MAX": 35
+        },
+        "EFFECT": [
+            [
+                30
+            ],
+            [
+                35
+            ],
+            [
+                40
+            ],
+            [
+                45
+            ]
+        ],
+        "paper": [
+            [20,0],
+            [40,5],
+            [100,20]
+        ]
+    },
+    "2012": {
+        "TYPE": 2,
+        "NAME": {
+            "cn": "药剂师",
+            "en": "Physician",
+            "tw": "藥劑師"
+        },
+        "DESC": {
+            "cn": "同样的药，不同的效果\n提高药品恢复效果",
+            "en": "Same medicine, different effect\nIncrease restoration effects of medicine",
+            "tw": "同樣的藥，不同的效果\n提高藥品恢復效果"
+        },
+        "BASE": {},
+        "ATTR": {
+            "MIN": 30,
+            "MAX": 40
+        },
+        "EFFECT": [
+            [
+                30
+            ],
+            [
+                35
+            ],
+            [
+                40
+            ],
+            [
+                45
+            ]
+        ],
+        "paper": [
+            [20,0],
+            [40,5],
+            [100,20]
+        ]
+    },
+    "2013": {
+        "TYPE": 2,
+        "NAME": {
+            "cn": "北境者",
+            "en": "Northerner",
+            "tw": "北境者"
+        },
+        "DESC": {
+            "cn": "长期生活在北方\n增加低温抗性",
+            "en": "A true person of the north\nIncrease low temperature resistance",
+            "tw": "長期生活在北方\n增加低溫抗性"
+        },
+        "BASE": {
+            "7053": 18
+        },
+        "ATTR": {},
+        "BASE_EFFECT": [
+            {
+                "7053": 18
+            },
+            {
+                "7053": 20
+            },
+            {
+                "7053": 22
+            },
+            {
+                "7053": 24
+            }
+        ],
+        "paper": [
+            [20,0],
+            [40,5],
+            [100,20]
+        ]
+    },
+    "2014": {
+        "TYPE": 2,
+        "NAME": {
+            "cn": "石皮者",
+            "en": "Stoneskin",
+            "tw": "石皮者"
+        },
+        "DESC": {
+            "cn": "皮肤与一般人有所不同\n降低外伤和内伤增长速度",
+            "en": "Your skin is different from others\nReduce Wound and Wound increment speed",
+            "tw": "皮膚與一般人有所不同\n降低外傷和內傷增長速度"
+        },
+        "BASE": {},
+        "ATTR": {
+            "MIN": 20,
+            "MAX": 30
+        },
+        "EFFECT": [
+            [
+                25
+            ],
+            [
+                30
+            ],
+            [
+                35
+            ],
+            [
+                40
+            ]
+        ],
+        "paper": [
+            [20,0],
+            [40,5],
+            [100,20]
+        ]
+    },
+    "2015": {
+        "TYPE": 2,
+        "NAME": {
+            "cn": "修仙者",
+            "en": "Enlightened",
+            "tw": "修仙者"
+        },
+        "DESC": {
+            "cn": "熬夜越深，修为越高\n降低失眠值增长速度",
+            "en": "Late nights make for razor focus\nReduce sleep increment speed",
+            "tw": "熬夜越深，修為越高\n降低失眠值增長速度"
+        },
+        "BASE": {},
+        "ATTR": {
+            "MIN": 20,
+            "MAX": 30
+        },
+        "EFFECT": [
+            [
+                25
+            ],
+            [
+                30
+            ],
+            [
+                35
+            ],
+            [
+                40
+            ]
+        ],
+        "paper": [
+            [20,0],
+            [40,5],
+            [100,20]
+        ]
+    },
+    "2016": {
+        "TYPE": 2,
+        "NAME": {
+            "cn": "小吃货",
+            "en": "Glutton",
+            "tw": "小吃貨"
+        },
+        "DESC": {
+            "cn": "只要有东西吃，就很满足了\n增加饥饿度上限增加和食物恢复效果",
+            "en": "As long as there's food\nIncrease max hunger gain and food restoration effect",
+            "tw": "只要有東西吃，就很滿足了\n增加饑餓度上限增加和食物恢復效果"
+        },
+        "BASE": {
+            "7006": 30,
+            "7048": 30
+        },
+        "ATTR": {
+            "MIN": 20,
+            "MAX": 30
+        },
+        "EFFECT": [
+            [
+                25
+            ],
+            [
+                30
+            ],
+            [
+                35
+            ],
+            [
+                40
+            ]
+        ],
+        "BASE_EFFECT": [
+            {
+                "7006": 25,
+                "7048": 25
+            },
+            {
+                "7006": 30,
+                "7048": 30
+            },
+            {
+                "7006": 35,
+                "7048": 35
+            },
+            {
+                "7006": 40,
+                "7048": 40
+            }
+        ],
+        "paper": [
+            [20,0],
+            [40,5],
+            [100,20]
+        ]
+    },
+    "2017": {
+        "TYPE": 2,
+        "NAME": {
+            "cn": "环境家",
+            "en": "Ecologist",
+            "tw": "環境家"
+        },
+        "DESC": {
+            "cn": "天灾大多是人祸\n增加循环资源点生态恢复速度",
+            "en": "Natural disasters are usually manmade\nIncrease restoration speed of circuit resource point ecosystem",
+            "tw": "天災大多是人禍\n增加循環資源點生態恢復速度"
+        },
+        "BASE": {},
+        "ATTR": 1.2,
+        "EFFECT": [
+            [
+                1.2
+            ],
+            [
+                1.3
+            ],
+            [
+                1.4
+            ],
+            [
+                1.5
+            ]
+        ],
+        "paper": [
+            [20,0],
+            [40,5],
+            [100,20]
+        ]
+    },
+    "2018": {
+        "TYPE": 3,
+        "NAME": {
+            "cn": "夜语者",
+            "en": "Whisper",
+            "tw": "夜語者"
+        },
+        "DESC": {
+            "cn": "黑夜与你同在\n降低营地夜晚被袭击概率",
+            "en": "The night is one with you\nReduce rate of being attacked while camping at night",
+            "tw": "黑夜與你同在\n降低營地夜晚被襲擊概率"
+        },
+        "BASE": {},
+        "ATTR": {
+            "GUARD": 15
+        },
+        "EFFECT": [
+            [
+                10
+            ],
+            [
+                12
+            ],
+            [
+                14
+            ],
+            [
+                16
+            ]
+        ],
+        "paper": [
+            [20,0],
+            [40,5],
+            [100,20]
+        ]
+    },
+    "2019": {
+        "TYPE": 3,
+        "NAME": {
+            "cn": "建筑师",
+            "en": "Builder",
+            "tw": "建築師"
+        },
+        "DESC": {
+            "cn": "好的设计和工序会影响建筑的使用\n增加建筑耐久度上限",
+            "en": "A good design and process affect a building's utility\nIncrease building's max durability",
+            "tw": "好的設計和工序會影響建築的使用\n增加建築耐久度上限"
+        },
+        "BASE": {},
+        "ATTR": {
+            "DURATION": 20
+        },
+        "EFFECT": [
+            [
+                20
+            ],
+            [
+                30
+            ],
+            [
+                40
+            ],
+            [
+                50
+            ]
+        ],
+        "paper": [
+            [20,0],
+            [40,5],
+            [100,20]
+        ]
+    },
+    "2020": {
+        "TYPE": 3,
+        "NAME": {
+            "cn": "洞察者",
+            "en": "Awareness",
+            "tw": "洞察者"
+        },
+        "DESC": {
+            "cn": "仔细观察，有不同的东西\n增加发现隐藏关卡概率",
+            "en": "You see so much more if you pay attention\nIncrease rate of discovering hidden stages",
+            "tw": "仔細觀察，有不同的東西\n增加發現隱藏關卡概率"
+        },
+        "BASE": {},
+        "ATTR": {
+            "MIN": 15,
+            "MAX": 15
+        },
+        "EFFECT": [
+            [
+                15
+            ],
+            [
+                30
+            ],
+            [
+                60
+            ],
+            [
+                100
+            ]
+        ],
+        "paper": [
+            [20,0],
+            [40,5],
+            [100,20]
+        ]
+    },
+    "2021": {
+        "TYPE": 3,
+        "NAME": {
+            "cn": "速泳者",
+            "en": "Swimmer",
+            "tw": "速泳者"
+        },
+        "DESC": {
+            "cn": "游泳的速度关系到生命\n离开沉船时不会遭遇鲨鱼",
+            "en": "The swimming's speed concerns life and death\nWon't encounter sharks when leaving sunken ships",
+            "tw": "遊泳的速度關系到生命\n離開沉船時不會遭遇鯊魚"
+        },
+        "BASE": {},
+        "ATTR": {
+            "MIN": 0,
+            "MAX": 0
+        },
+        "EFFECT": [
+            [
+                0
+            ],
+            [
+                20
+            ],
+            [
+                30
+            ],
+            [
+                40
+            ]
+        ],
+        "paper": [
+            [20,0],
+            [40,5],
+            [100,20]
+        ]
+    },
+    "2022": {
+        "TYPE": 3,
+        "NAME": {
+            "cn": "谈判家",
+            "en": "Negotiator",
+            "tw": "談判家"
+        },
+        "DESC": {
+            "cn": "良好的谈判技巧有很大的帮助\n交易时能用更低的价格换取更多的物资",
+            "en": "Great negotiation skills are always great help\nGet more goods at lower prices when trading",
+            "tw": "良好的談判技巧有很大的幫助\n交易時能用更低的價格換取更多的物資"
+        },
+        "BASE": {},
+        "ATTR": 70,
+        "EFFECT": [
+            [
+                80
+            ],
+            [
+                70
+            ],
+            [
+                60
+            ],
+            [
+                50
+            ]
+        ],
+        "paper": [
+            [20,0],
+            [40,5],
+            [100,20]
+        ]
+    },
+    "2023": {
+        "TYPE": 1,
+        "NAME": {
+            "cn": "好战者",
+            "en": "Warmonger",
+            "tw": "好戰者"
+        },
+        "DESC": {
+            "cn": "战斗才是最好的休息方式\n战斗之后能恢复微量的精神值",
+            "en": "Fighting is the best way to rest\nYou can restore a small amount of mental after fighting",
+            "tw": "戰鬥才是最好的休息方式\n戰鬥之後能恢復微量的精神值"
+        },
+        "BASE": {},
+        "EFFECT": [
+            [
+                2
+            ],
+            [
+                3
+            ],
+            [
+                4
+            ],
+            [
+                5
+            ]
+        ],
+        "paper": [
+            [20,0],
+            [40,5],
+            [100,20]
+        ]
+    }
+}

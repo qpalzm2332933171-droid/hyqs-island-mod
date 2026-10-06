@@ -1,0 +1,46 @@
+{
+  "errorCode": 0,
+  "errorMsg": "",
+  "data": {
+    "goods_from_channel": [],
+    "goods_from_user": [
+      {
+        "id": 1791337288475,
+        "title": "月卡每日奖励",
+        "nick": "%E7%A9%BA%E9%87%8A",
+        "type": "item",
+        "message": "280贝壳，土豪请查收！\n重置时间：北京时间08：00",
+        "goods": "100000:6;100002:6",
+        "createTime": 1643981588000,
+        "deadline": 1646573587000,
+        "valid": 1,
+        "from_user": "233",
+        "to_user": "1000000000000",
+        "channel": "_",
+        "is_receive": 0,
+        "is_open": 0,
+        "coin": 280,
+        "token": "085c2470fbcc200bee762178626ffb0a"
+      },
+      {
+        "id": 1791337288476,
+        "title": "成功激活月卡",
+        "nick": "%E7%A9%BA%E9%87%8A",
+        "type": "item",
+        "message": "恭喜土豪成功获取月卡！\n2800贝壳请查收！\n接下来每天都会有一份280贝壳的奖励发给土豪哦！",
+        "goods": "",
+        "createTime": 1643981588000,
+        "deadline": 1646573587000,
+        "valid": 1,
+        "from_user": "233",
+        "to_user": "1000000000000",
+        "channel": "_",
+        "is_receive": 0,
+        "is_open": 0,
+        "coin": 2801,
+        "token": "cd73890981fd5dd94bb32d39a383f863"
+      }
+    ]
+  },
+  "time": 1643981677273
+}
