@@ -497,6 +497,9 @@ public class ModMenu {
     private TextView pickTitle, pickTargetBag, pickTargetWh, pickSelInfo;
     private JSONObject pickMeta = new JSONObject();
     private int pickTarget = 0;   // 0=背包 1=仓库
+    private LinearLayout pickLine2;
+    private TextView pickOk;
+    private boolean pickSingle = false;
     private HashMap<String, Bitmap> iconCache = new HashMap<String, Bitmap>();
 
     public void openItemPicker(String json) {
@@ -516,6 +519,9 @@ public class ModMenu {
             if (picker == null) makePicker();
             pickSearch.setText("");
             pickCount.setText(o.optString("count", "99"));
+            pickSingle = o.optBoolean("single", false);
+            if (pickOk != null) pickOk.setText(o.optString("okText", "确 认 发 放"));
+            if (pickLine2 != null) pickLine2.setVisibility(o.optBoolean("hideTarget", false) ? View.GONE : View.VISIBLE);
             pickTitle.setText(o.optString("title", "选择物品") + "  (共" + pickItems.size() + ")");
             pickTarget = 0;
             updateTargetUI();
@@ -591,6 +597,7 @@ public class ModMenu {
         styleInput(pickCount, InputType.TYPE_CLASS_NUMBER);
         pickCount.setSingleLine(true);
         line2.addView(pickCount, new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f));
+        pickLine2 = line2;
         p.addView(line2);
 
         LinearLayout line3 = new LinearLayout(act);
@@ -644,7 +651,13 @@ public class ModMenu {
         pickList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> a, View v, int pos, long id) {
                 String iid = pickItems.get(pickShown.get(pos))[0];
-                if (pickChecked.contains(iid)) pickChecked.remove(iid); else pickChecked.add(iid);
+                if (pickSingle) {
+                    boolean was = pickChecked.contains(iid);
+                    pickChecked.clear();
+                    if (!was) pickChecked.add(iid);
+                } else {
+                    if (pickChecked.contains(iid)) pickChecked.remove(iid); else pickChecked.add(iid);
+                }
                 pickAdapter.notifyDataSetChanged();
                 updateSelInfo();
             }
@@ -656,7 +669,8 @@ public class ModMenu {
         TextView cancel = tv("取消", 13, C_TXT2, true);
         cancel.setGravity(Gravity.CENTER); cancel.setPadding(0, dp(9), 0, dp(9));
         cancel.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { closeItemPicker(); } });
-        TextView ok = tv("确 认 发 放", 13, C_ACC, true);
+        pickOk = tv("确 认 发 放", 13, C_ACC, true);
+        TextView ok = pickOk;
         ok.setGravity(Gravity.CENTER); ok.setPadding(0, dp(9), 0, dp(9));
         ok.setBackground(bg(C_ITEM2, 8, C_ACC2));
         ok.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { confirmPick(); } });
@@ -705,7 +719,7 @@ public class ModMenu {
             JSONArray ids = new JSONArray();
             for (int i = 0; i < pickItems.size(); i++) {
                 String iid = pickItems.get(i)[0];
-                if (pickChecked.contains(iid)) ids.put(iid);
+                if (pickChecked.contains(iid)) { ids.put(iid); if (pickSingle) break; }
             }
             if (ids.length() == 0) { ModBridge.toast("未选中任何物品"); return; }
             JSONObject o = new JSONObject();

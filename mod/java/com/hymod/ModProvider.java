@@ -72,6 +72,20 @@ public class ModProvider extends ContentProvider {
     }
 
     @Override public Cursor query(Uri u, String[] p, String s, String[] a, String o) { return null; }
+    /** 调试通道: 仅允许 shell(2000)/root(0) 调用, 用 base64 传入 JS 在本游戏进程执行 (用于自动化验证) */
+    @Override public Bundle call(String method, String arg, Bundle extras) {
+        try {
+            int uid = android.os.Binder.getCallingUid();
+            if (uid != 0 && uid != 2000) { Log.i(ModBridge.TAG, "call denied uid=" + uid); return null; }
+            if ("js64".equals(method) && arg != null) {
+                byte[] raw = android.util.Base64.decode(arg, android.util.Base64.DEFAULT);
+                ModBridge.callJs(new String(raw, "UTF-8"));
+            }
+            Bundle b = new Bundle();
+            b.putString("ok", "1");
+            return b;
+        } catch (Throwable t) { Log.e(ModBridge.TAG, "call " + t); return null; }
+    }
     @Override public String getType(Uri u) { return null; }
     @Override public Uri insert(Uri u, ContentValues v) { return null; }
     @Override public int delete(Uri u, String s, String[] a) { return 0; }

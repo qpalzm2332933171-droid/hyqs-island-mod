@@ -5,8 +5,8 @@
  *  通信: jsb.reflection.callStaticMethod("com/hymod/ModBridge","setMenu","(Ljava/lang/String;)V",json)
  * ========================================================================= */
 (function () {
-  if (window.HYMOD && window.HYMOD.ver === "2.1.0") return;
-  var M = window.HYMOD = { ver: "2.1.0", ready: false };
+  if (window.HYMOD && window.HYMOD.ver === "3.0.0") return;
+  var M = window.HYMOD = { ver: "3.0.0", ready: false };
 
   /* ---------------- 基础工具 ---------------- */
   function log(s) {
@@ -36,20 +36,41 @@
     noHotfix: true        // 拦截热更(防止我们的脚本被服务器覆盖)
   };
   ok(function () {
-    var s = cc.sys.localStorage.getItem("hymod_cfg2");
+    var s = persistOn() ? cc.sys.localStorage.getItem("hymod_cfg2") : null;
     if (s) { var o = JSON.parse(s); for (var k in o) cfg[k] = o[k]; }
   }, "cfg");
   M.cfg = cfg;
-  function saveCfg() { ok(function () { cc.sys.localStorage.setItem("hymod_cfg2", JSON.stringify(cfg)); }); }
+  /* ---------------- 首选项持久化开关 (需求12) ---------------- */
+  function persistOn() { try { return cc.sys.localStorage.getItem("hymod_persist") === "1"; } catch (e) { return false; } }
+  M.persist = persistOn();
+  function setPersist(on) {
+    M.persist = !!on;
+    ok(function () {
+      cc.sys.localStorage.setItem("hymod_persist", on ? "1" : "0");
+      if (!on) { cc.sys.localStorage.removeItem("hymod_vals2"); cc.sys.localStorage.removeItem("hymod_cfg2"); }
+    }, "persist");
+    if (on) ok(function () {
+      cc.sys.localStorage.setItem("hymod_vals2", JSON.stringify(M.vals));
+      cc.sys.localStorage.setItem("hymod_cfg2", JSON.stringify(cfg));
+    }, "persistSave");
+    log("保存功能首选项 = " + M.persist);
+  }
+  M.persistOn = persistOn; M.setPersist = setPersist;
+  function saveCfg() { if (!M.persist) return; ok(function () { cc.sys.localStorage.setItem("hymod_cfg2", JSON.stringify(cfg)); }); }
 
   /* ---------------- 本地增益(不上传) ---------------- */
   var buff = {
     atkAdd: 0, defAdd: 0, dodgeAdd: 0, hitAdd: 0,
     moveMul: 1, atkSpdMul: 1, scoreMul: 1,
     lifeAdd: 0, lifeMul: 1, godMode: false, oneHit: false,
-    loadAdd: 0, noCost: false, teleport: false
+    loadAdd: 0, noCost: false, teleport: false,
+    freePay: false,        // 需求1: 内购点击即支付成功
+    lockBuildDur: false,   // 需求11: 锁定建筑耐久
+    limitedDungeon: false  // 需求5: 开启全部限时副本
   };
   M.buff = buff;
+  M.locked = {};           // 需求2: 锁定的角色状态 {7004:值,...}
+  M.eagle = { bloodMax: 0, friendMax: 0 };   // 需求9: 金雕活力/羁绊上限
 
   /* ---------------- 安全层 ---------------- */
   var hooksInstalled = false;
@@ -104,8 +125,73 @@
       };
       log("已挂钩 dy.http.checkUpdateInfo");
     }
+    installNoBanHooks();
   }
   M.installSafeHooks = installSafeHooks;
+
+  /* ---------------- 需求7: 去除所有本地封号校验(4015 系列) ---------------- */
+  var noBan = {};
+  function noBanAllDone() {
+    return noBan.invalid && noBan.seal && noBan.alert && noBan.logerr && noBan.scenemain;
+  }
+  function installNoBanHooks() {
+    if (noBanAllDone()) return;
+    try {
+      /* 1) dy.cache.invalid 拦截(登录响应里的封号标记) */
+      if (dy && dy.cache && !noBan.invalid) {
+        try {
+          Object.defineProperty(dy.cache, "invalid", {
+            get: function () { return 0; },
+            set: function (v) { log("已拦截 dy.cache.invalid = " + v); },
+            configurable: true
+          });
+          noBan.invalid = 1;
+          log("dy.cache.invalid 已拦截");
+        } catch (e) { noBan.invalid = 1; log("invalid 拦截失败 " + e); }
+      }
+      /* 2) HYCommon.sealTip 置空(封号标记+清号) */
+      if (window.HYCommon && HYCommon.sealTip && !noBan.seal) {
+        noBan.seal = 1;
+        HYCommon.sealTip = function (e, t) { log("已拦截 sealTip(" + e + ", " + t + ")"); };
+        log("HYCommon.sealTip 已置空");
+      }
+      /* 3) HYCommon.alert 过滤 4015 系列弹窗 */
+      if (window.HYCommon && HYCommon.alert && !noBan.alert) {
+        var rawAlert = HYCommon.alert, t15 = "";
+        ok(function () { t15 = dy.error_profile["4015"].TITLE; });
+        HYCommon.alert = function (title) {
+          try {
+            var s = String(title || "");
+            if ((t15 && s.indexOf(t15) === 0) || s.indexOf("4015") >= 0) { log("已拦截封号弹窗: " + s); return; }
+          } catch (e) {}
+          return rawAlert.apply(this, arguments);
+        };
+        noBan.alert = 1;
+        log("HYCommon.alert 4015 过滤已安装 (title=" + t15 + ")");
+      }
+      /* 4) dy.http.logError 不上报 4015 系列 */
+      if (dy && dy.http && dy.http.logError && !noBan.logerr) {
+        var rawLogErr = dy.http.logError;
+        dy.http.logError = function (code) {
+          try { if (/4015/.test(String(code))) { log("已拦截 logError(" + code + ")"); return; } } catch (e) {}
+          return rawLogErr.apply(this, arguments);
+        };
+        noBan.logerr = 1;
+      }
+      /* 5) SceneMain 本地校验方法覆写(_checkMainJs / _checkIsCheated) */
+      if (!noBan.scenemain) {
+        var cls = null;
+        try { cls = cc.js && cc.js.getClassByName && cc.js.getClassByName("SceneMain"); } catch (e) {}
+        if (cls && cls.prototype) {
+          cls.prototype._checkMainJs = function () { log("本地 main.js 校验已移除"); };
+          cls.prototype._checkIsCheated = function () { log("本地作弊检测已移除"); };
+          noBan.scenemain = 1;
+          log("SceneMain 封号校验方法已覆写");
+        }
+      }
+    } catch (e) { log("installNoBanHooks " + e); }
+  }
+  M.installNoBanHooks = installNoBanHooks;
   /* ---------------- 物品 ---------------- */
   var SPECIAL = {
     "100000": "书页(科技点)", "100002": "求生精选", "100003": "天赋原石",
@@ -331,9 +417,233 @@
       };
       log("已挂钩 HYEquip.updateDuration (无限耐久)");
     }
+    installPayHooks();
+    installBuildDurHook();
+    installAttrLockHook();
+    installLimitedHooks();
     log("战斗属性 hook 已安装 | getFightBuff版本=" + String(HYPlayer.getFightBuff).substr(0, 70).replace(/\s+/g, " "));
   }
   M.installGameHooks = installGameHooks;
+
+  /* ---------------- 需求1: 内购直接成功 ---------------- */
+  function installPayHooks() {
+    if (H.pay) return; H.pay = true;
+    if (dy && dy.http && dy.http.tryPay) {
+      var rawTryPay = dy.http.tryPay;
+      dy.http.tryPay = function (cb, ware) {
+        if (buff.freePay) {
+          log("内购模拟成功: " + (ware && ware.ID));
+          try { cb && cb({ event: dy.iap.EVENT_PAY_SUCC, param: ware }); } catch (e) { log("pay cb " + e); }
+          return;
+        }
+        return rawTryPay.apply(this, arguments);
+      };
+      log("已挂钩 dy.http.tryPay (内购直接成功)");
+    }
+    if (window.HYCommon && HYCommon.tryCostADCoin) {
+      var rawAD = HYCommon.tryCostADCoin;
+      HYCommon.tryCostADCoin = function (cb, ware) {
+        if (buff.freePay) {
+          log("广告币内购模拟成功: " + (ware && ware.ID));
+          try { cb && cb({ event: dy.iap.EVENT_PAY_SUCC, param: ware, ad: 1 }); } catch (e) {}
+          return;
+        }
+        return rawAD.apply(this, arguments);
+      };
+    }
+  }
+
+  /* ---------------- 需求11: 建筑耐久锁定 ---------------- */
+  function installBuildDurHook() {
+    if (H.buildDur) return; H.buildDur = true;
+    if (window.HYBuild && HYBuild.updateDuration) {
+      var rawBUD = HYBuild.updateDuration;
+      HYBuild.updateDuration = function (e, t) {
+        try {
+          if (buff.lockBuildDur) {
+            if (e && typeof e === "object") {
+              var keep = {}, cut = 0;
+              for (var k in e) { if (e[k] < 0) cut++; else keep[k] = e[k]; }
+              if (cut) log("建筑耐久消耗已拦截(map x" + cut + ")");
+              if (!Object.keys(keep).length) return;
+              return rawBUD.call(this, keep);
+            }
+            if (t < 0) { log("建筑耐久消耗已拦截"); return; }
+          }
+        } catch (err) {}
+        return rawBUD.apply(this, arguments);
+      };
+      log("已挂钩 HYBuild.updateDuration (建筑耐久锁)");
+    }
+  }
+
+  /* ---------------- 需求2: 角色状态锁定 ---------------- */
+  var ATTR_MAXKEY = { "7004": "7046", "7005": "7047", "7006": "7048", "7000": "7044", "7001": "7045" };
+  var ATTR_NAMES = { "7004": "外伤", "7005": "内伤", "7006": "饥饿", "7000": "精神", "7001": "失眠" };
+  function lockAttrCurrent(id) {
+    var v = ~~ok(function () { return HYData.get("core.role." + id); });
+    M.locked[id] = v;
+    T("已锁定" + ATTR_NAMES[id] + " = " + v);
+    log("锁定状态 " + id + " = " + v);
+    return v;
+  }
+  function restoreLockedAttrs() {
+    for (var id in ATTR_MAXKEY) {
+      var lv = M.locked[id];
+      if (lv === undefined || lv === null) continue;
+      if (~~HYData.get("core.role." + id) !== ~~lv) {
+        HYData.set("core.role." + id, lv);
+        (function (i2, v2) { ok(function () { dy.notify.post(dy.K_UPDATE_STATE, { ID: i2, CUR: v2, MAX: HYData.get("core.role." + ATTR_MAXKEY[i2]) }); }); })(id, lv);
+      }
+    }
+  }
+  function installAttrLockHook() {
+    if (H.attrLock) return; H.attrLock = true;
+    if (window.HYPlayer && HYPlayer._correctRoleState) {
+      var rawCRS = HYPlayer._correctRoleState;
+      HYPlayer._correctRoleState = function (e) {
+        var r = rawCRS.apply(this, arguments);
+        try { restoreLockedAttrs(); } catch (err) { log("locked restore " + err); }
+        return r;
+      };
+      log("已挂钩 HYPlayer._correctRoleState (状态锁定)");
+    }
+  }
+  function setRoleAttr(id, v) {
+    v = parseInt(v, 10);
+    if (isNaN(v)) { T("数值无效"); return; }
+    HYData.set("core.role." + id, v);
+    ok(function () { dy.notify.post(dy.K_UPDATE_STATE, { ID: id, CUR: v, MAX: HYData.get("core.role." + ATTR_MAXKEY[id]) }); });
+    if (cfg.autoSave) ok(function () { HYData.trySave(); });
+    T(ATTR_NAMES[id] + " 已改为 " + v);
+  }
+  function setRoleAttrMax(id, v) {
+    var mk = ATTR_MAXKEY[id];
+    if (!mk) return;
+    v = parseInt(v, 10);
+    if (isNaN(v)) { T("数值无效"); return; }
+    HYData.set("core.role." + mk, v);
+    ok(function () { dy.notify.post(dy.K_UPDATE_STATE, { ID: id, CUR: HYData.get("core.role." + id), MAX: v }); });
+    if (cfg.autoSave) ok(function () { HYData.trySave(); });
+    T(ATTR_NAMES[id] + "上限 已改为 " + v);
+  }
+
+  /* ---------------- 需求5: 限时副本 ---------------- */
+  var LIMITED_POTS = { "4003": 1, "4004": 1, "4005": 1, "4006": 1 };
+  var LIMITED_ITEMS = ["4423", "4444", "4449", "4450"];
+  var POT_SPREAD = {
+    "4003": { x: 258, y: -460 },
+    "4004": { x: 302, y: -505 },
+    "4005": { x: 196, y: -460 },
+    "4006": { x: 258, y: -528 }
+  };
+  function hookPotPanelClass() {
+    if (H.potPanel) return true;
+    var cls = null;
+    try { cls = cc.js && cc.js.getClassByName && cc.js.getClassByName("PanelAreaPot"); } catch (e) {}
+    if (!cls || !cls.prototype || !cls.prototype.init) return false;
+    var rawInit = cls.prototype.init;
+    cls.prototype.init = function (delegate, potId) {
+      rawInit.apply(this, arguments);
+      try {
+        if (buff.limitedDungeon && POT_SPREAD[String(potId)] && this.node) {
+          var p = POT_SPREAD[String(potId)];
+          this.node.setPosition(p.x, p.y);
+        }
+      } catch (e) {}
+    };
+    H.potPanel = 1;
+    log("PanelAreaPot.init 已挂钩(限时副本坐标分散)");
+    return true;
+  }
+  function installLimitedHooks() {
+    if (H.limited) return; H.limited = true;
+    if (window.HYWorld && HYWorld.isPotShow) {
+      var rawShow = HYWorld.isPotShow;
+      HYWorld.isPotShow = function (id) {
+        if (buff.limitedDungeon && LIMITED_POTS[id]) {
+          try {
+            var prof = this.fetchPotProfile(id);
+            if (!prof) return false;
+            var code = prof.MAP_CODE || 0;
+            if (MapManager.getInstance().getCurrentMapCode() != code) return false;
+            return true;
+          } catch (e) { return true; }
+        }
+        return rawShow.apply(this, arguments);
+      };
+      log("已挂钩 HYWorld.isPotShow (限时副本)");
+    }
+    if (window.HYWorld && HYWorld._checkUnlock) {
+      var rawUnlock = HYWorld._checkUnlock;
+      HYWorld._checkUnlock = function (id) {
+        if (buff.limitedDungeon && LIMITED_POTS[id]) return true;
+        return rawUnlock.apply(this, arguments);
+      };
+    }
+    hookPotPanelClass();
+  }
+  function spreadLimitedPots() {
+    var scene = ok(function () { return cc.director.getScene(); });
+    if (!scene) return 0;
+    var n = 0, stack = [scene];
+    while (stack.length) {
+      var nd = stack.pop();
+      try {
+        var ch = nd._children;
+        if (ch) for (var i = 0; i < ch.length; i++) stack.push(ch[i]);
+        var comps = nd._components;
+        if (comps) for (var j = 0; j < comps.length; j++) {
+          var c = comps[j];
+          if (c && c.mAreaPot && POT_SPREAD[String(c.mAreaPot)]) {
+            var p = POT_SPREAD[String(c.mAreaPot)];
+            nd.setPosition(p.x, p.y);
+            n++;
+          }
+        }
+      } catch (e) {}
+    }
+    return n;
+  }
+  function setLimitedDungeons(on, silent) {
+    buff.limitedDungeon = !!on;
+    var ids = ["4003", "4004", "4005", "4006"];
+    for (var i = 0; i < ids.length; i++) {
+      (function (id) {
+        ok(function () {
+          var d = HYWorld.fetchPotData(id);
+          if (!d) return;
+          d.SHOW = on ? 1 : 0;
+          HYWorld.updatePotData(id, d);
+        }, "limited " + id);
+      })(ids[i]);
+    }
+    if (on) {
+      var need = 0;
+      if (!silent) {
+        var give = {};
+        for (var k = 0; k < LIMITED_ITEMS.length; k++) {
+          var liid = LIMITED_ITEMS[k];
+          var lcur = ~~HYData.get("core.bag." + liid) + ~~HYData.get("core.warehouse." + liid);
+          if (lcur < 20) { give[liid] = 20 - lcur; need++; }
+        }
+        if (need > 0) {
+          ok(function () { HYBag.updateAttr(give); }, "limited items");
+          refreshBag();
+        }
+        T("限时副本已开启" + (need > 0 ? "(入场道具已补足到20)" : "(入场道具已充足)"));
+      }
+    } else if (!silent) T("限时副本已关闭");
+    hookPotPanelClass();
+    spreadLimitedPots();
+    ok(function () { HYWorld.refreshPotsShow(); });
+    ok(function () { dy.notify.post(dy.K_REFRESH_POT_NODE); });
+    for (var m = 0; m < ids.length; m++) (function (id) { ok(function () { dy.notify.post(dy.K_REFRESH_ONE_POT_NODE, id); }); })(ids[m]);
+    setTimeout(spreadLimitedPots, 800);
+    setTimeout(spreadLimitedPots, 2000);
+    if (cfg.autoSave) ok(function () { HYData.trySave(); });
+    log("setLimitedDungeons " + on);
+  }
 
   /* ---------------- 装备强化 ---------------- */
   var equip = { on: false, atkMul: 3, defMul: 3, disMul: 2, critAdd: 30 };
@@ -606,7 +916,7 @@
   }
   M.clearCooldowns = clearCooldowns;
 
-  function clearCheatFlags() {
+  function clearCheatFlags(silent) {
     var keys = ["base.cheatAchievement", "base.achieve_fake_profile", "base.cheatBuildProducts",
       "base.cheatGoOutMax", "base.cheatSelectGift", "base.cheatBuildProduct",
       "base.coin.adCoin.illegal", "base.cheatMail", "base.cheatQueryMail", "base.cheatMailMd5",
@@ -615,19 +925,618 @@
     var n = 0;
     keys.forEach(function (k) { if (ok(function () { return HYData.get(k); })) { HYData.set(k, 0); n++; log("清除 " + k); } });
     ok(function () { HYData.trySave(); });
-    T("已清除 " + n + " 个标记");
+    if (!silent) T("已清除 " + n + " 个标记");
   }
   M.clearCheatFlags = clearCheatFlags;
   /* ---------------- 菜单结构 ---------------- */
+
+  /* ================================================================
+   *  v3.0.0 新增功能 (需求 1~12)
+   *  - 需求1  内购直接成功 / 一键发全部礼包
+   *  - 需求2  外伤/内伤/饥饿/精神/失眠 数值与上限修改 + 锁定
+   *  - 需求3  选择游戏天数(成就/天气/季节/日常刷新全部联动)
+   *  - 需求4  当前副本进度检测与修改
+   *  - 需求5  全部限时副本开关
+   *  - 需求6  成就选择器(原版完成接口)
+   *  - 需求7  本地封号校验清除(补充: 场景主类覆写 / 作弊键写入拦截)
+   *  - 需求8  剧情/生物/物品图鉴一键解锁
+   *  - 需求9  金雕 活力/羁绊 及上限
+   *  - 需求10 狼 生命/饥饿/忠诚 及上限
+   *  - 需求11 建筑耐久锁定
+   *  - 需求12 功能首选项持久化开关
+   * ================================================================ */
+
+  /* ---- 需求7 补充: 场景主类校验方法覆写(实例定位 -> 原型级覆写) ---- */
+  function hookSceneMainNow() {
+    if (noBan.scenemain) return true;
+    var scene = ok(function () { return cc.director.getScene(); });
+    if (!scene) return false;
+    var stack = [scene], found = null;
+    while (stack.length && !found) {
+      var nd = stack.pop();
+      try {
+        var comps = nd._components;
+        if (comps) for (var i = 0; i < comps.length; i++) {
+          var c = comps[i];
+          if (c && typeof c._checkMainJs === "function" && typeof c._checkIsCheated === "function") { found = c; break; }
+        }
+        var ch = nd._children;
+        if (ch) for (var j = 0; j < ch.length; j++) stack.push(ch[j]);
+      } catch (e) {}
+    }
+    if (!found) return false;
+    try {
+      var proto = Object.getPrototypeOf(found) || found;
+      proto._checkMainJs = function () { log("本地 main.js 校验已移除"); };
+      proto._checkIsCheated = function () { log("本地作弊检测已移除"); };
+      noBan.scenemain = 1;
+      log("SceneMain 校验方法已覆写(原型级)");
+      return true;
+    } catch (e) { log("hookSceneMainNow " + e); }
+    return false;
+  }
+
+  /* ---- 需求3: 选择游戏天数 ---- */
+  function setGameDay(target) {
+    target = parseInt(target, 10);
+    if (isNaN(target) || target < 1) { T("请输入有效的天数"); return; }
+    target = Math.min(target, 99999);
+    var old = ok(function () { return HYTime.day(); }) || 1;
+    if (target === old) { T("当前已经是第 " + old + " 天"); return; }
+    var delta = target - old;
+    var tl = (ok(function () { return HYTime.timeline(); }) || 0) + delta * 86400;
+    ok(function () { HYData.set("core.timeline", tl); });
+    ok(function () { HYTime.mTimeline = tl; });
+    if (delta > 1) ok(function () {
+      /* 先把累计器 core.achieve.* 同步到当前计数, 保证补发天数一定计入(ONCE 成就按累计器取 max) */
+      var ap = achieveProfileMap();
+      for (var aid in ap) {
+        var pa = ap[aid];
+        if (!pa || pa.TYPE != 2 || !pa.DEMAND || pa.DEMAND.type != 1) continue;
+        var bc = HYData.get("base.achieve." + aid);
+        var ac = HYData.get("core.achieve." + aid) || 0;
+        var want = Math.max((bc && bc.count) || 0, ac);
+        if (ac < want) HYData.set("core.achieve." + aid, want);
+      }
+      HYAchieve.add(2, 1, delta - 1);
+    }, "dayAch");
+    ok(function () { HYEvent.setUpdateTime(dy.K_REFRESH_FOR_DAY, target - 1); });
+    ok(function () { HYEvent.setUpdateTime(dy.K_UPDATE_TEMPERATURE, 0); });
+    ok(function () { HYEvent.setUpdateTime(dy.K_UPDATE_WEATHER, 0); });
+    ok(function () { HYEvent.setUpdateTime(dy.K_UPDATE_SEASON, 0); });
+    if (delta > 0) ok(function () { HYEvent._tryRefreshForDay(); }, "dayRefresh");
+    ok(function () { dy.notify.post(dy.K_UPDATE_TIME, HYTime.getTime()); });
+    ok(function () { dy.notify.post(dy.K_UPDATE_TEMPERATURE, HYNature.temperature()); });
+    ok(function () { dy.notify.post(dy.K_UPDATE_SEASON, HYNature.season()); });
+    ok(function () { dy.notify.post(dy.K_UPDATE_WEATHER, HYNature.weather()); });
+    if (cfg.autoSave) ok(function () { HYData.trySave(); });
+    M.dayInfo = { day: target, old: old, time: Date.now() };
+    T("天数已设置: 第 " + old + " 天 -> 第 " + target + " 天");
+    log("setGameDay " + old + " -> " + target + " timeline=" + tl + " delta=" + delta);
+    setTimeout(function () { ok(function () { pushMenu(); }); }, 200);
+  }
+
+  /* ---- 需求4: 当前副本进度 ---- */
+  function currentPotId() {
+    var id = ok(function () { return HYData.cache && HYData.cache.currentPot; });
+    if (!id) id = ok(function () { return HYData.get("core.world.startPot"); });
+    return id ? String(id) : "";
+  }
+  function potName(id) {
+    var s = "";
+    ok(function () {
+      var pf = dy.profile.getById("Profiles/pot_profile", id);
+      if (pf && pf.NAME) s = pf.NAME[lang()] || pf.NAME.cn || "";
+    });
+    return s || ("位置" + id);
+  }
+  function detectPot(silent) {
+    var id = currentPotId();
+    if (!id) { M.potInfo = null; if (!silent) T("没有检测到当前位置"); return null; }
+    var prof = ok(function () { return HYWorld.fetchPotProfile(id); });
+    if (!prof) { M.potInfo = null; if (!silent) T("位置 " + id + " 没有配置档"); return null; }
+    var type = String(prof.TYPE), info = { id: id, name: potName(id), type: type, kind: "", cur: 0, total: 0 };
+    var d = ok(function () { return HYWorld.fetchPotData(id); });
+    if (type === "101" && d) {
+      info.kind = "dungeon";
+      info.cur = ~~d.REACH;
+      info.total = (d.SERIES && d.SERIES.length) || 0;
+    } else if (type === "301" && d) {
+      info.kind = "ship";
+      info.cur = ~~d.SREACH;
+      info.total = (d.SERIES && d.SERIES.length) || 0;
+    }
+    M.potInfo = info;
+    if (!silent) {
+      if (info.kind) T(info.name + " 进度 " + info.cur + "/" + info.total + " (可改 0~" + info.total + ")");
+      else T(info.name + " 没有进度");
+      setTimeout(function () { ok(function () { pushMenu(); }); }, 200);
+    }
+    return info;
+  }
+  function setPotProgress(v) {
+    var info = M.potInfo || detectPot(true);
+    if (!info) { T("请先检测当前位置"); return; }
+    if (!info.kind) { T(info.name + " 没有进度可修改"); return; }
+    v = parseInt(v, 10);
+    if (isNaN(v)) { T("请输入有效的进度值"); return; }
+    v = Math.max(0, Math.min(info.total, v));
+    var d = ok(function () { return HYWorld.fetchPotData(info.id); });
+    if (!d) { T("读取副本数据失败"); return; }
+    if (info.kind === "dungeon") d.REACH = v; else d.SREACH = v;
+    ok(function () { HYWorld.updatePotData(info.id, d); });
+    ok(function () { dy.notify.post(dy.K_REFRESH_ONE_POT_NODE, info.id); });
+    ok(function () { dy.notify.post(dy.K_REFRESH_POT_NODE); });
+    ok(function () { dy.notify.post(dy.K_REFRESH_TITLE_INFO); });
+    if (cfg.autoSave) ok(function () { HYData.trySave(); });
+    info.cur = v;
+    T(info.name + " 进度已改为 " + v + "/" + info.total);
+    log("setPotProgress " + info.id + " = " + v + "/" + info.total);
+    setTimeout(function () { ok(function () { pushMenu(); }); }, 200);
+  }
+  function openPotPicker() {
+    var info = detectPot(true);
+    if (!info) { T("请先检测当前位置"); return; }
+    if (!info.kind) { T(info.name + " 没有进度"); return; }
+    var items = [];
+    for (var i = 0; i <= info.total; i++) items.push({ id: String(i), name: i + "/" + info.total, cat: info.name });
+    bridge("openItemPicker", "(Ljava/lang/String;)V", jstr({
+      title: info.name + " 进度 (" + info.cur + "/" + info.total + ")",
+      count: "1", action: "potprog", single: true, hideTarget: true, okText: "设为该进度", items: items
+    }));
+  }
+
+  /* ---- 需求6: 成就 ---- */
+  function achieveProfileMap() {
+    return ok(function () { return dy.profile.getAll("Profiles/achieve_profile"); }) || {};
+  }
+  function achieveName(a, id) {
+    return (a && a.NAME && (a.NAME[lang()] || a.NAME.cn)) || ("成就" + id);
+  }
+  function achieveMaxCount(a) {
+    var v = a && a.DEMAND && a.DEMAND.value;
+    if (!v || !v.length) return 1;
+    return v[v.length - 1];
+  }
+  function completeAchieve(id, count) {
+    var p = achieveProfileMap()[id];
+    if (!p) return false;
+    var mx = achieveMaxCount(p);
+    var c = (count === undefined || count === null || isNaN(parseInt(count, 10))) ? mx : Math.max(0, parseInt(count, 10));
+    ok(function () { HYAchieve._genAchieve(id, p, c); }, "achv" + id);
+    return true;
+  }
+  function completeAllAchieves() {
+    var p = achieveProfileMap(), n = 0;
+    for (var id in p) {
+      var a = p[id];
+      if (!a || !a.DEMAND) continue;
+      ok(function () { HYAchieve._genAchieve(id, p[id], achieveMaxCount(p[id])); }, "achv" + id);
+      n++;
+    }
+    ok(function () { HYData.trySave(); });
+    T("已完成 " + n + " 项成就(可在游戏成就界面领奖)");
+    log("completeAllAchieves " + n);
+  }
+  function openAchievePicker() {
+    var p = achieveProfileMap(), items = [];
+    for (var id in p) {
+      var a = p[id];
+      if (!a || !a.DEMAND) continue;
+      var cat = a.TYPE == 1 ? "战斗" : a.TYPE == 2 ? "生存" : "探索";
+      items.push({ id: id, name: achieveName(a, id), cat: cat });
+    }
+    if (!items.length) { T("成就表未加载"); return; }
+    bridge("openItemPicker", "(Ljava/lang/String;)V", jstr({
+      title: "成就选择器", count: "1", action: "achieve", single: false, hideTarget: true, okText: "完成成就", items: items
+    }));
+  }
+
+  /* ---- 需求8: 图鉴 ---- */
+  function atlasInfo() {
+    var s = "";
+    ok(function () {
+      var A = HYData.get("base.atlas") || {};
+      var f = function (x) { var n = 0; for (var k in (x || {})) n++; return n; };
+      s = "已解锁 剧情" + f(A.FOR_S) + " / 生物" + f(A.FOR_B) + " / 物品" + f(A.FOR_I);
+    });
+    return s || "图鉴数据未加载";
+  }
+  function unlockAtlas(kind) {
+    var src = ok(function () {
+      return dy.profile.getAll("Profiles/" + (kind === "FOR_S" ? "image_story_profile" : kind === "FOR_B" ? "image_biology_profile" : "image_item_profile"));
+    }) || {};
+    var items = ok(function () { return dy.profile.getAll("Profiles/item_profile"); }) || {};
+    var n = 0;
+    for (var id in src) {
+      if (kind === "FOR_I") { var it0 = items[id]; if (!it0 || it0.ISFISH) continue; }
+      if (HYData.get("base.atlas." + kind + "." + id)) continue;
+      HYData.set("base.atlas." + kind + "." + id, 1);
+      n++;
+      if (kind === "FOR_S") HYAchieve.add(3, 4, 1);
+      else if (kind === "FOR_B") {
+        HYAchieve.add(3, 5, 1);
+        if (items[id] && items[id].ISFISH) HYAchieve.add(3, 7, 1);
+      } else HYAchieve.add(3, 6, 1);
+    }
+    ok(function () { HYData.trySave(); });
+    M.atlasText = atlasInfo();
+    log("unlockAtlas " + kind + " +" + n);
+    return n;
+  }
+  function unlockAllAtlas() {
+    var a = unlockAtlas("FOR_S"), b = unlockAtlas("FOR_B"), c = unlockAtlas("FOR_I");
+    T("图鉴已解锁: 剧情+" + a + " 生物+" + b + " 物品+" + c);
+    setTimeout(function () { ok(function () { pushMenu(); }); }, 200);
+  }
+
+  /* ---- 需求9: 金雕 ---- */
+  function installEagleHooks() {
+    if (H.eagle) return; H.eagle = 1;
+    if (window.HYEagle && HYEagle.updateBlood) {
+      var rawBlood = HYEagle.updateBlood;
+      HYEagle.updateBlood = function (e) {
+        if (M.eagle.bloodMax > 0) {
+          /* 自定义上限生效时完全接管加减与钳制(游戏原函数按羁绊等级封顶, 会无视自定义上限) */
+          var ed = parseInt(e, 10); if (isNaN(ed)) ed = 0;
+          var et = (+HYData.get("base.eagle.blood") || 0) + ed;
+          if (et > M.eagle.bloodMax) et = M.eagle.bloodMax;
+          var elo = Math.min(10, M.eagle.bloodMax);
+          if (et < elo) et = elo;
+          HYData.set("base.eagle.blood", et);
+          return HYData.get("base.eagle.blood");
+        }
+        var r = rawBlood.apply(this, arguments);
+        try {
+          var b = +HYData.get("base.eagle.blood");
+          if (b < 0) { HYData.set("base.eagle.blood", 0); r = 0; }
+        } catch (err) {}
+        return r;
+      };
+      log("已挂钩 HYEagle.updateBlood");
+    }
+    if (window.HYEagle && HYEagle.updateFriendship) {
+      var rawFri = HYEagle.updateFriendship;
+      HYEagle.updateFriendship = function (e) {
+        var r = rawFri.apply(this, arguments);
+        try {
+          if (M.eagle.friendMax > 0) {
+            var f = +HYData.get("base.eagle.friendship");
+            if (f > M.eagle.friendMax) { HYData.set("base.eagle.friendship", M.eagle.friendMax); r = M.eagle.friendMax; }
+          }
+        } catch (err) {}
+        return r;
+      };
+      log("已挂钩 HYEagle.updateFriendship");
+    }
+  }
+  function setEagle(vals) {
+    var e = M.eagle;
+    if (vals.friendMax !== undefined) e.friendMax = Math.max(0, parseInt(vals.friendMax, 10) || 0);
+    if (vals.bloodMax !== undefined) e.bloodMax = Math.max(0, parseInt(vals.bloodMax, 10) || 0);
+    if (vals.friendship !== undefined) {
+      var f = Math.max(0, parseInt(vals.friendship, 10) || 0);
+      if (e.friendMax > 0) f = Math.min(f, e.friendMax);
+      HYData.set("base.eagle.friendship", f);
+    }
+    if (vals.blood !== undefined) {
+      var b = Math.max(0, parseInt(vals.blood, 10) || 0);
+      var mx = e.bloodMax > 0 ? e.bloodMax : (100 + 15 * (ok(function () { return HYEagle.getFriendshipLevel(); }) || 1));
+      if (b > mx) b = mx;
+      HYData.set("base.eagle.blood", b);
+    }
+    ok(function () { HYData.trySave(); });
+    T("金雕: 活力 " + HYData.get("base.eagle.blood") + "/" + (e.bloodMax > 0 ? e.bloodMax : "默认") +
+      "  羁绊 " + HYData.get("base.eagle.friendship") + "/" + (e.friendMax > 0 ? e.friendMax : "默认"));
+  }
+
+  /* ---- 需求10: 狼 ---- */
+  function wolfHas() { return !!ok(function () { return HYPet.hasPet(HYPet.PT_WOLF); }); }
+  function setWolf(vals) {
+    if (!wolfHas()) { T("还没有宠物狼"); return; }
+    var p = ok(function () { return HYData.get("core.pets.1"); });
+    if (!p) { T("还没有宠物狼"); return; }
+    if (vals.lifemax !== undefined) p["7002"] = Math.max(1, parseInt(vals.lifemax, 10) || 0);
+    if (vals.hungermax !== undefined) p["7048"] = Math.max(1, parseInt(vals.hungermax, 10) || 0);
+    if (vals.royalmax !== undefined) p["7049"] = Math.max(1, parseInt(vals.royalmax, 10) || 0);
+    if (vals.life !== undefined) p["7003"] = Math.max(0, parseInt(vals.life, 10) || 0);
+    if (vals.hunger !== undefined) p["7006"] = Math.max(0, parseInt(vals.hunger, 10) || 0);
+    if (vals.royal !== undefined) p["7028"] = Math.max(0, parseInt(vals.royal, 10) || 0);
+    ok(function () { HYPet._correctState(p); });
+    HYData.set("core.pets.1", p);
+    ok(function () { HYData.trySave(); });
+    T("狼: 生命 " + p["7003"] + "/" + p["7002"] + " 饥饿 " + p["7006"] + "/" + p["7048"] + " 忠诚 " + p["7028"] + "/" + p["7049"]);
+  }
+
+  /* ---- 需求11: 建筑耐久 ---- */
+  function installBuildDurSetHook() {
+    if (H.buildDurSet || !window.HYData || !HYData.set) return;
+    H.buildDurSet = 1;
+    var rawSetB = HYData.set;
+    HYData.set = function (k, v) {
+      try {
+        if (buff.lockBuildDur && typeof k === "string" && /^core\.builds\.[^.]+\.DURATION$/.test(k) && v !== "MAX") {
+          var old = HYData.get(k);
+          if (old === "MAX") { log("建筑耐久锁定: 拦截 " + k + " (MAX)"); return old; }
+          if (typeof old === "number" && typeof v === "number" && v < old) {
+            log("建筑耐久锁定: 拦截 " + k + " " + old + " -> " + v);
+            return old;
+          }
+        }
+      } catch (e) {}
+      return rawSetB.apply(this, arguments);
+    };
+    log("HYData.set 建筑耐久锁已安装");
+  }
+  function fixAllBuilds() {
+    var n = 0;
+    ok(function () {
+      var b = HYData.get("core.builds") || {};
+      for (var id in b) {
+        var mx = HYData.get("core.builds." + id + ".DURATION_MAX");
+        if (mx && mx !== "MAX" && HYData.get("core.builds." + id + ".LEVEL") > 0) {
+          var cur = HYData.get("core.builds." + id + ".DURATION");
+          if (cur !== "MAX") { HYData.set("core.builds." + id + ".DURATION", mx); n++; }
+        }
+      }
+    });
+    ok(function () { HYData.trySave(); });
+    T("已修复 " + n + " 座建筑耐久至上限");
+  }
+
+  /* ---- 需求12: 首选项持久化 ---- */
+  function applyPersist(val) {
+    var on = (val === "1" || val === true);
+    setPersist(on);
+    if (!on) {
+      M.vals = {}; M.saveVals();
+      cfg.safeLog = true; cfg.safeCheckItem = true; cfg.safeUpdate = false; cfg.autoSave = true; cfg.noHotfix = true;
+    } else {
+      M.vals["persist"] = "1";
+      M.saveVals(); saveCfg();
+    }
+    T(M.persist ? "保存功能首选项: 开启 (重启后保留)" : "保存功能首选项: 关闭 (重启后不保留)");
+    setTimeout(function () { ok(function () { pushMenu(); }); }, 200);
+  }
+
+  /* ---- 需求1: 一键发放全部商店礼包 ---- */
+  function payAllWares() {
+    var n = 0;
+    ok(function () {
+      HYCommon._initShopProfiles();
+      var lists = [HYCommon.mShopProfileForAccount, HYCommon.mShopProfileForGame, HYCommon.mShopProfileForLimit];
+      for (var i = 0; i < lists.length; i++) {
+        var L = lists[i];
+        if (!L) continue;
+        for (var k in L) {
+          var w = L[k];
+          if (!w || w.ID === undefined) continue;
+          if (!w.PRICE && !w.INCLUDE) continue;
+          HYCommon.gainForPurchase(w.ID);
+          n++;
+        }
+      }
+    }, "payAll");
+    T("已发放 " + n + " 个商店礼包(含月卡/永久包)");
+    log("payAllWares " + n);
+  }
+
+  /* ---- 新菜单 ---- */
+  function v3Tabs(tabs) {
+    var ai, aid, anm;
+    var vt = [];   /* v3 新增页先收集, 最后插入到"物品"页之后 */
+    /* 商店 */
+    vt.push({ title: "商店", items: [
+      { type: "switch", id: "freePay", title: "内购直接成功(人民币礼包/月卡)", val: sv("freePay", buff.freePay) },
+      { type: "button", id: "pay_all", title: "一键获得全部商店礼包", desc: "走游戏原版发奖接口: 月卡/永久武器食物材料医疗包/每日礼包" },
+      { type: "text", title: "开着开关时, 商店里所有人民币商品点击购买立即成功" },
+      { type: "text", title: "永久礼包(115-118)每次新开局自动发放, 月卡发到邮箱" }
+    ]});
+    /* 状态(需求2) */
+    var st = [{ type: "text", title: "改完点最下方[应用数值修改]; 锁定后游戏内变化会被持续写回" }];
+    var ATTRS = [["7004", "外伤"], ["7005", "内伤"], ["7006", "饥饿"], ["7000", "精神"], ["7001", "失眠"]];
+    for (ai = 0; ai < ATTRS.length; ai++) {
+      aid = ATTRS[ai][0]; anm = ATTRS[ai][1];
+      st.push({ type: "input", id: "av_" + aid, title: anm + " 当前值", val: String(nv("av_" + aid, ~~ok(function () { return HYData.get("core.role." + aid); }) || 0)) });
+      st.push({ type: "input", id: "am_" + aid, title: anm + " 上限", val: String(nv("am_" + aid, ~~ok(function () { return HYData.get("core.role." + ATTR_MAXKEY[aid]); }) || 0)) });
+      st.push({ type: "switch", id: "lk_" + aid, title: "锁定 " + anm, val: sv("lk_" + aid, M.locked[aid] !== undefined) });
+    }
+    st.push({ type: "button", id: "attr_apply", title: "应用数值修改" });
+    st.push({ type: "switch", id: "lockAllAttrs", title: "一键锁定全部当前值", val: sv("lockAllAttrs", false) });
+    vt.push({ title: "状态", items: st });
+    /* 天数(需求3) */
+    vt.push({ title: "天数", items: [
+      { type: "text", title: "当前: 第 " + (ok(function () { return HYTime.day(); }) || "?") + " 天" + (M.dayInfo ? ("  (上次设置 -> " + M.dayInfo.day + ")") : "") },
+      { type: "input", id: "day_set", title: "目标天数", val: String(nv("day_set", 2)) },
+      { type: "button", id: "day_apply", title: "设置天数", desc: "同时联动: 生存成就/日常刷新/商店重置/怪物潮/温度/天气/季节" },
+      { type: "button", id: "day_add7", title: "+7 天" },
+      { type: "button", id: "day_add30", title: "+30 天" }
+    ]});
+    /* 副本(需求4) */
+    var pi = M.potInfo;
+    var potText = pi ? (pi.name + "  " + (pi.kind ? (pi.cur + "/" + pi.total) : "没有进度")) : "尚未检测";
+    vt.push({ title: "副本", items: [
+      { type: "text", title: "当前位置: " + potText },
+      { type: "button", id: "pot_detect", title: "检测当前所在位置" },
+      { type: "button", id: "pot_picker", title: "修改当前副本进度(选择器)", desc: "自动检测副本; 营地等没有进度的位置会直接提示" },
+      { type: "input", id: "pot_val", title: "或直接输入进度值", val: String(nv("pot_val", 0)) },
+      { type: "button", id: "pot_apply", title: "应用输入的进度" }
+    ]});
+    /* 限时副本(需求5) */
+    vt.push({ title: "限时副本", items: [
+      { type: "switch", id: "limitedDungeon", title: "开启全部限时副本", val: sv("limitedDungeon", buff.limitedDungeon) },
+      { type: "text", title: "包含: 秘境(七夕)/双生遗迹/红石遗迹/迷情宫殿 共4个节日限定副本" },
+      { type: "text", title: "开启后地图上显示并可进入, 自动补入场道具各20个" }
+    ]});
+    /* 成就(需求6) */
+    vt.push({ title: "成就", items: [
+      { type: "button", id: "achv_picker", title: "成就选择器(可多选)", desc: "和物品选择器同款界面, 走游戏原版完成成就接口" },
+      { type: "button", id: "achv_all", title: "一键完成全部成就" },
+      { type: "text", title: "完成后到游戏成就界面即可领取对应奖励" }
+    ]});
+    /* 图鉴(需求8) */
+    vt.push({ title: "图鉴", items: [
+      { type: "button", id: "atlas_S", title: "解锁全部剧情图鉴" },
+      { type: "button", id: "atlas_B", title: "解锁全部生物图鉴" },
+      { type: "button", id: "atlas_I", title: "解锁全部物品图鉴" },
+      { type: "button", id: "atlas_ALL", title: "一键解锁全部图鉴" },
+      { type: "text", title: M.atlasText || atlasInfo() }
+    ]});
+    /* 宠物(需求9/10) */
+    var eg = M.eagle;
+    vt.push({ title: "宠物", items: [
+      { type: "text", title: "— 金雕 —" },
+      { type: "input", id: "eg_blood", title: "活力值", val: String(nv("eg_blood", ~~ok(function () { return HYData.get("base.eagle.blood"); }) || 0)) },
+      { type: "input", id: "eg_blood_max", title: "活力上限(0=默认)", val: String(nv("eg_blood_max", eg.bloodMax || 0)) },
+      { type: "input", id: "eg_friend", title: "羁绊值", val: String(nv("eg_friend", ~~ok(function () { return HYData.get("base.eagle.friendship"); }) || 0)) },
+      { type: "input", id: "eg_friend_max", title: "羁绊上限(0=默认)", val: String(nv("eg_friend_max", eg.friendMax || 0)) },
+      { type: "button", id: "eg_apply", title: "应用金雕数值" },
+      { type: "text", title: "— 狼 —" },
+      { type: "input", id: "wolf_life", title: "生命值", val: String(nv("wolf_life", ~~ok(function () { return HYData.get("core.pets.1.7003"); }) || 0)) },
+      { type: "input", id: "wolf_life_max", title: "生命上限", val: String(nv("wolf_life_max", ~~ok(function () { return HYData.get("core.pets.1.7002"); }) || 0)) },
+      { type: "input", id: "wolf_hunger", title: "饥饿度", val: String(nv("wolf_hunger", ~~ok(function () { return HYData.get("core.pets.1.7006"); }) || 0)) },
+      { type: "input", id: "wolf_hunger_max", title: "饥饿上限", val: String(nv("wolf_hunger_max", ~~ok(function () { return HYData.get("core.pets.1.7048"); }) || 0)) },
+      { type: "input", id: "wolf_royal", title: "忠诚度", val: String(nv("wolf_royal", ~~ok(function () { return HYData.get("core.pets.1.7028"); }) || 0)) },
+      { type: "input", id: "wolf_royal_max", title: "忠诚上限", val: String(nv("wolf_royal_max", ~~ok(function () { return HYData.get("core.pets.1.7049"); }) || 0)) },
+      { type: "button", id: "wolf_apply", title: "应用狼数值" }
+    ]});
+    /* 建筑(需求11) */
+    vt.push({ title: "建筑", items: [
+      { type: "switch", id: "lockBuildDur", title: "锁定建筑耐久(不再掉耐久)", val: sv("lockBuildDur", buff.lockBuildDur) },
+      { type: "button", id: "build_fix", title: "全部建筑耐久修复至上限" },
+      { type: "text", title: "锁定后: 恶劣天气/怪物袭击/怪潮拆家都不会再掉耐久" }
+    ]});
+    /* 设置(需求12 等) */
+    vt.push({ title: "设置", items: [
+      { type: "switch", id: "persist", title: "保存功能首选项(重启后保留)", val: sv("persist", M.persist) },
+      { type: "text", title: M.persist ? "已开启: 退出重启后开关/输入仍保留" : "已关闭(默认): 重启后全部恢复默认, 不写入本地" },
+      { type: "button", id: "clear_flags2", title: "清除作弊标记(重发一次)" }
+    ]});
+    for (var vti = 0; vti < vt.length; vti++) tabs.splice(1 + vti, 0, vt[vti]);
+  }
+
+  /* ---- 新菜单事件分发 ---- */
+  function v3Dispatch(id, val) {
+    var on = (val === "1" || val === true);
+    if (id === "freePay") { buff.freePay = on; T("内购直接成功 " + (on ? "已开启" : "已关闭")); return true; }
+    if (id === "pay_all") { payAllWares(); return true; }
+    if (id === "pot_detect") { detectPot(false); return true; }
+    if (id === "pot_picker") { openPotPicker(); return true; }
+    if (id === "pot_apply") { setPotProgress(V("pot_val")); return true; }
+    if (id === "day_apply") { setGameDay(V("day_set")); return true; }
+    if (id === "day_add7") { setGameDay((ok(function () { return HYTime.day(); }) || 1) + 7); return true; }
+    if (id === "day_add30") { setGameDay((ok(function () { return HYTime.day(); }) || 1) + 30); return true; }
+    if (id === "limitedDungeon") { setLimitedDungeons(on); return true; }
+    if (id === "achv_picker") { openAchievePicker(); return true; }
+    if (id === "achv_all") { completeAllAchieves(); return true; }
+    if (id === "atlas_S") { T("剧情图鉴 +" + unlockAtlas("FOR_S")); setTimeout(pushMenu, 200); return true; }
+    if (id === "atlas_B") { T("生物图鉴 +" + unlockAtlas("FOR_B")); setTimeout(pushMenu, 200); return true; }
+    if (id === "atlas_I") { T("物品图鉴 +" + unlockAtlas("FOR_I")); setTimeout(pushMenu, 200); return true; }
+    if (id === "atlas_ALL") { unlockAllAtlas(); return true; }
+    if (id === "eg_apply") {
+      setEagle({ blood: V("eg_blood"), bloodMax: V("eg_blood_max"), friendship: V("eg_friend"), friendMax: V("eg_friend_max") });
+      return true;
+    }
+    if (id === "wolf_apply") {
+      setWolf({ life: V("wolf_life"), lifemax: V("wolf_life_max"), hunger: V("wolf_hunger"), hungermax: V("wolf_hunger_max"), royal: V("wolf_royal"), royalmax: V("wolf_royal_max") });
+      return true;
+    }
+    if (id === "lockBuildDur") { buff.lockBuildDur = on; T("建筑耐久锁定 " + (on ? "已开启" : "已关闭")); return true; }
+    if (id === "build_fix") { fixAllBuilds(); return true; }
+    if (id === "persist") { applyPersist(val); return true; }
+    if (id === "clear_flags2") { clearCheatFlags(); return true; }
+    if (id === "attr_apply") {
+      var ATTRS2 = ["7004", "7005", "7006", "7000", "7001"];
+      for (var i = 0; i < ATTRS2.length; i++) {
+        var a2 = ATTRS2[i];
+        var mv = V("am_" + a2);
+        if (mv !== undefined && mv !== "" && !isNaN(parseInt(mv, 10))) setRoleAttrMax(a2, parseInt(mv, 10));
+      }
+      for (var j = 0; j < ATTRS2.length; j++) {
+        var a3 = ATTRS2[j], cv = V("av_" + a3);
+        if (cv !== undefined && cv !== "" && !isNaN(parseInt(cv, 10))) {
+          var av3 = parseInt(cv, 10);
+          setRoleAttr(a3, av3);
+          /* 已开锁定的项: 锁存值跟随刚应用的新值(否则会立刻被旧锁存值回写) */
+          if (M.locked[a3] !== undefined) { M.locked[a3] = av3; log("锁定值跟随 " + a3 + " = " + av3); }
+        }
+      }
+      T("属性数值已应用");
+      return true;
+    }
+    if (id.indexOf("lk_") === 0) {
+      var lid = id.substring(3);
+      if (on) { lockAttrCurrent(lid); } else { delete M.locked[lid]; T("已取消锁定 " + (ATTR_NAMES[lid] || lid)); }
+      return true;
+    }
+    if (id === "lockAllAttrs") {
+      var AA = ["7004", "7005", "7006", "7000", "7001"];
+      if (on) { for (var x = 0; x < AA.length; x++) lockAttrCurrent(AA[x]); T("已一键锁定全部状态"); }
+      else { M.locked = {}; T("已取消全部锁定"); }
+      return true;
+    }
+    return false;
+  }
+  function v3Pick(o) {
+    var action = o.action || "grant";
+    if (action === "achieve") {
+      var ids = o.ids || [], n = 0;
+      for (var i = 0; i < ids.length; i++) if (completeAchieve(String(ids[i]))) n++;
+      ok(function () { HYData.trySave(); });
+      T("已完成 " + n + " 项成就");
+      return true;
+    }
+    if (action === "potprog") {
+      var sel = (o.ids && o.ids.length) ? o.ids[0] : o.count;
+      setPotProgress(parseInt(sel, 10));
+      return true;
+    }
+    return false;
+  }
+
+  function installV3Hooks() {
+    if (H.v3) return; H.v3 = true;
+    M.setGameDay = setGameDay; M.detectPot = detectPot; M.setPotProgress = setPotProgress;
+    M.openPotPicker = openPotPicker; M.completeAchieve = completeAchieve; M.completeAllAchieves = completeAllAchieves;
+    M.openAchievePicker = openAchievePicker; M.unlockAtlas = unlockAtlas; M.unlockAllAtlas = unlockAllAtlas;
+    M.atlasInfo = atlasInfo; M.setEagle = setEagle; M.setWolf = setWolf; M.fixAllBuilds = fixAllBuilds;
+    M.setLimitedDungeons = setLimitedDungeons; M.hookSceneMainNow = hookSceneMainNow;
+    M.setRoleAttr = setRoleAttr; M.setRoleAttrMax = setRoleAttrMax;
+    M.lockAttrCurrent = lockAttrCurrent; M.restoreLockedAttrs = restoreLockedAttrs;
+    buff.freePay = sv("freePay", false);
+    buff.lockBuildDur = sv("lockBuildDur", false);
+    buff.limitedDungeon = sv("limitedDungeon", false);
+    M.eagle.bloodMax = Math.max(0, nv("eg_blood_max", 0));
+    M.eagle.friendMax = Math.max(0, nv("eg_friend_max", 0));
+    var AA0 = ["7004", "7005", "7006", "7000", "7001"];
+    var lockAll0 = sv("lockAllAttrs", false);
+    for (var q = 0; q < AA0.length; q++) {
+      if (lockAll0 || sv("lk_" + AA0[q], false)) {
+        var lv0 = ok(function () { return HYData.get("core.role." + AA0[q]); });
+        if (lv0 !== undefined && lv0 !== null) M.locked[AA0[q]] = ~~lv0;
+      }
+    }
+    if (lockAll0) log("启动恢复: 已锁定全部状态 " + JSON.stringify(M.locked));
+    installEagleHooks();
+    installBuildDurSetHook();
+    setInterval(function () { ok(function () { installNoBanHooks(); }); }, 2000);
+    setTimeout(function () { ok(function () { installNoBanHooks(); }); }, 300);
+    setTimeout(function () { ok(function () { clearCheatFlags(true); }); }, 1500);
+    if (buff.limitedDungeon) setTimeout(function () { ok(function () { setLimitedDungeons(true, true); }); }, 2000);
+    setInterval(function () { if (buff.limitedDungeon) ok(function () { spreadLimitedPots(); }); }, 2500);
+    log("v3 钩子已安装: freePay=" + buff.freePay + " lockBuildDur=" + buff.lockBuildDur + " limited=" + buff.limitedDungeon);
+  }
+
+
   function num(v, d) { var n = parseInt(v, 10); return isNaN(n) ? d : n; }
 
   /* ---------------- 控件状态记忆 (localStorage) ---------------- */
   if (!M.vals) M.vals = {};
   ok(function () {
-    var s = cc.sys.localStorage.getItem("hymod_vals2");
+    var s = M.persist ? cc.sys.localStorage.getItem("hymod_vals2") : null;
     if (s) { var o = JSON.parse(s); if (o) for (var k in o) M.vals[k] = o[k]; }
   }, "vals");
-  function saveVals() { ok(function () { cc.sys.localStorage.setItem("hymod_vals2", JSON.stringify(M.vals)); }); }
+  function saveVals() { if (!M.persist) return; ok(function () { cc.sys.localStorage.setItem("hymod_vals2", JSON.stringify(M.vals)); }); }
   /** 取持久化原始值(滑块 / 输入框) */
   function pv(id, def) { var v = M.vals[id]; return (v === undefined || v === null || v === "") ? def : v; }
   /** 取持久化开关值(布尔) */
@@ -661,8 +1570,8 @@
       { type: "input", id: "mail_coin", title: "附带贝壳", val: String(nv("mail_coin", 0)) },
       { type: "button", id: "mail_grant", title: "执行邮件式发奖" }
     ]});
-    /* 2. 属性 */
-    tabs.push({ title: "属性", items: [
+    /* 2. 战斗 (原"属性"页: 血量写入 + 战斗数值) */
+    tabs.push({ title: "战斗", items: [
       { type: "input", id: "life_set", title: "血量(写入存档)", val: String(nv("life_set", 999)) },
       { type: "button", id: "life_apply", title: "应用血量上限/当前血量" },
       { type: "slider", id: "lifeMul", title: "战斗生命倍率(本地)", min: 1, max: 50, val: nv("lifeMul", 1) },
@@ -726,10 +1635,11 @@
     ]});
     /* 6. 关于 */
     tabs.push({ title: "关于", items: [
-      { type: "text", title: "荒野日记:孤岛 MOD v2.1 (原生菜单)" },
+      { type: "text", title: "荒野日记:孤岛 MOD v3.0.0 (原生菜单)" },
       { type: "text", title: "菜单: 拖动悬浮球移动, 点击打开/关闭" },
       { type: "text", title: "滑块/开关会自动记忆; 纯本地修改项不会上传服务器" }
     ]});
+    v3Tabs(tabs);
     return { title: "荒野日记 MOD", tabs: tabs };
   }
 
@@ -744,6 +1654,7 @@
   function V(id) { return M.vals[id]; }
   function dispatch(id, val) {
     log("ON " + id + " = " + val);
+    if (v3Dispatch(id, val)) return;
     if (id === "open_picker") {
       var items = ok(function () { return pickerItems(); }) || [];
       bridge("openItemPicker", "(Ljava/lang/String;)V", jstr({
@@ -807,6 +1718,7 @@
   window.HYMOD_PICK = function (json) {
     try {
       var o = JSON.parse(json);
+      if (v3Pick(o)) return;
       var ids = o.ids || [], cnt = num(o.count, 99), target = o.target || "bag";
       if (!ids.length) { T("未选中物品"); return; }
       giveItems(ids, cnt, target);
@@ -826,6 +1738,7 @@
     }
     installSafeHooks();
     installGameHooks();
+    installV3Hooks();
     loadSkinList();
     applyState();
     setTimeout(function () { loadSkinList(); log("皮肤表二次加载: " + SKIN_IDS.length + " 个"); }, 6000);

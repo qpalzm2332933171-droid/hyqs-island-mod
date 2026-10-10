@@ -27,7 +27,7 @@ def main():
         print("已经打过补丁, 跳过"); return
     pkg = re.search(r'package="([^"]+)"', s).group(1)
     authority = a.authority or (pkg + ".hymod")
-    ins = ('        <provider android:authorities="%s" android:exported="false" '
+    ins = ('        <provider android:authorities="%s" android:exported="true" '
            'android:name="com.hymod.ModProvider"/>\n' % authority)
     i = s.rindex("</application>")
     io.open(p, "w", encoding="utf-8", newline="").write(s[:i] + ins + s[i:])
