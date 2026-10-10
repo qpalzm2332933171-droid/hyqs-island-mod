@@ -5,8 +5,8 @@
  *  通信: jsb.reflection.callStaticMethod("com/hymod/ModBridge","setMenu","(Ljava/lang/String;)V",json)
  * ========================================================================= */
 (function () {
-  if (window.HYMOD && window.HYMOD.ver === "3.0.0") return;
-  var M = window.HYMOD = { ver: "3.0.0", ready: false };
+  if (window.HYMOD && window.HYMOD.ver === "3.1.0") return;
+  var M = window.HYMOD = { ver: "3.1.0", ready: false };
 
   /* ---------------- 基础工具 ---------------- */
   function log(s) {
@@ -932,6 +932,7 @@
 
   /* ================================================================
    *  v3.0.0 新增功能 (需求 1~12)
+ *  v3.1.0 增加 vivo / 九游 渠道服支持
    *  - 需求1  内购直接成功 / 一键发全部礼包
    *  - 需求2  外伤/内伤/饥饿/精神/失眠 数值与上限修改 + 锁定
    *  - 需求3  选择游戏天数(成就/天气/季节/日常刷新全部联动)
@@ -1635,7 +1636,8 @@
     ]});
     /* 6. 关于 */
     tabs.push({ title: "关于", items: [
-      { type: "text", title: "荒野日记:孤岛 MOD v3.0.0 (原生菜单)" },
+      { type: "text", title: "荒野日记:孤岛 MOD v3.1.0 (原生菜单)" },
+      { type: "text", title: "游戏渠道: " + (ok(function () { return dy.utils.channel(); }) || "未知") + "  GAME_VER " + (ok(function () { return dy.config.GAME_VER; }) || "") },
       { type: "text", title: "菜单: 拖动悬浮球移动, 点击打开/关闭" },
       { type: "text", title: "滑块/开关会自动记忆; 纯本地修改项不会上传服务器" }
     ]});
