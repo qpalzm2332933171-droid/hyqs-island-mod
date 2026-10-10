@@ -5,8 +5,8 @@
  *  通信: jsb.reflection.callStaticMethod("com/hymod/ModBridge","setMenu","(Ljava/lang/String;)V",json)
  * ========================================================================= */
 (function () {
-  if (window.HYMOD && window.HYMOD.ver === "3.1.0") return;
-  var M = window.HYMOD = { ver: "3.1.0", ready: false };
+  if (window.HYMOD && window.HYMOD.ver === "3.2.0") return;
+  var M = window.HYMOD = { ver: "3.2.0", ready: false };
 
   /* ---------------- 基础工具 ---------------- */
   function log(s) {
@@ -1322,6 +1322,477 @@
     log("payAllWares " + n);
   }
 
+  /* ================= v3.2.0 新功能 ================= */
+
+  /* ---- 机关甲人 (设置部件与等级) ---- */
+  var ROBOT_SECTIONS = [
+    { sec: 0, name: "核心", ids: ["1"] },
+    { sec: 1, name: "手臂", ids: ["101", "102", "103", "104", "105", "106", "107"] },
+    { sec: 2, name: "躯干", ids: ["201", "202", "203", "204"] },
+    { sec: 3, name: "足部", ids: ["301", "302", "303", "304", "305"] }
+  ];
+  function robotProfile(id) { return ok(function () { return dy.profile.getById("Profiles/robot", id); }); }
+  function robotUpgap(id) { var p = robotProfile(id); return (p && p.upgap) || null; }
+  function robotExp(id) {
+    var n = 0;
+    ok(function () {
+      if (dy.cache.robotOnline && dy.cache.robotInfo && dy.cache.robotInfo.formula) n = ~~dy.cache.robotInfo.formula[id + ""] || 0;
+      else n = ~~HYData.get("base.robot.formula." + id) || 0;
+    });
+    return n;
+  }
+  function robotLevel(id) {
+    var up = robotUpgap(id);
+    if (!up || !up.length) return 1;
+    var n = robotExp(id);
+    for (var o = 0; o < up.length; o++) {
+      if (n < ~~up[o] || o == up.length - 1) return o + 1;
+      n -= ~~up[o];
+    }
+    return up.length;
+  }
+  function robotExpForLevel(id, lv) {
+    var up = robotUpgap(id);
+    if (!up || !up.length) return 0;
+    lv = Math.max(1, Math.min(up.length, parseInt(lv, 10) || 1));
+    var s = 0;
+    for (var i = 0; i < lv - 1; i++) s += ~~up[i];
+    return s;
+  }
+  function robotName(id) {
+    var p = robotProfile(id);
+    var nm = ok(function () { return dy.i18n.t(p.name + "_" + robotLevel(id)); });
+    return (nm || ("组件" + id)) + "(" + id + ")";
+  }
+  function robotWear() {
+    var w = ok(function () {
+      if (dy.cache.robotOnline && dy.cache.robotInfo && dy.cache.robotInfo.wearId && dy.cache.robotInfo.wearId.length) return dy.cache.robotInfo.wearId.slice();
+      var v = HYData.get("base.robot.wearId");
+      if (v && v.length) return v.slice();
+      return ["1", "101", "201", "301"];
+    });
+    return w || ["1", "101", "201", "301"];
+  }
+  function robotSavedExp() {
+    var o = {};
+    ok(function () { o = JSON.parse(M.vals["rb_exp"] || "{}") || {}; });
+    return o || {};
+  }
+  function robotSaveCfg(wearArr, expObj) {
+    if (wearArr) M.vals["rb_wear"] = JSON.stringify(wearArr);
+    if (expObj) {
+      var cur = robotSavedExp();
+      for (var k in expObj) cur[k] = expObj[k];
+      M.vals["rb_exp"] = JSON.stringify(cur);
+    }
+    M.saveVals();
+  }
+  /** 把 MOD 的甲人配置写进存档 + 内存缓存 */
+  function robotPushToGame(wearArr, expObj, unlockAll) {
+    var b = HYData.get("core.robot") || {};
+    var w = (wearArr || robotWear()).slice();
+    var i, j, s, id;
+    if (unlockAll) for (i = 0; i < ROBOT_SECTIONS.length; i++) for (j = 0; j < ROBOT_SECTIONS[i].ids.length; j++) b[ROBOT_SECTIONS[i].ids[j]] = ROBOT_SECTIONS[i].sec + 1;
+    for (s = 0; s < 4; s++) if (w[s] && !b[w[s]]) b[w[s]] = s + 1;
+    HYData.set("core.robot", b);
+    HYData.set("base.robot.wearId", w);
+    if (expObj) for (id in expObj) HYData.set("base.robot.formula." + id, ~~expObj[id]);
+    ok(function () {
+      if (dy.cache.robotInfo) {
+        dy.cache.robotInfo.wearId = w.slice();
+        var f = dy.cache.robotInfo.formula || {};
+        if (expObj) for (var id2 in expObj) f[id2 + ""] = ~~expObj[id2];
+        dy.cache.robotInfo.formula = f;
+      }
+    }, "rbCache");
+    if (cfg.autoSave) ok(function () { HYData.trySave(); });
+  }
+  function robotReapply(silent) {
+    var w = null, e = null;
+    ok(function () { if (M.vals["rb_wear"]) w = JSON.parse(M.vals["rb_wear"]); });
+    ok(function () { if (M.vals["rb_exp"]) e = JSON.parse(M.vals["rb_exp"]); });
+    if (!w && !e) { if (!silent) T("还没有可恢复的甲人配置"); return false; }
+    robotPushToGame(w, e, M.vals["rb_unlock"] === "1");
+    if (!silent) T("甲人配置已重新应用");
+    return true;
+  }
+  function refreshRobotUI() {
+    ok(function () {
+      var scene = cc.director.getScene();
+      if (!scene) return;
+      var walk = function (nd) {
+        if (!nd) return null;
+        if (nd.name === "PanelRobotDetail") return nd;
+        var cs = nd.children || [];
+        for (var i = 0; i < cs.length; i++) { var r = walk(cs[i]); if (r) return r; }
+        return null;
+      };
+      var node = walk(scene);
+      if (node) { var c = node.getComponent("PanelRobotDetail"); if (c && c.layoutUI) c.layoutUI(); }
+    }, "rbUI");
+  }
+  function robotUnlockEntrance() {
+    ok(function () {
+      HYData.set("base.robot.unlock", 1);
+      if (!HYData.get("core.robot")) HYData.set("core.robot", { "1": 1, "101": 2, "201": 3, "301": 4 });
+      if (!HYData.get("base.robot.wearId")) HYData.set("base.robot.wearId", ["1", "101", "201", "301"]);
+      if (!HYData.get("core.builds.3200")) HYData.set("core.builds.3200", { LEVEL: 1, DURATION: "MAX", DURATION_MAX: "MAX", LOCK: 0 });
+      if (cfg.autoSave) HYData.trySave();
+    });
+    T("机关甲人入口已解锁(回营地首页查看)");
+    setTimeout(pushMenu, 200);
+  }
+  function robotUnlockAll(silent) {
+    var b = HYData.get("core.robot") || {}, n = 0;
+    for (var i = 0; i < ROBOT_SECTIONS.length; i++) for (var j = 0; j < ROBOT_SECTIONS[i].ids.length; j++) {
+      var id = ROBOT_SECTIONS[i].ids[j];
+      if (!b[id]) { b[id] = ROBOT_SECTIONS[i].sec + 1; n++; }
+    }
+    HYData.set("core.robot", b);
+    M.vals["rb_unlock"] = "1"; M.saveVals();
+    if (cfg.autoSave) ok(function () { HYData.trySave(); });
+    if (!silent) { T("已解锁全部 17 个甲人组件"); setTimeout(pushMenu, 200); }
+    return n;
+  }
+  function robotEquip(section, id) {
+    var S = ROBOT_SECTIONS[~~section];
+    if (!S) return;
+    var p = robotProfile(id);
+    if (!p) { T("组件不存在: " + id); return; }
+    if (~~p.section !== S.sec) { T("组件 " + id + " 不能装在" + S.name); return; }
+    var w = robotWear();
+    w[~~section] = String(id);
+    var exp = {}, se = robotSavedExp();
+    if (se[id] !== undefined) exp[id] = se[id];
+    robotSaveCfg(w, exp);
+    robotPushToGame(w, exp, false);
+    T(S.name + "已换为 " + robotName(id));
+    refreshRobotUI();
+    setTimeout(pushMenu, 200);
+  }
+  function robotSetLevels() {
+    var w = robotWear(), exp = {}, n = 0, maxLv = 19;
+    for (var s = 0; s < 4; s++) {
+      var v = V("rb_lv" + s);
+      if (v === undefined || v === null || v === "") continue;
+      var lv = parseInt(v, 10);
+      if (isNaN(lv)) continue;
+      var up = robotUpgap(w[s]) || [];
+      maxLv = up.length || 19;
+      exp[w[s]] = robotExpForLevel(w[s], lv);
+      n++;
+    }
+    if (!n) { T("请先填写等级(1-" + maxLv + ")"); return; }
+    robotSaveCfg(w, exp);
+    robotPushToGame(w, exp, false);
+    T("甲人等级已应用(" + n + " 项)");
+    refreshRobotUI();
+    setTimeout(pushMenu, 200);
+  }
+  function robotMaxLevels(which) {
+    var ids = [], s;
+    if (which === "all") { for (s = 0; s < ROBOT_SECTIONS.length; s++) ids = ids.concat(ROBOT_SECTIONS[s].ids); }
+    else ids = robotWear();
+    var exp = {};
+    for (var i = 0; i < ids.length; i++) {
+      var id = ids[i]; if (!id) continue;
+      var up = robotUpgap(id); if (!up || !up.length) continue;
+      exp[id] = robotExpForLevel(id, up.length);
+    }
+    robotUnlockAll(true);
+    robotSaveCfg(null, exp);
+    robotPushToGame(null, exp, false);
+    T((which === "all" ? "全部组件" : "当前装备") + "已满级(" + Object.keys(exp).length + " 个)");
+    refreshRobotUI();
+    setTimeout(pushMenu, 200);
+  }
+  function openRobotPicker(section) {
+    var S = ROBOT_SECTIONS[~~section];
+    if (!S) return;
+    var items = [];
+    for (var i = 0; i < S.ids.length; i++) {
+      var id = S.ids[i];
+      items.push({ id: id, name: robotName(id), cat: "当前 Lv." + robotLevel(id) });
+    }
+    bridge("openItemPicker", "(Ljava/lang/String;)V", jstr({
+      title: "选择" + S.name + "组件", count: "1", action: "robot:" + ~~section, single: true, hideTarget: true, okText: "装备该组件", items: items
+    }));
+  }
+  /** 在线模式下拦截服务器刷新, 保住 MOD 的甲人修改 */
+  function installRobotHook() {
+    if (H.robotHook) return;
+    if (!dy.http || !dy.http.getRobotInfo) return;
+    H.robotHook = true;
+    var raw = dy.http.getRobotInfo;
+    dy.http.getRobotInfo = function (cb) {
+      return raw.call(this, function (err, res) {
+        try {
+          if (!err && res && res.data && sv("rb_lock", false)) {
+            var w = null, e = null;
+            if (M.vals["rb_wear"]) w = JSON.parse(M.vals["rb_wear"]);
+            if (M.vals["rb_exp"]) e = JSON.parse(M.vals["rb_exp"]);
+            if (w && w.length) res.data.wearId = w.join(";");
+            if (e) res.data.formula = JSON.stringify(e);
+            log("甲人: 服务器刷新已被本地配置覆盖");
+          }
+        } catch (e2) { log("robotHook " + e2); }
+        cb && cb(err, res);
+      });
+    };
+    log("已挂钩 dy.http.getRobotInfo (甲人锁定)");
+  }
+
+  /* ---- 建筑等级 ---- */
+  function fillRobotNames() {
+    if (H.fillName) return;
+    ok(function () {
+      var tab = window.i18n && window.i18n.languages && window.i18n.languages[dy.cache.language];
+      if (!tab) return;
+      var R = dy.profile.getAll("Profiles/robot") || {}, n = 0;
+      for (var id in R) {
+        var p = R[id] || {}, base = p.name, up = p.upgap || [];
+        if (!base) continue;
+        var n0 = tab[base + "_1"];
+        if (!n0) continue;
+        for (var lv = 2; lv <= (up.length || 19); lv++) {
+          if (tab[base + "_" + lv] === undefined) { tab[base + "_" + lv] = n0; n++; }
+        }
+      }
+      H.fillName = true;
+      if (n) log("部件名补齐: " + n + " 条");
+    }, "fillName");
+  }
+  function talentRatio() {
+    var r = 1;
+    ok(function () { if (HYData.get("core.talent.2019")) r = (100 + HYTechnology.techTalent("2019")[0]) / 100; });
+    return r;
+  }
+  function buildProfile(id) { return ok(function () { return dy.profile.getById("Profiles/build_profile", id); }); }
+  function buildLevels(id) {
+    var p = buildProfile(id), out = [];
+    if (p) for (var k in p) if (/^\d+(_\d)?$/.test(k)) out.push(k);
+    out.sort(function (a, b) { return parseFloat(a.replace("_", ".")) - parseFloat(b.replace("_", ".")); });
+    return out;
+  }
+  function buildEntryName(id, lv) {
+    var p = buildProfile(id), e = p && p[lv];
+    return (e && e.NAME && (e.NAME[dy.cache.language] || e.NAME.cn)) || ("Lv." + lv);
+  }
+  function buildCurLevel(id) {
+    var v = ok(function () { return HYData.get("core.builds." + id + ".LEVEL"); });
+    return (v === undefined || v === null) ? 0 : v;
+  }
+  function buildInfoText() {
+    var id = String(M.vals["bld_id"] || "").replace(/\s/g, "");
+    if (!id) return "未选择建筑 (点上面的[选择建筑])";
+    if (!buildProfile(id)) return "已选: " + id + " (无此建筑)";
+    var cur = buildCurLevel(id);
+    return "已选: " + id + "  " + (parseInt(cur, 10) > 0 ? ("当前 " + cur + " 级 " + buildEntryName(id, cur)) : "当前未建造") + "  可选等级: " + buildLevels(id).join("/");
+  }
+  function setBuildLevel(id, lv, silent) {
+    id = String(id || "").replace(/\s/g, "");
+    lv = String(lv || "").replace(/\s/g, "");
+    if (!id) { if (!silent) T("请输入建筑ID, 如 3000"); return false; }
+    var p = buildProfile(id);
+    if (!p) { if (!silent) T("没有建筑 " + id + " (可点[选择建筑])"); return false; }
+    if (lv === "0") {
+      var lock0 = ~~ok(function () { return HYData.get("core.builds." + id + ".LOCK"); }) || 0;
+      ok(function () { HYPlayer.addBuild(id, 0, lock0); });
+      ok(function () { dy.notify.post(dy.K_REFRESH_HOME_BUILDS); });
+      if (cfg.autoSave) ok(function () { HYData.trySave(); });
+      if (!silent) { T("建筑 " + id + " 已拆除(0级)"); setTimeout(pushMenu, 200); }
+      return true;
+    }
+    var entry = p[lv];
+    if (!entry) { if (!silent) T("建筑 " + id + " 没有等级 " + lv + " (可用: " + buildLevels(id).join("/") + ")"); return false; }
+    var lock = ~~ok(function () { return HYData.get("core.builds." + id + ".LOCK"); }) || 0;
+    var num = parseInt(lv, 10);
+    ok(function () { HYPlayer.addBuild(id, num, lock); }, "addBuild");
+    if (/^\d+$/.test(lv)) {
+      ok(function () { HYData.set("core.builds." + id + ".LEVEL", num); });
+    } else {
+      HYData.set("core.builds." + id + ".LEVEL", lv);
+      var d = entry.DURATION;
+      if (d !== "MAX") d = Math.floor(d * talentRatio());
+      HYData.set("core.builds." + id + ".DURATION", d);
+      HYData.set("core.builds." + id + ".DURATION_MAX", d);
+    }
+    ok(function () {
+      var mx = HYData.get("core.builds." + id + ".DURATION_MAX"), cur = HYData.get("core.builds." + id + ".DURATION");
+      if (mx && mx !== "MAX" && cur !== "MAX" && cur < mx) HYData.set("core.builds." + id + ".DURATION", mx);
+    });
+    ok(function () { dy.notify.post(dy.K_BUILD_UPDATE); });
+    ok(function () { dy.notify.post(dy.K_REFRESH_HOME_BUILDS); });
+    ok(function () { dy.notify.post(dy.K_UPDATE_DURATION); });
+    if (cfg.autoSave) ok(function () { HYData.trySave(); });
+    if (!silent) { T("建筑 " + id + " = " + lv + " 级 " + buildEntryName(id, lv)); setTimeout(pushMenu, 200); }
+    log("setBuildLevel " + id + " -> " + lv);
+    return true;
+  }
+  function openBuildPicker() {
+    var prof = ok(function () { return dy.profile.getAll("Profiles/build_profile"); }) || {};
+    var items = [];
+    for (var id in prof) {
+      var lvs = buildLevels(id);
+      if (!lvs.length) continue;
+      var names = [];
+      for (var i = 0; i < lvs.length; i++) names.push(lvs[i] + "=" + buildEntryName(id, lvs[i]));
+      var cur = buildCurLevel(id);
+      items.push({ id: id, name: "当前 " + (parseInt(cur, 10) > 0 ? cur + "级 " + buildEntryName(id, cur) : "未建造"), cat: names.join(" / ") });
+    }
+    if (!items.length) { T("建筑表未加载"); return; }
+    bridge("openItemPicker", "(Ljava/lang/String;)V", jstr({
+      title: "选择建筑", count: "1", action: "build:", single: true, hideTarget: true, okText: "选定该建筑", items: items
+    }));
+  }
+  function openBuildLevelPicker() {
+    var id = String(M.vals["bld_id"] || V("bld_id") || "").replace(/\s/g, "");
+    if (!id) { T("请先选择建筑"); return; }
+    var lvs = buildLevels(id);
+    if (!lvs.length) { T("没有建筑 " + id); return; }
+    var items = [];
+    for (var i = 0; i < lvs.length; i++) items.push({ id: lvs[i], name: buildEntryName(id, lvs[i]), cat: (lvs[i] === String(buildCurLevel(id)) ? "当前等级" : "可设为 " + lvs[i] + " 级") });
+    bridge("openItemPicker", "(Ljava/lang/String;)V", jstr({
+      title: "选择 " + id + " 的等级", count: "1", action: "buildlvl:" + id, single: true, hideTarget: true, okText: "应用该等级", items: items
+    }));
+  }
+  function maxAllBuilds() {
+    var b = ok(function () { return HYData.get("core.builds"); }) || {};
+    var n = 0, fail = 0;
+    for (var id in b) {
+      if (!/^\d+$/.test(id)) continue;
+      var cur = b[id] && b[id].LEVEL;
+      if (!(parseInt(cur, 10) > 0)) continue;
+      var lvs = buildLevels(id);
+      if (!lvs.length) continue;
+      var curS = String(cur), target = null, i;
+      if (curS.indexOf("_") > 0) for (i = 0; i < lvs.length; i++) if (lvs[i] === curS) target = curS;
+      if (!target) {
+        var mx = 0;
+        for (i = 0; i < lvs.length; i++) { var v = parseInt(lvs[i], 10); if (!isNaN(v) && v > mx) mx = v; }
+        target = String(mx);
+      }
+      if (curS !== target) { if (setBuildLevel(id, target, true)) n++; else fail++; }
+    }
+    if (cfg.autoSave) ok(function () { HYData.trySave(); });
+    T("全部建筑满级: 已升级 " + n + " 座" + (fail ? (", 失败 " + fail) : "") + " (分支建筑保留原分支)");
+    setTimeout(pushMenu, 200);
+  }
+
+  /* ---- 天赋一键解锁 ---- */
+  function talentUnlockInfo() {
+    var tal = ok(function () { return dy.profile.getAll("Profiles/talent_profile"); }) || {};
+    var total = 0, n = 0;
+    for (var id in tal) {
+      if (id === "2000") continue;
+      total++;
+      if (HYData.get("base.unlock.talent." + id)) n++;
+    }
+    return { n: n, total: total };
+  }
+  function unlockAllTalents(silent) {
+    var tal = ok(function () { return dy.profile.getAll("Profiles/talent_profile"); }) || {};
+    var n = 0;
+    for (var id in tal) {
+      if (id === "2000") continue;
+      if (!HYData.get("base.unlock.talent." + id)) { HYData.set("base.unlock.talent." + id, 1); n++; }
+    }
+    if (cfg.autoSave) ok(function () { HYData.trySave(); });
+    log("unlockAllTalents +" + n);
+    if (!silent) {
+      var info = talentUnlockInfo();
+      T("已解锁全部天赋: 新增 " + n + " 个 (现在 " + info.n + "/" + info.total + ")");
+      setTimeout(pushMenu, 200);
+    }
+    return n;
+  }
+  function talentFullUnlock() {
+    var n = unlockAllTalents(true), m = talentMax(true);
+    if (cfg.autoSave) ok(function () { HYData.trySave(); });
+    T("天赋全开: 解锁+" + n + " 强化+" + m + " (全部★3)");
+    setTimeout(pushMenu, 200);
+  }
+
+  /* ---- 心情笔记跳过按钮(原生弹窗) ---- */
+  function addMoodSkipButton(panel) {
+    if (panel._hymodSkipBtn || !panel.nodClose || !panel.node) return;
+    var src = panel.nodClose;
+    if (!src.parent) return;
+    var clone = cc.instantiate(src);
+    clone.name = "btnHymodSkip";
+    var btn = clone.getComponent(cc.Button);
+    if (btn) btn.clickEvents = [];
+    ok(function () {
+      var locs = clone.getComponentsInChildren("LocaleLabel") || [];
+      for (var li = 0; li < locs.length; li++) { try { locs[li].node.removeComponent(locs[li]); } catch (e2) {} }
+    }, "moodLocal");
+    /* 面板入场景前 getComponentInChildren 有时拿不到, 多补几次确保显示"跳过" */
+    var applyLab = function () {
+      if (panel.canTouch) return;
+      ok(function () {
+        var l = clone.getComponentInChildren(cc.Label);
+        if (!l) { var n2 = clone.getChildByName("Label"); if (n2) l = n2.getComponent(cc.Label); }
+        if (l && l.string !== "跳过") l.string = "跳过";
+      }, "moodLab");
+    };
+    clone.active = true;
+    clone.setPosition(src.getPosition());
+    src.parent.addChild(clone);
+    applyLab();
+    setTimeout(applyLab, 60);
+    setTimeout(applyLab, 250);
+    clone.on(cc.Node.EventType.TOUCH_END, function (event) {
+      ok(function () {
+        if (panel.canTouch) return;
+        /* 关键: 拦住冒泡, 否则这次点击会走到根按钮 buttonListenter 把窗口直接关掉 */
+        if (event && event.stopPropagation) event.stopPropagation();
+        if (panel._hymodSkipBtn) panel._hymodSkipBtn.active = false;
+        if (panel.func) panel.unschedule(panel.func);
+        if (panel.labMsg) panel.labMsg.string = panel.msg || panel.labMsg.string;
+        panel.canTouch = true;
+        if (panel.nodClose) panel.nodClose.active = 1;
+        dy.audio.playMusic("bgm_home", !0);
+        log("心情笔记: 已跳过");
+      }, "moodSkip");
+    });
+    panel._hymodSkipBtn = clone;
+    log("心情笔记: 跳过按钮已添加");
+  }
+  function installMoodSkipHook() {
+    if (H.moodSkip) return;
+    var cls = ok(function () { return cc.js.getClassByName("PanelMoodAlert"); });
+    if (!cls || !cls.prototype || !cls.prototype.init) return;
+    H.moodSkip = true;
+    var proto = cls.prototype;
+    var rawInit = proto.init;
+    proto.typingAni = function () {
+      var self = this;
+      var chars = (self.msg || "").split(""), spd = 0.1;
+      if ("en" == dy.cache.language) spd = 0.03;
+      var total = chars.length, i = 0;
+      dy.audio.playMusic("note", !0);
+      self.unschedule(self.func);
+      self.func = function () {
+        self.labMsg.string += chars[i];
+        if (++i == total) {
+          self.unschedule(self.func);
+          dy.audio.playMusic("bgm_home", !0);
+          self.canTouch = !0;
+          self.nodClose.active = 1;
+          if (self._hymodSkipBtn) self._hymodSkipBtn.active = false;
+        }
+      };
+      self.schedule(self.func, spd, cc.macro.REPEAT_FOREVER, 0);
+    };
+    proto.init = function () {
+      var self = this;
+      rawInit.apply(self, arguments);
+      ok(function () { if (self.nodClose) self.nodClose.active = false; }, "moodHideClose");
+      ok(function () { addMoodSkipButton(self); }, "moodBtn");
+    };
+    log("已挂钩 PanelMoodAlert (心情笔记跳过)");
+  }
+
   /* ---- 新菜单 ---- */
   function v3Tabs(tabs) {
     var ai, aid, anm;
@@ -1401,11 +1872,51 @@
       { type: "input", id: "wolf_royal_max", title: "忠诚上限", val: String(nv("wolf_royal_max", ~~ok(function () { return HYData.get("core.pets.1.7049"); }) || 0)) },
       { type: "button", id: "wolf_apply", title: "应用狼数值" }
     ]});
+    /* 机关甲人 (v3.2.0: 任意部件 + 等级) */
+    var rbW = robotWear();
+    var rbItems = [
+      { type: "button", id: "rb_unlock_entrance", title: "解锁机关甲人(含制作台)", desc: "还没通关剧情解锁甲人时用" },
+      { type: "text", title: "核心 " + robotName(rbW[0]) + " Lv." + robotLevel(rbW[0]) + "  |  手臂 " + robotName(rbW[1]) + " Lv." + robotLevel(rbW[1]) },
+      { type: "text", title: "躯干 " + robotName(rbW[2]) + " Lv." + robotLevel(rbW[2]) + "  |  足部 " + robotName(rbW[3]) + " Lv." + robotLevel(rbW[3]) },
+      { type: "button", id: "rb_unlock_all", title: "解锁全部 17 个组件", desc: "解锁后可在游戏更换面板里看到并装备" },
+      { type: "button", id: "rb_max_all", title: "全部组件等级拉满", desc: "17 个组件全部升到 19 级" },
+      { type: "button", id: "rb_max_wear", title: "当前装备的 4 个组件满级" },
+      { type: "text", title: "— 更换组件 —" }
+    ];
+    for (var rs = 0; rs < ROBOT_SECTIONS.length; rs++) {
+      var RS = ROBOT_SECTIONS[rs];
+      rbItems.push({ type: "button", id: "rb_pick_" + rs, title: "更换" + RS.name + "组件", desc: "当前 " + robotName(rbW[rs]) + " / 共 " + RS.ids.length + " 种" });
+    }
+    rbItems.push({ type: "text", title: "— 设置等级(1-19) —" });
+    for (rs = 0; rs < ROBOT_SECTIONS.length; rs++) {
+      rbItems.push({ type: "input", id: "rb_lv" + rs, title: ROBOT_SECTIONS[rs].name + " 等级", val: String(nv("rb_lv" + rs, robotLevel(rbW[rs]))) });
+    }
+    rbItems.push({ type: "button", id: "rb_apply_lv", title: "应用等级设置" });
+    rbItems.push({ type: "switch", id: "rb_lock", title: "锁定甲人修改(防服务器刷新覆盖)", val: sv("rb_lock", false) });
+    rbItems.push({ type: "text", title: "MOD 改的是本地存档+内存; 开启锁定后服务器刷新也会被覆盖" });
+    vt.push({ title: "甲人", items: rbItems });
     /* 建筑(需求11) */
     vt.push({ title: "建筑", items: [
       { type: "switch", id: "lockBuildDur", title: "锁定建筑耐久(不再掉耐久)", val: sv("lockBuildDur", buff.lockBuildDur) },
       { type: "button", id: "build_fix", title: "全部建筑耐久修复至上限" },
-      { type: "text", title: "锁定后: 恶劣天气/怪物袭击/怪潮拆家都不会再掉耐久" }
+      { type: "text", title: "锁定后: 恶劣天气/怪物袭击/怪潮拆家都不会再掉耐久" },
+      { type: "text", title: "— 建筑等级修改(v3.2.0) —" },
+      { type: "button", id: "build_picker", title: "选择建筑(看当前等级)", desc: "列出全部建筑与可选等级" },
+      { type: "text", title: buildInfoText() },
+      { type: "button", id: "build_lvl_picker", title: "选择该建筑的等级并应用", desc: "3级分支建筑(工作间/淬毒台)会列出 3 / 3_1" },
+      { type: "input", id: "bld_id", title: "或直接输入建筑ID", val: pv("bld_id", "") },
+      { type: "input", id: "bld_lv", title: "目标等级(1/2/3/3_1)", val: pv("bld_lv", "") },
+      { type: "button", id: "build_apply", title: "应用输入的建筑ID+等级" },
+      { type: "button", id: "build_max_all", title: "全部建筑升到满级", desc: "分支建筑保留当前分支; 只处理已建成的" }
+    ]});
+    /* 天赋 (v3.2.0): 一键解锁全部(含非卖品) */
+    var tally = talentUnlockInfo();
+    vt.push({ title: "天赋", items: [
+      { type: "text", title: "已解锁 " + tally.n + " / " + tally.total + " 个天赋(不含'无')" },
+      { type: "button", id: "talent_unlock_all", title: "一键解锁全部天赋", desc: "含商店买不到的特殊天赋, 共23个" },
+      { type: "button", id: "talent_max_all", title: "全部天赋强化至 ★3" },
+      { type: "button", id: "talent_full_all", title: "解锁全部 + 全部★3" },
+      { type: "text", title: "解锁后即可在游戏天赋界面选择; ★3 为游戏上限" }
     ]});
     /* 设置(需求12 等) */
     vt.push({ title: "设置", items: [
@@ -1444,6 +1955,25 @@
     }
     if (id === "lockBuildDur") { buff.lockBuildDur = on; T("建筑耐久锁定 " + (on ? "已开启" : "已关闭")); return true; }
     if (id === "build_fix") { fixAllBuilds(); return true; }
+    if (id === "build_picker") { openBuildPicker(); return true; }
+    if (id === "build_lvl_picker") { openBuildLevelPicker(); return true; }
+    if (id === "build_apply") { setBuildLevel(V("bld_id"), V("bld_lv")); return true; }
+    if (id === "build_max_all") { maxAllBuilds(); return true; }
+    if (id === "rb_unlock_entrance") { robotUnlockEntrance(); return true; }
+    if (id === "rb_unlock_all") { robotUnlockAll(false); return true; }
+    if (id === "rb_max_all") { robotMaxLevels("all"); return true; }
+    if (id === "rb_max_wear") { robotMaxLevels("wear"); return true; }
+    if (id === "rb_apply_lv") { robotSetLevels(); return true; }
+    if (id.indexOf("rb_pick_") === 0) { openRobotPicker(parseInt(id.substring(8), 10)); return true; }
+    if (id === "rb_lock") {
+      if (on) { installRobotHook(); robotReapply(true); T("甲人修改已锁定(服务器刷新也会被本地配置覆盖)"); }
+      else T("甲人锁定已关闭(重启游戏后服务器数据会恢复)");
+      setTimeout(pushMenu, 200);
+      return true;
+    }
+    if (id === "talent_unlock_all") { unlockAllTalents(false); return true; }
+    if (id === "talent_max_all") { T("全部天赋强化: " + talentMax(false)); setTimeout(pushMenu, 200); return true; }
+    if (id === "talent_full_all") { talentFullUnlock(); return true; }
     if (id === "persist") { applyPersist(val); return true; }
     if (id === "clear_flags2") { clearCheatFlags(); return true; }
     if (id === "attr_apply") {
@@ -1492,6 +2022,23 @@
       setPotProgress(parseInt(sel, 10));
       return true;
     }
+    if (action.indexOf("robot:") === 0) {
+      var rbSec = parseInt(action.substring(6), 10);
+      if (o.ids && o.ids.length) robotEquip(rbSec, String(o.ids[0]));
+      return true;
+    }
+    if (action === "build:") {
+      if (o.ids && o.ids.length) {
+        M.vals["bld_id"] = String(o.ids[0]); M.vals["bld_lv"] = ""; M.saveVals();
+        T("已选建筑 " + o.ids[0] + " (当前 " + (buildCurLevel(String(o.ids[0])) || 0) + " 级)");
+        setTimeout(pushMenu, 200);
+      }
+      return true;
+    }
+    if (action.indexOf("buildlvl:") === 0) {
+      if (o.ids && o.ids.length) setBuildLevel(action.substring(9), String(o.ids[0]));
+      return true;
+    }
     return false;
   }
 
@@ -1504,6 +2051,14 @@
     M.setLimitedDungeons = setLimitedDungeons; M.hookSceneMainNow = hookSceneMainNow;
     M.setRoleAttr = setRoleAttr; M.setRoleAttrMax = setRoleAttrMax;
     M.lockAttrCurrent = lockAttrCurrent; M.restoreLockedAttrs = restoreLockedAttrs;
+    M.robotEquip = robotEquip; M.robotSetLevels = robotSetLevels; M.robotMaxLevels = robotMaxLevels;
+    M.robotUnlockAll = robotUnlockAll; M.robotUnlockEntrance = robotUnlockEntrance;
+    M.robotLevel = robotLevel; M.robotWear = robotWear; M.robotExpForLevel = robotExpForLevel;
+    M.setBuildLevel = setBuildLevel; M.maxAllBuilds = maxAllBuilds; M.buildLevels = buildLevels;
+    M.openBuildPicker = openBuildPicker; M.openBuildLevelPicker = openBuildLevelPicker;
+    M.unlockAllTalents = unlockAllTalents; M.talentFullUnlock = talentFullUnlock;
+    M.installMoodSkipHook = installMoodSkipHook; M.addMoodSkipButton = addMoodSkipButton;
+    M.installRobotHook = installRobotHook;
     buff.freePay = sv("freePay", false);
     buff.lockBuildDur = sv("lockBuildDur", false);
     buff.limitedDungeon = sv("limitedDungeon", false);
@@ -1520,8 +2075,11 @@
     if (lockAll0) log("启动恢复: 已锁定全部状态 " + JSON.stringify(M.locked));
     installEagleHooks();
     installBuildDurSetHook();
-    setInterval(function () { ok(function () { installNoBanHooks(); }); }, 2000);
-    setTimeout(function () { ok(function () { installNoBanHooks(); }); }, 300);
+    installRobotHook();
+    installMoodSkipHook();
+    fillRobotNames();
+    setInterval(function () { ok(function () { installNoBanHooks(); installMoodSkipHook(); installRobotHook(); fillRobotNames(); }); }, 2000);
+    setTimeout(function () { ok(function () { installNoBanHooks(); installMoodSkipHook(); installRobotHook(); fillRobotNames(); }); }, 300);
     setTimeout(function () { ok(function () { clearCheatFlags(true); }); }, 1500);
     if (buff.limitedDungeon) setTimeout(function () { ok(function () { setLimitedDungeons(true, true); }); }, 2000);
     setInterval(function () { if (buff.limitedDungeon) ok(function () { spreadLimitedPots(); }); }, 2500);
@@ -1636,7 +2194,8 @@
     ]});
     /* 6. 关于 */
     tabs.push({ title: "关于", items: [
-      { type: "text", title: "荒野日记:孤岛 MOD v3.1.0 (原生菜单)" },
+      { type: "text", title: "荒野日记:孤岛 MOD v3.2.0 (原生菜单)" },
+      { type: "text", title: "v3.2.0 新增: 机关甲人部件/等级 / 建筑等级(含3级分支) / 天赋一键全解锁 / 心情笔记跳过按钮" },
       { type: "text", title: "游戏渠道: " + (ok(function () { return dy.utils.channel(); }) || "未知") + "  GAME_VER " + (ok(function () { return dy.config.GAME_VER; }) || "") },
       { type: "text", title: "菜单: 拖动悬浮球移动, 点击打开/关闭" },
       { type: "text", title: "滑块/开关会自动记忆; 纯本地修改项不会上传服务器" }
